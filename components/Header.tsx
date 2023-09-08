@@ -23,7 +23,6 @@ const Header = () => {
 
   //lấy số lượng order lưu vào usecontext
   useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems");
     const inforUser = localStorage.getItem("inforUser");
     if (inforUser) {
       const parsedinforUser = JSON.parse(inforUser);
