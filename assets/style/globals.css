@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  @font-face {
+    font-family: "roboto_regular";
+    src: url("../font/Roboto-Regular.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "roboto_medium";
+    src: url("../font/Roboto-Medium.ttf") format("truetype");
+  }
+  @font-face {
+    font-family: "roboto_bold";
+    src: url("../font/Roboto-Bold.ttf") format("truetype");
+  }
+  .header {
+    background-image: url("../img/bgdoctor.jpg");
+    background-position: center;
+  }
+  .form-control {
+    @apply w-[100%] border-b-[1px] border-[#ddd] py-[5px] px-[10px];
+  }
+}

@@ -1,0 +1,20 @@
+/* styles.module.css */
+.container {
+  /* Kiểu mặc định của container */
+}
+
+.container:hover .labelCallShop {
+  display: none; /* Ẩn phần tử có lớp CSS 'phone' khi hover container */
+}
+
+.container:hover .phonenumber {
+  display: block; /* Hiển thị phần tử có lớp CSS 'number' khi hover container */
+}
+
+.labelCallShop {
+  display: block; /* Hiển thị phần tử có lớp CSS 'phone' */
+}
+
+.phonenumber {
+  display: none; /* Ẩn phần tử có lớp CSS 'number' */
+}

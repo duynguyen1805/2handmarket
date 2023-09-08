@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.fade-in:hover {
+  opacity: 1;
+  transform: scale(0.95);
+}
+
+.active {
+  background-color: #18de6b;
+}
+
+@media (max-width: 1300px) {
+  .mobile {
+    display: none;
+  }
+}
+
+.modal-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/*Đổi màu icon sang trắng*/
+.icon-white {
+  filter: invert(1);
+  transition: filter 0.3s ease;
+}
+.icon-blue {
+  filter: invert(20%) sepia(100%) saturate(7491%) hue-rotate(207deg)
+    brightness(93%) contrast(114%);
+  transition: filter 0.3s ease;
+}
+
+/* styles.css (hoặc tệp CSS tương tự) */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.running-text {
+  animation: marquee 10s linear infinite; /* 10s animation chạy qua lại một lần*/
+}
+@keyframes colorChange {
+  0% {
+    color: blue; /* Màu ban đầu (màu xanh) */
+  }
+  50% {
+    color: yellow; /* Màu thay đổi (màu xanh lá cây) */
+  }
+  100% {
+    color: blue; /* Quay lại màu ban đầu (màu xanh) */
+  }
+}
+.text-animation {
+  animation: colorChange 2s infinite; /* 2s mỗi vòng lặp, infinite chạy vô hạn */
+}
+
+/* Ẩn thanh cuộn mặc định 
+::-webkit-scrollbar {
+  display: none;
+}*/
+/* Scrollbar Track */
+::-webkit-scrollbar {
+  width: 8px;
+}
+/* Scrollbar Thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+/* Scrollbar Thumb on Hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+/* Scrollbar Track when scrolling */
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+/* Hide scrollbar buttons */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Tùy chỉnh một thông báo toast cụ thể */
+.Toastify__toast {
+  /* Thêm các thuộc tính CSS ở đây */
+  width: 400px;
+}
