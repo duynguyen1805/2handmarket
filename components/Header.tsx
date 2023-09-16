@@ -20,7 +20,6 @@ import { motion } from "framer-motion";
 const Header = () => {
   //lấy số lượng order qua usecontext
   const { information_User, setInfoUser } = useMyContext();
-
   //lấy số lượng order lưu vào usecontext
   useEffect(() => {
     const inforUser = localStorage.getItem("inforUser");
@@ -66,11 +65,10 @@ const Header = () => {
   const handleClickManager = () => {
     router.push("/admin/adminDashboard");
   };
-  const handleClickInformation = (id: any) => {
-    router.push(`/account/${id}`);
-  };
-  const handleClickHistoryOrder = (id: any) => {
-    router.push(`/account/order/${id}`);
+  const handleClickMessage = (idUser: any) => {
+    router
+      .push(`/account/tin-nhan/${idUser}`)
+      .then(() => window.location.reload());
   };
   const clickInfoDetail = (idUser: string) => {
     router.push(`/account/trang-ca-nhan/${idUser}`);
@@ -182,7 +180,10 @@ const Header = () => {
 
           <div className="w-[40%] flex items-center">
             {/* tinnhan */}
-            <div className="h-auto lg:w-[25%] sm:w-[15%] flex gap-2.5 items-center justify-center cursor-pointer">
+            <div
+              className="h-auto lg:w-[25%] sm:w-[15%] flex gap-2.5 items-center justify-center cursor-pointer"
+              onClick={() => handleClickMessage(datainforUser?._id)}
+            >
               <Image
                 src={message}
                 alt="icon"

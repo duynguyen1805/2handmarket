@@ -98,12 +98,12 @@ const chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
 
   useEffect(() => {
     fetchDataProduct();
-    console.log("check query:", type, id_product);
+    // console.log("check query:", type, id_product);
   }, []);
   const fetchDataProduct = async () => {
     try {
       const response = await API_getProductbyId(type, id_product);
-      // console.log("check response: ", response);
+      console.log("check response: ", response);
       setItem(response.dataItem[0]);
       setInfoClient(response.userInfo[0]);
       //để map img
@@ -111,6 +111,27 @@ const chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const [datainforUser_local, setdatainforUser_local] = useState<any>();
+  useEffect(() => {
+    //lấy thông tin người dùng Đăng nhập
+    const storedItems = localStorage.getItem("inforUser");
+    if (storedItems) {
+      setdatainforUser_local(JSON.parse(storedItems));
+    }
+  }, []);
+
+  const handleClickMessage = () => {
+    const query: any = {
+      current_user_name: datainforUser_local?.name,
+      id_receiver: infoClient._id,
+      name_receiver: infoClient.name,
+    };
+    router.push({
+      pathname: `/account/tin-nhan/${datainforUser_local?._id}`,
+      query,
+    });
   };
 
   return (
@@ -137,9 +158,12 @@ const chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
             <div className="h-[540px] w-full">
               <Slider {...settings_slider}>
                 {img_arr &&
-                  img_arr.map((item: any) => {
+                  img_arr.map((item: any, index: number) => {
                     return (
-                      <div className="h-[500px] w-[500px] flex justify-center">
+                      <div
+                        key={index}
+                        className="h-[500px] w-[500px] flex justify-center"
+                      >
                         <div
                           className="h-full w-full bg-center bg-contain bg-no-repeat"
                           style={{ backgroundImage: `url(${item})` }}
@@ -188,7 +212,10 @@ const chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
               >
                 {openNumber ? phonenumber : "Bấm để hiện số điện thoại"}
               </div>
-              <div className="h-full w-[40%] border border-mauxanhtroi text-lg text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer">
+              <div
+                className="h-full w-[40%] border border-mauxanhtroi text-lg text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
+                onClick={handleClickMessage}
+              >
                 Chat với người bán
               </div>
             </div>

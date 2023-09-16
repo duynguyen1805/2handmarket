@@ -120,7 +120,7 @@ const register = () => {
           </div>
           <a
             href="/"
-            className="cursor-pointer hover:text-green-600 sm:text-base md:text-lg"
+            className="cursor-pointer hover:text-mauxanhtroi sm:text-base md:text-lg"
           >
             Trang chủ /
           </a>
@@ -139,7 +139,7 @@ const register = () => {
                 placeholder="Họ và tên"
                 value={name}
                 onChange={handleChangeName}
-                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-green-600"
+                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
               />
               <input
                 type="text"
@@ -148,7 +148,7 @@ const register = () => {
                 placeholder="Địa chỉ"
                 value={address}
                 onChange={handleChangeAddress}
-                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-green-600"
+                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
               />
               <input
                 type="text"
@@ -158,7 +158,7 @@ const register = () => {
                 placeholder="Nhập số điện thoại"
                 value={account}
                 onChange={handleChangeAccount}
-                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-green-600"
+                className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
               />
               {!sendCodeConf ? (
                 <>
@@ -169,7 +169,7 @@ const register = () => {
                     placeholder="Nhập mật khẩu"
                     value={password}
                     onChange={handlePasswordChange}
-                    className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-green-600"
+                    className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                   />
                   <input
                     type="password"
@@ -180,7 +180,7 @@ const register = () => {
                     onChange={handleConfirmPasswordChange}
                     className={
                       passwordMatch
-                        ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-green-600"
+                        ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                         : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
                     }
                   />
@@ -208,7 +208,7 @@ const register = () => {
                     onChange={(e) => {
                       setOTP(e.target.value);
                     }}
-                    className="border border-gray-300 rounded-l-md px-3 pr-20 py-3 w-full focus:outline-none focus:border-green-600"
+                    className="border border-gray-300 rounded-l-md px-3 pr-20 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                   />
                   <a
                     onClick={sendOTP}
@@ -221,7 +221,7 @@ const register = () => {
               {!sendCodeConf ? (
                 <button
                   type="submit"
-                  className="h-[50px] w-full bg-green-600 border border-green-600 rounded-md text-white hover:opacity-90"
+                  className="h-[50px] w-full bg-mauxanhtroi border border-mauxanhtroi rounded-md text-white hover:opacity-90"
                   onClick={sendOTP}
                 >
                   Gửi mã xác nhận
@@ -229,7 +229,7 @@ const register = () => {
               ) : (
                 <button
                   type="submit"
-                  className="h-[50px] w-full bg-green-600 border border-green-600 rounded-md text-white hover:opacity-90"
+                  className="h-[50px] w-full bg-mauxanhtroi border border-mauxanhtroi rounded-md text-white hover:opacity-90"
                   onClick={hanldeRegister}
                 >
                   Đăng ký
