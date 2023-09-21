@@ -96,9 +96,3 @@
 ::-webkit-scrollbar-button {
   display: none;
 }
-
-/* Tùy chỉnh một thông báo toast cụ thể */
-.Toastify__toast {
-  /* Thêm các thuộc tính CSS ở đây */
-  width: 400px;
-}

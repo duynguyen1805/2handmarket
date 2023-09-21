@@ -115,7 +115,6 @@ const Header = () => {
       console.error(error);
     }
   };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
@@ -123,15 +122,10 @@ const Header = () => {
     handleSearch(value);
   };
 
-  const callPhoneNumber = () => {
-    var phoneNumber = "0907497517"; // Số điện thoại để gọi
-    window.location.href = "tel:" + phoneNumber;
-  };
-
   return (
     <>
       {/* display medium/desktop */}
-      <div className="h-auto min-h-[80px] w-[100%] bg-mauxanhtroi px-2.5 py-0 border-b sticky top-0 left-0 z-10">
+      <div className="h-auto min-h-[80px] w-[100%] bg-mauxanhtroi px-2.5 py-0 border-b sticky top-0 left-0 z-20">
         <div className="w-[100%] h-[80px] flex">
           <div className="w-[60%] flex items-center">
             <a

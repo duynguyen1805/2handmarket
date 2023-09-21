@@ -115,7 +115,6 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
       setRam(undefined);
       setKichthuocmanhinh(undefined);
       setLoaiocung("SSD"), setCardmanhinh(undefined);
-      setdongmay(undefined);
     }
     if (type === "mayanh") {
       setHang(undefined);
@@ -128,7 +127,7 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
   };
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-10 flex items-start justify-center pt-[85px]">
+    <div className="fixed inset-0 z-30 flex items-start justify-center pt-[85px]">
       <div className="modal-overlay absolute inset-0 bg-gray-900 opacity-20" />
       <motion.div
         initial={{ opacity: 0, y: -50 }}

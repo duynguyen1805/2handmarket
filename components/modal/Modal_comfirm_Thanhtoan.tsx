@@ -17,7 +17,7 @@ const ModalComponent: React.FC<ModalProps> = ({
   if (!isopenModalnangcapTinuutien) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-10 flex items-center justify-center">
+    <div className="fixed inset-0 z-30 flex items-center justify-center">
       <div className="modal-overlay absolute inset-0 bg-gray-900 opacity-20" />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -46,12 +46,6 @@ const ModalComponent: React.FC<ModalProps> = ({
               Phí nâng cấp Tin ưu tiên: 10.000 vnđ
             </p>
             <div className="h-[60px] w-full flex items-center justify-end px-2 space-x-3">
-              {/* <button
-                className={`px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-red-500 hover:text-white rounded-md cursor-pointer`}
-                // onClick={() => handleClick_Xoa()}
-              >
-                Thanh toán
-              </button> */}
               <div className="">
                 <Button_thanhtoanMomo />
               </div>

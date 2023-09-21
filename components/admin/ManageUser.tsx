@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal_addnew_user from "../modal/Modal_addnew_user";
+import router from "next/router";
 
 const ManageUser = () => {
   const [users, setUser] = useState<any>();
@@ -103,7 +104,12 @@ const ManageUser = () => {
                     </td>
                     <td className="pt-1 px-2 border border-black">
                       <div className="flex items-center justify-center space-x-6 mb-1">
-                        <button className=" bg-mauxanhtroi text-white font-bold rounded-md px-2 py-2 hover:opacity-80 ">
+                        <button
+                          className=" bg-mauxanhtroi text-white font-bold rounded-md px-2 py-2 hover:opacity-80"
+                          onClick={() =>
+                            router.push(`/account/trang-ca-nhan/${item._id}`)
+                          }
+                        >
                           Trang cá nhân
                         </button>
                         <button

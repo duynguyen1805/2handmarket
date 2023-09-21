@@ -1,7 +1,5 @@
-import AddProduct from "@/components/admin/AddProduct";
 import Header from "@/components/Header";
 import DS_doiduyet from "@/components/admin/DS_doiduyet";
-import ViewAllitem from "@/components/admin/ViewAllProduct";
 import Head from "next/head";
 import Image from "next/image";
 import Home from "../../assets/icon/home.png";

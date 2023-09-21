@@ -3,11 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import styles from "../styles/Home.module.css";
-import {
-  API_getAllcollection,
-  API_get_Dodientu,
-  Search,
-} from "@/service/userService";
+import { API_getAllcollection, API_get_Dodientu } from "@/service/userService";
 import router from "next/router";
 import Danhmuc from "@/components/Danhmuc";
 import Display_product_vertical from "@/components/Display_product_vertical";

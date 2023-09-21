@@ -14,13 +14,14 @@ import {
   API_get_Phuongtien,
   API_get_Thucung,
   API_updateStatusTindang,
+  Search_tindang_daduyet,
 } from "@/service/userService";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Display_product_horizontal from "../Display_product_horizontal";
 import { motion } from "framer-motion";
-// import Test_modal from "../modal/Modal_TuchoiTindang";
+import ReactPaginate from "react-paginate";
 
 const DS_daduyet: React.FC<any> = ({ selectoption }) => {
   const settings_slider = {
@@ -64,99 +65,70 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
   };
   const [itemALL, setitemALL] = useState<any[]>([]);
   const [active_tab_filter, setActiveTab] = useState<number>(2);
+  const [pagehientai, setpagehientai] = useState<number>(1);
+  const [totalpages, setTotalPages] = useState<number>(1);
 
+  useEffect(() => {
+    setitemALL([]);
+    setpagehientai(1);
+    fetchDataProduct();
+    setactive(null);
+    setdataitem(null);
+    setInputLydoantin(null);
+  }, [selectoption, active_tab_filter]);
   useEffect(() => {
     setitemALL([]);
     fetchDataProduct();
     setactive(null);
     setdataitem(null);
-  }, [selectoption, active_tab_filter]);
+  }, [pagehientai]);
+
   const fetchDataProduct = async () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 0,
+        soluong: 7,
         trangthai: active_tab_filter,
+        pagehientai: pagehientai,
+        role: "Admin",
       };
       if (selectoption === "hoctap") {
         const response = await API_get_Dohoctap(build_data);
-        const sort_response = response.all_dohoctap
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dohoctap);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "dodientu") {
         const response = await API_get_Dodientu(build_data);
-        const sort_response = response.all_dodientu
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dodientu);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "phuongtien") {
         const response = await API_get_Phuongtien(build_data);
-        const sort_response = response.all_phuongtien
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_phuongtien);
       }
       if (selectoption === "donoithat") {
         const response = await API_get_Donoithat(build_data);
-        const sort_response = response.all_donoithat
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_donoithat);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "dienlanh") {
         const response = await API_get_Dienlanh(build_data);
-        const sort_response = response.all_dienlanh
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dienlanh);
       }
       if (selectoption === "dodungcanhan") {
         const response = await API_get_Docanhan(build_data);
-        const sort_response = response.all_docanhan
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_docanhan);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "dogiaitri") {
         const response = await API_get_Dogiaitri(build_data);
-        const sort_response = response.all_dogiaitri
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dogiaitri);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "thucung") {
         const response = await API_get_Thucung(build_data);
-        const sort_response = response.all_thucung
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_thucung);
+        setTotalPages(response.totalpages);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -207,7 +179,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
       );
       if (response.errCode === 0) {
         {
-          response.trangthai === 2 && toast.success("Tin đã được duyệt");
+          response.trangthai === 2 && toast.success("Tin đã được hiển thị lại");
         }
         {
           response.trangthai === 3 &&
@@ -228,16 +200,36 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
     { id: 3, name: "Bị từ chối" },
     { id: 4, name: "Người dùng ẩn" },
   ];
+  const [keyword, setKeyword] = useState<string>("");
+  const handleSearch = async () => {
+    try {
+      if (keyword !== "") {
+        const response = await Search_tindang_daduyet(keyword, selectoption);
+        // console.log("check response: ", response);
+        setitemALL(response.resultSearch);
+      } else {
+        setpagehientai(1);
+        fetchDataProduct();
+      }
+    } catch (error) {
+      console.log("Lỗi handleSearch: ", error);
+    }
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+  const handlePageClick = (event: any) => {
+    const selected = event.selected + 1;
+    setpagehientai(selected);
+  };
 
   return (
     <div className="flex sm:h-auto md:h-full sm:w-full sm:pt-5 sm:bg-gray-100 md:bg-white md:pt-0">
-      {/* <Test_modal
-        openlidotuchoi={openlidotuchoi}
-        setOpenlidotuchoi={setOpenlidotuchoi}
-      /> */}
       {/* display medium */}
-      <div className="w-[40%] h-auto">
-        <div className="h-[60px] w-full flex items-center">
+      <div className="relative w-[40%] h-auto">
+        <div className="h-[50px] w-full flex items-center">
           {listFilter &&
             listFilter.map((item: any, index: number) => {
               return (
@@ -253,13 +245,23 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
               );
             })}
         </div>
-        <div className="h-[50px] w-full px-3">
+        {/* call api search tin đã đăng theo tiêu đề, id */}
+        <div className="h-[50px] w-full px-3 flex flex-row">
           <input
-            className="h-full w-full px-2 border border-gray-400 rounded-md outline-none"
-            placeholder="Tìm tiêu đề bài đăng"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="h-full w-[85%] px-2 border-y border-l border-gray-300 rounded-tl-md rounded-bl-md outline-none"
+            placeholder="Tìm kiếm theo tiêu đề hoặc id tin đăng"
           />
+          <button
+            className="text-black w-[15%] h-full bg-[#e9ecef] text-lg cursor-pointer rounded-tr-[10px] rounded-br-[10px] border-y border-r border-gray-300 outline-none hover:bg-gray-200"
+            onClick={() => handleSearch()}
+          >
+            Tìm
+          </button>
         </div>
-        <div className="w-full h-auto max-h-[840px] p-2 overflow-y-auto overflow-x-hidden">
+        <div className="w-full h-auto max-h-[800px] p-2 overflow-y-auto overflow-x-hidden">
           {itemALL &&
             itemALL.map((item: any, index: number) => {
               //handle thời gian đã đăng
@@ -303,29 +305,29 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
                   exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
                   whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
                   // className="h-[160px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer"
-                  className={`h-[160px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer ${
+                  className={`h-[100px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer ${
                     index === active ? "bg-gray-100 border-mauxanhtroi" : ""
                   }`}
                   onClick={() => setData(index, item)}
                 >
-                  <div className="h-[150px] w-[150px] flex justify-center">
+                  <div className="h-[90px] w-[90px] flex justify-center">
                     <div
                       className="h-full w-full bg-center bg-contain bg-no-repeat"
                       style={{ backgroundImage: `url(${item.img[0]})` }}
                     ></div>
                   </div>
-                  <div className="h-full w-[500px] px-2">
+                  <div className="h-full w-auto max-w-full px-2">
                     <div className="h-[50%] w-full">
-                      <p className="h-auto max-h-[50px] w-full text-lg pb-1 overflow-hidden">
+                      <p className="h-auto max-h-[30px] w-full text-lg pb-1 overflow-hidden">
                         {item.tieude}
                       </p>
-                      <p className="h-[40px] w-full font-bold text-red-500">
+                      <p className="h-[30px] w-full font-bold text-red-500">
                         {item.price.toLocaleString("vi-VN")} đ
                       </p>
                     </div>
                     <div className="h-[50%] w-full flex items-end pb-3">
                       <div>
-                        <p className="h-[30px] w-full text-lg">
+                        <p className="h-[20px] w-full text-lg">
                           Đăng tin: {thoigiandadang}
                         </p>
                       </div>
@@ -335,6 +337,29 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
               );
             })}
         </div>
+        <div className="h-auto w-full mt-1 absolute bottom-0">
+          <ReactPaginate
+            forcePage={pagehientai - 1}
+            breakLabel="..."
+            nextLabel="Sau >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={2}
+            pageCount={totalpages}
+            previousLabel="< Trước"
+            renderOnZeroPageCount={null}
+            //css
+            pageClassName="h-full w-[35px] flex items-center justify-center text-lg border border-blue-500 text-blue-500"
+            pageLinkClassName="page-link"
+            previousClassName="h-full w-[100px] bg-gray-50 rounded-l-md border-2 border-blue-500 flex items-center justify-center text-lg text-blue-500 cursor-pointer"
+            previousLinkClassName="page-link"
+            nextClassName="h-full w-[100px] bg-gray-50 rounded-r-md border-2 border-blue-500 flex items-center justify-center text-lg text-blue-500 cursor-pointer"
+            nextLinkClassName="page-link"
+            breakClassName="h-full w-[35px] flex items-center justify-center border border-blue-500 text-blue-500"
+            breakLinkClassName="page-link"
+            containerClassName="h-[40px] flex items-center justify-center space-x-2"
+            activeClassName="bg-blue-500 text-white"
+          />
+        </div>
       </div>
 
       {item && (
@@ -342,9 +367,12 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
           <div className="h-[540px] w-full">
             <Slider {...settings_slider}>
               {img_arr &&
-                img_arr.map((item: any) => {
+                img_arr.map((item: any, index: number) => {
                   return (
-                    <div className="h-[500px] w-[500px] flex justify-center">
+                    <div
+                      key={index}
+                      className="h-[500px] w-[500px] flex justify-center"
+                    >
                       <div
                         className="h-full w-full bg-center bg-contain bg-no-repeat"
                         style={{ backgroundImage: `url(${item})` }}
@@ -760,57 +788,56 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
               </div>
             </div>
           </div>
-          <div className="h-[60px] w-full flex sticky bottom-0">
-            <div
-              className="h-full w-[50%] bg-red-500 text-xl text-white cursor-pointer rounded-l-md hover:bg-red-600 flex items-center justify-center"
-              onClick={() => Openlidotuchoi()}
-            >
-              <p>Ẩn tin</p>
-            </div>
-            <div
-              className="h-full w-[50%] bg-green-500 text-xl text-white cursor-pointer rounded-r-md hover:bg-green-600 flex items-center justify-center"
-              // onClick={() => handleUpdateStatusTindang()}
-            >
-              Chưa biết làm gì
-            </div>
-          </div>
-          {openlidotuchoi && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.3, delay: 0.1 },
-              }}
-              exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
-              className="absolute bottom-[70px] h-[315px] w-[490px] bg-white border border-gray-500 rounded-md shadow-lg"
-            >
-              <div className="font-bold px-2 py-3 bg-red-500 text-white flex items-center place-content-between">
-                <p>Lý do từ chối</p>
+          {/* Ẩn tin */}
+          <div className="h-auto w-auto sticky bottom-0">
+            <div className="relative h-[50px] w-full flex">
+              {item.trangthai == 2 && (
                 <div
-                  className="h-full w-auto text-2xl px-2 cursor-pointer"
+                  className="h-full w-[100%] bg-red-500 text-xl text-white cursor-pointer rounded-md hover:bg-red-600 flex items-center justify-center"
                   onClick={() => Openlidotuchoi()}
                 >
-                  ✖
+                  <p>Ẩn tin</p>
                 </div>
-              </div>
-              <textarea
-                className="min-h-[200px] max-h-[200px] w-full p-1 border-t border-gray-400 outline-none"
-                value={inputLydoantin}
-                onChange={handleChangeLydoantin}
-                placeholder="Nhập lý do từ chối duyệt bài đăng này."
-              ></textarea>
-              <div className="w-full flex items-center justify-end px-2">
-                <button
-                  disabled={!inputLydoantin}
-                  className={`px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-md cursor-pointer`}
-                  onClick={() => handleUpdateStatusTindang()}
+              )}
+              {openlidotuchoi && (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.3, delay: 0.1 },
+                  }}
+                  exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
+                  className="absolute bottom-[60px] h-[315px] w-[490px] bg-white border border-gray-500 rounded-md shadow-lg"
                 >
-                  Xác nhận
-                </button>
-              </div>
-            </motion.div>
-          )}
+                  <div className="font-bold px-2 py-3 bg-red-500 text-white flex items-center place-content-between">
+                    <p>Lý do từ chối</p>
+                    <div
+                      className="h-full w-auto text-2xl px-2 cursor-pointer"
+                      onClick={() => Openlidotuchoi()}
+                    >
+                      ✖
+                    </div>
+                  </div>
+                  <textarea
+                    className="min-h-[200px] max-h-[200px] w-full p-1 border-t border-gray-400 outline-none"
+                    value={inputLydoantin}
+                    onChange={handleChangeLydoantin}
+                    placeholder="Nhập lý do từ chối duyệt bài đăng này."
+                  ></textarea>
+                  <div className="w-full flex items-center justify-end px-2">
+                    <button
+                      disabled={!inputLydoantin}
+                      className={`px-4 py-2 border border-gray-300 bg-gray-200 hover:bg-gray-300 rounded-md cursor-pointer`}
+                      onClick={() => handleUpdateStatusTindang()}
+                    >
+                      Xác nhận
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import router from "next/router";
 // frame motion
@@ -62,7 +62,6 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
           style={{ backgroundImage: `url(${item.img[0]})` }}
         ></div>
       </div>
-
       <p className="h-[50px] w-full overflow-hidden">{item.tieude}</p>
       <p className="h-[24px] w-full font-bold text-red-500">
         {item.price.toLocaleString("vi-VN")} đ

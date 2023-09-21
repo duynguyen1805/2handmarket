@@ -75,88 +75,38 @@ const DS_doiduyet: React.FC<any> = ({ selectoption }) => {
       const build_data = {
         type: "ALL",
         trangthai: 1,
-        // soluong: 10,
-        // pagehientai: 1,
       };
       if (selectoption === "hoctap") {
         const response = await API_get_Dohoctap(build_data);
-        const sort_response = response.all_dohoctap
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dohoctap);
       }
       if (selectoption === "dodientu") {
         const response = await API_get_Dodientu(build_data);
-        const sort_response = response.all_dodientu
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dodientu);
       }
       if (selectoption === "phuongtien") {
         const response = await API_get_Phuongtien(build_data);
-        const sort_response = response.all_phuongtien
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_phuongtien);
       }
       if (selectoption === "donoithat") {
         const response = await API_get_Donoithat(build_data);
-        const sort_response = response.all_donoithat
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_donoithat);
       }
       if (selectoption === "dienlanh") {
         const response = await API_get_Dienlanh(build_data);
-        const sort_response = response.all_dienlanh
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dienlanh);
       }
       if (selectoption === "dodungcanhan") {
         const response = await API_get_Docanhan(build_data);
-        const sort_response = response.all_docanhan
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_docanhan);
       }
       if (selectoption === "dogiaitri") {
         const response = await API_get_Dogiaitri(build_data);
-        const sort_response = response.all_dogiaitri
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_dogiaitri);
       }
       if (selectoption === "thucung") {
         const response = await API_get_Thucung(build_data);
-        const sort_response = response.all_thucung
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-        setitemALL(sort_response);
+        setitemALL(response.all_thucung);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -284,29 +234,29 @@ const DS_doiduyet: React.FC<any> = ({ selectoption }) => {
                 exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
                 whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
                 // className="h-[160px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer"
-                className={`h-[160px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer ${
+                className={`h-[100px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer ${
                   index === active ? "bg-gray-100 border-mauxanhtroi" : ""
                 }`}
                 onClick={() => setData(index, item)}
               >
-                <div className="h-[150px] w-[150px] flex justify-center">
+                <div className="h-[90px] w-[90px] flex justify-center">
                   <div
                     className="h-full w-full bg-center bg-contain bg-no-repeat"
                     style={{ backgroundImage: `url(${item.img[0]})` }}
                   ></div>
                 </div>
-                <div className="h-full w-[500px] px-2">
+                <div className="h-full w-auto max-w-full px-2">
                   <div className="h-[50%] w-full">
-                    <p className="h-auto max-h-[50px] w-full text-lg pb-1 overflow-hidden">
+                    <p className="h-auto max-h-[30px] w-full text-lg pb-1 overflow-hidden">
                       {item.tieude}
                     </p>
-                    <p className="h-[40px] w-full font-bold text-red-500">
+                    <p className="h-[30px] w-full font-bold text-red-500">
                       {item.price.toLocaleString("vi-VN")} đ
                     </p>
                   </div>
                   <div className="h-[50%] w-full flex items-end pb-3">
                     <div>
-                      <p className="h-[30px] w-full text-lg">
+                      <p className="h-[20px] w-full text-lg">
                         Đăng tin: {thoigiandadang}
                       </p>
                     </div>

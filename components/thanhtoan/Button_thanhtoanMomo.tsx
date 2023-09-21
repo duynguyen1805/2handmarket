@@ -3,7 +3,7 @@ import axios from "axios";
 import crypto from "crypto";
 import router from "next/router";
 
-const testMomo = () => {
+const button_thanhtoanMomo = () => {
   type DataInfor = {
     _id: string;
     name: string;
@@ -13,11 +13,17 @@ const testMomo = () => {
     avatar: string;
   };
   const [datainforUser, setdatainforUser] = useState<DataInfor>();
+  const [itemnangcap, setitemnangcap] = useState<any>();
   useEffect(() => {
     //lấy thông tin người dùng
     const storedItems = localStorage.getItem("inforUser");
     if (storedItems) {
       setdatainforUser(JSON.parse(storedItems));
+    }
+    //lấy tin đăng cần nâng cấp
+    const Items = localStorage.getItem("itemNangcap");
+    if (Items) {
+      setitemnangcap(JSON.parse(Items));
     }
   }, []);
   const date = new Date().getTime();
@@ -30,10 +36,10 @@ const testMomo = () => {
   const requestType = "captureWallet";
   const ipnUrl = "http://localhost:4000/admin/phanhoiMomo"; //momo returnInfo khi user thanh toan thanh cong
   const orderId = date;
-  const amount = 1000;
+  const amount = 10000;
   const lang = "vi";
   const autoCapture = true;
-  const orderInfo = "test thanh toán";
+  const orderInfo = `Tiêu đề tin: ${itemnangcap?.tieude}`;
   const requestId = date + "id";
   const extraData = "";
   // const redirectUrl = `http://localhost:3000/account/quan-ly-tin/${datainforUser?._id}`;
@@ -95,4 +101,4 @@ const testMomo = () => {
   );
 };
 
-export default testMomo;
+export default button_thanhtoanMomo;

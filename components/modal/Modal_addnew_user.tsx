@@ -78,7 +78,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isopen, onClose }) => {
   }, [response, onClose]);
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-10 flex items-center justify-center">
+    <div className="fixed inset-0 z-30 flex items-center justify-center">
       <div className="modal-overlay absolute inset-0 bg-gray-900 opacity-20" />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -88,7 +88,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isopen, onClose }) => {
           transition: { duration: 0.3, delay: 0.1 },
         }}
         exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
-        className="modal-container bg-white h-auto w-[800px] rounded-lg shadow-lg z-50 overflow-y-auto"
+        className="modal-container bg-white h-auto w-[600px] rounded-lg shadow-lg z-50 overflow-y-auto"
       >
         <div className="modal-content">
           <div className="modal-header font-bold px-2 py-3 bg-mauxanhtroi text-white flex items-center place-content-between">

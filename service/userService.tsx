@@ -8,13 +8,24 @@ export async function AllUser_API() {
   const data = await response.json();
   return data;
 }
-export async function Search(params: { key: string }): Promise<any> {
-  const { key } = params;
-  const response = await fetch(
-    `http://localhost:8080/clinics/search?keyword=${key}`
-  );
-  const data = await response.json();
-  return data;
+export async function Search_tindang_daduyet(
+  keyword: string,
+  typecollection: string
+) {
+  try {
+    const response = await axios.post(
+      `http://localhost:4000/admin/search-tindang-daduyet`,
+      {
+        keyword: keyword,
+        typecollection: typecollection,
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("call Search_tindang_daduyet không thành công");
+  }
 }
 
 export async function API_register(

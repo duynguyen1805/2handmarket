@@ -105,7 +105,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Button_thanhtoanMomo from "@/components/thanhtoan/Button_thanhtoanMomo";
 import router from "next/router";
 
-const dang_tin = () => {
+const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
   useEffect(() => {
     const { resultCode } = router.query;
@@ -1944,4 +1944,4 @@ const dang_tin = () => {
   );
 };
 
-export default dang_tin;
+export default Dang_tin;

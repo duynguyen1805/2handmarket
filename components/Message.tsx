@@ -18,6 +18,9 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
+import Gallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+import router from "next/router";
 
 const Message = ({
   id_current_user,
@@ -28,7 +31,6 @@ const Message = ({
   avatar_receiver,
 }: any) => {
   const [datainforUser_local, setdatainforUser_local] = useState<any>();
-
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const storedItems = localStorage.getItem("inforUser");
@@ -70,7 +72,7 @@ const Message = ({
     ]);
   };
   // Xóa ảnh
-  const handleCloseButtonClick = (indexToRemove: number) => {
+  const handleCloseButton_Img = (indexToRemove: number) => {
     setReviewImg_arr((prevReviewImg_arr: any) => {
       const updatedReviewImg_arr = [...prevReviewImg_arr];
       updatedReviewImg_arr.splice(indexToRemove, 1); // Xóa phần tử tại indexToRemove
@@ -83,7 +85,7 @@ const Message = ({
     });
   };
 
-  const [messageText, setMessageText] = useState(""); //msg nhập ở input
+  const [messageText, setMessageText] = useState<string>(""); //msg nhập ở input
   const [messages, setMessages] = useState<any>([]);
   //tạo id_room giữa 2 user
   const sortedIds = [id_current_user, id_receiver].sort();
@@ -113,12 +115,13 @@ const Message = ({
   }, [id_receiver]);
 
   const sendMessage = async () => {
-    if (messageText.trim() !== "") {
+    if (messageText.trim() !== "" || messageText !== "" || img_arr.length > 0) {
       try {
         const messageData = {
           sender: id_current_user,
           userName: userName_current,
           text: messageText,
+          img: img_arr,
           timestamp: serverTimestamp(),
         };
         // tạo tham chiếu tới collection "messages"
@@ -126,9 +129,11 @@ const Message = ({
           doc(db, "conversations", conversationID),
           "messages"
         );
+        setMessageText("");
+        setImg_arr([]);
+        setReviewImg_arr([]);
         // thêm messageData vào collection con "messages"
         await addDoc(messagesCollectionRef, messageData);
-
         // tham chiếu tới document conversationID, tạo infor 2 user cho dễ biết
         const conversationDocRef = doc(db, "conversations", conversationID);
         // check tồn tại
@@ -149,11 +154,10 @@ const Message = ({
           };
           await setDoc(conversationDocRef, newConversationData);
         }
-
         // tạo tham chiếu tới subcollection "list_userchat" của người dùng hiện tại
         const listUserChatCollectionRef = collection(
-          doc(db, "list_chat", id_current_user),
-          "list_userchat"
+          doc(db, "list_user_chat", id_current_user),
+          "list_chatting"
         );
         // tham chiếu document mới cho người dùng hiện tại trong "list_userchat"
         const currentUserDocRef = doc(listUserChatCollectionRef, id_receiver);
@@ -169,7 +173,6 @@ const Message = ({
           if (currentData.userName !== userName_receiver) {
             updateData_receiver.userName = userName_receiver;
           }
-
           if (currentData.avatar !== avatar_receiver) {
             updateData_receiver.avatar = avatar_receiver;
           }
@@ -184,11 +187,10 @@ const Message = ({
           };
           await setDoc(currentUserDocRef, currentUserData);
         }
-
         // tạo tham chiếu tới subcollection "list_userchat" của người dùng nhận (receiver)
         const receiverUserChatCollectionRef = collection(
-          doc(db, "list_chat", id_receiver),
-          "list_userchat"
+          doc(db, "list_user_chat", id_receiver),
+          "list_chatting"
         );
         // tạo document mới cho người dùng nhận (receiver) trong "list_userchat"
         const receiverUserDocRef = doc(
@@ -207,7 +209,6 @@ const Message = ({
           if (currentData.userName !== userName_current) {
             updateData_receiver.userName = userName_current;
           }
-
           if (currentData.avatar !== avatar_current_user) {
             updateData_receiver.avatar = avatar_current_user;
           }
@@ -222,8 +223,6 @@ const Message = ({
           };
           await setDoc(receiverUserDocRef, receiverUserData);
         }
-
-        setMessageText("");
       } catch (e) {
         console.error("Error sending message: ", e);
       }
@@ -244,6 +243,21 @@ const Message = ({
     }
   }, [messages]);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectImg, setselectImg] = useState<any>();
+  const handleOpenImg = (img: any) => {
+    setIsOpen(true);
+    setselectImg(img);
+  };
+  const images: any = [
+    {
+      original: selectImg,
+      thumbnail: selectImg,
+      onCloseRequest: () => setIsOpen(false),
+      isFullscreen: true,
+    },
+  ];
+
   return (
     <>
       <div className="h-[90px] w-full flex items-center space-x-2 px-2 border-b border-gray-300 cursor-pointer">
@@ -252,9 +266,13 @@ const Message = ({
           style={{
             backgroundImage: `url(${avatar_receiver})`,
           }}
+          onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
         ></div>
         <div className="h-[60px] w-auto max-w-full overflow-x-hidden">
-          <div className="h-[30px] w-full font-bold flex items-center">
+          <div
+            className="h-[30px] w-full font-bold flex items-center"
+            onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
+          >
             {userName_receiver}
           </div>
           <div className="h-[30px] w-full flex items-center space-x-2">
@@ -266,37 +284,101 @@ const Message = ({
       <div className="relative h-[708px] w-full">
         <div
           ref={chatContainerRef}
-          className="h-[653px] w-full px-2 py-1 overflow-auto"
+          className="h-[730px] w-full px-2 py-1 mb-1 overflow-auto"
         >
           {messages &&
             messages.map((message: any, index: number) => {
+              let firebaseTimestamp = message?.timestamp;
+              const date = new Date(firebaseTimestamp?.seconds * 1000);
+              const hours = date.getHours();
+              const minutes = date.getMinutes();
+              const dayOfWeek = date.getDay(); // 0 là CN
+              const dayOfMonth = date.getDate();
+              const month = date.getMonth() + 1; // tháng từ 0
+              const year = date.getFullYear();
+              const formattedDate = `${getDayName(
+                dayOfWeek
+              )}, ${dayOfMonth}/${month} - ${hours}:${minutes}`;
+              function getDayName(day: any) {
+                const daysOfWeek = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+                return daysOfWeek[day];
+              }
               return (
-                <div
-                  key={index}
-                  className={`${
-                    message.sender == id_current_user && `justify-end`
-                  } h-[45px] w-full flex items-center`}
-                >
-                  <div
-                    className={`${
-                      message.sender == id_current_user
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200"
-                    } h-[40px] w-auto max-w-[50%] px-3 flex items-center rounded-3xl`}
-                  >
-                    {message.text}
-                  </div>
+                <div key={index} className="h-auto w-full">
+                  {message && message.text !== "" && (
+                    <div
+                      className={`${
+                        message.sender == id_current_user && `justify-end`
+                      } min-h-[45px] w-full flex items-center`}
+                    >
+                      <div
+                        className={`${
+                          message.sender == id_current_user
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-200"
+                        } min-h-[40px] w-auto max-w-[50%] px-4 py-1 my-1 flex items-center rounded-3xl relative group`}
+                      >
+                        <div
+                          className={`${
+                            message.sender == id_current_user
+                              ? "left-[-130px]"
+                              : "right-[-130px]"
+                          } absolute bg-gray-400 text-white h-[34px] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100`}
+                        >
+                          {formattedDate}
+                        </div>
+                        {message.text}
+                      </div>
+                    </div>
+                  )}
+                  {message &&
+                    message?.img?.map((img: any, index: number) => {
+                      // images.push({
+                      //   original: img,
+                      //   thumbnail: img,
+                      //   onCloseRequest: () => setIsOpen(false),
+                      //   isFullscreen: true,
+                      // });
+                      return (
+                        <div
+                          key={index}
+                          className={`${
+                            message.sender == id_current_user && `justify-end`
+                          } h-auto w-full flex items-center`}
+                        >
+                          <div
+                            className={`${
+                              message.sender == id_current_user
+                                ? "border bg-gray-200"
+                                : "border bg-gray-200"
+                            } min-h-[268px] h-auto w-auto min-w-[202px] max-h-[268px] max-w-[50%] my-1 bg-center bg-contain bg-no-repeat flex items-center rounded-3xl relative group `}
+                            style={{ backgroundImage: `url(${img})` }}
+                            onClick={() => handleOpenImg(img)}
+                          >
+                            <div
+                              className={`${
+                                message.sender == id_current_user
+                                  ? "left-[-130px]"
+                                  : "right-[-130px]"
+                              } absolute bg-gray-400 text-white h-[34px] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100`}
+                            >
+                              {formattedDate}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               );
             })}
         </div>
-        <div className="absolute top-[553px] h-auto w-full flex flex-wrap gap-[5px]">
+        <div className="absolute top-[632px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
           {reviewImg_arr !== null && reviewImg_arr !== "" ? (
             reviewImg_arr?.map((item_img: any, index: number) => {
               return (
                 <div
                   key={index}
-                  className="h-[100px] w-[97px] flex items-center justify-center relative"
+                  className="h-[100px] w-[97px] flex items-center justify-center relative bg-white"
                 >
                   <div
                     className="h-full w-full bg-center bg-contain bg-no-repeat border border-blue-400"
@@ -304,7 +386,7 @@ const Message = ({
                   ></div>
                   <button
                     className="absolute z-10 h-[24px] w-[24px] top-[-7px] right-[-10px] p-1 bg-black text-white rounded-full text-xs"
-                    onClick={() => handleCloseButtonClick(index)}
+                    onClick={() => handleCloseButton_Img(index)}
                   >
                     X
                   </button>
@@ -322,7 +404,7 @@ const Message = ({
             value={messageText}
             onChange={(e) => setMessageText(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="h-full w-[522px] border-y border-l border-gray-400 rounded-l-full text-lg outline-none px-3 ml-1"
+            className="h-full w-[522px] border-y border-l border-gray-400 rounded-l-full text-lg outline-none px-3 ml-1 resize-none"
           />
           <div className="relative h-full w-[60px] flex items-center justify-center mr-1 rounded-r-full border-y border-r border-gray-400">
             <Image src={addimg} alt="add img" className="h-[32px] w-[32px]" />
@@ -335,8 +417,9 @@ const Message = ({
               }}
             />
           </div>
-          <div
+          <button
             className="h-full w-[60px] flex items-center justify-center rounded-br-md hover:opacity-75"
+            disabled={messageText == "" && img_arr.length == 0}
             onClick={sendMessage}
           >
             <Image
@@ -344,9 +427,26 @@ const Message = ({
               alt="send message"
               className="h-[30px] w-[30px]"
             />
-          </div>
+          </button>
         </div>
       </div>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center h-full w-full bg-black">
+          <button
+            className="absolute top-2 right-6 text-white text-2xl"
+            onClick={() => setIsOpen(false)}
+          >
+            &times;
+          </button>
+          <Gallery
+            items={images}
+            // showNav={true}
+            // lazyLoad={true}
+            // autoPlay={false}
+            // startIndex={0}
+          />
+        </div>
+      )}
     </>
   );
 };

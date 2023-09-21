@@ -20,7 +20,7 @@ const ModalComponent: React.FC<ModalProps> = ({
   if (!openlidotuchoi) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-10 flex items-center justify-center">
+    <div className="fixed inset-0 z-30 flex items-center justify-center">
       <div className="modal-overlay absolute inset-0 bg-gray-900 opacity-50" />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -34,7 +34,7 @@ const ModalComponent: React.FC<ModalProps> = ({
       >
         <div className="modal-content">
           <div className="modal-header font-bold px-2 py-3 bg-red-500 text-white flex items-center place-content-between">
-            <h3 className="text-lg font-semibold text-white">Lý do từ chối</h3>
+            <h3 className="text-lg font-semibold text-white">Lý do</h3>
             <button
               className="modal-close-btn text-white px-2 py-1 "
               onClick={() => Openlidotuchoi()}

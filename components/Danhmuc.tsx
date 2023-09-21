@@ -50,7 +50,7 @@ const NavbarDropdown: React.FC = () => {
       </button>
       {isOpen && (
         <motion.div
-          className="absolute sm:h-[500px] sm:w-[200px] md:h-[770px] lg:h-[680px] md:w-[620px] lg:w-[900px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-50"
+          className="absolute sm:h-[500px] sm:w-[200px] md:h-[770px] lg:h-[680px] md:w-[620px] lg:w-[900px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-10"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
           exit={{

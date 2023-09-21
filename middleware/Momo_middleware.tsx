@@ -27,7 +27,6 @@ export default async function momoMiddleware(
         signature: data.signature,
       }
     );
-
     res.status(response.status).json(response.data);
   } catch (error) {
     console.error(error);

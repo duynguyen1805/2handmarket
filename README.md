@@ -1,11 +1,11 @@
 CHƯA LÀM: (
--- Phân trang khi có filter
--- chat realtime
--- còn authoritation login
--- redux
--- thanh toán momo
--- lazy loading để sử dụng về img
+-- còn authoritation
+-- tin đăng ẩn trangthai: 4 kèm lydoantin: "ĐÃ BÁN" sẽ bị xóa sau 1 khoảng thời gian
+-- tin đăng bị admin từ chối sẽ bị xóa sau 1 khoảng thời gian
+-- tin đăng được quảng cáo ? ngày, làm sao xử lý khi hết tg quảng cáo
+-- cần thống kê doanh thu từ quảng cáo hay không ?
 )
+
 error: (
 -- Product.tsx {
 -- line 19 - 24: push có type.

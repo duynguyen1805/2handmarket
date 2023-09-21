@@ -22,7 +22,7 @@ import Display_product_vertical from "@/components/Display_product_vertical";
 interface infodetailProps {
   id_user: string;
 }
-const trang_ca_nhan = ({ id_user }: infodetailProps) => {
+const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any>([]);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
@@ -69,6 +69,18 @@ const trang_ca_nhan = ({ id_user }: infodetailProps) => {
   const handleClickfilted = (key: number) => {
     fetchdata_tindang_user();
     setIsOpen(key);
+  };
+
+  const handleClickMessage = () => {
+    const query: any = {
+      current_user_name: datainforUser_local?.name,
+      id_receiver: datainforUser._id,
+      name_receiver: datainforUser.name,
+    };
+    router.push({
+      pathname: `/account/tin-nhan/${datainforUser_local?._id}`,
+      query,
+    });
   };
 
   return (
@@ -130,7 +142,7 @@ const trang_ca_nhan = ({ id_user }: infodetailProps) => {
                     {datainforUser?._id !== datainforUser_local?._id && (
                       <div
                         className="w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80"
-                        onClick={() => router.push(`/`)}
+                        onClick={handleClickMessage}
                       >
                         Nhắn tin liên hệ
                       </div>
@@ -142,7 +154,7 @@ const trang_ca_nhan = ({ id_user }: infodetailProps) => {
           </div>
         </div>
         <div className="h-auto w-full flex items-center justify-center mt-1">
-          <div className="h-auto max-h-[2500px] w-[990px] mt-3 px-2 border rounded-lg bg-white overflow-auto">
+          <div className="h-auto w-[990px] mt-3 px-2 border rounded-lg bg-white overflow-auto">
             {/* display medium */}
             <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 flex-col items-center overflow-auto">
               <motion.div
@@ -176,7 +188,11 @@ const trang_ca_nhan = ({ id_user }: infodetailProps) => {
                 {filteredList &&
                   filteredList.lenght !== 0 &&
                   filteredList.map((item: any, index: number) => {
-                    return <Display_product_vertical item={item} />;
+                    return (
+                      <div key={index}>
+                        <Display_product_vertical item={item} />
+                      </div>
+                    );
                   })}
               </div>
             </div>
@@ -203,4 +219,4 @@ export const getServerSideProps: GetServerSideProps<infodetailProps> = async (
   };
 };
 
-export default trang_ca_nhan;
+export default Trang_ca_nhan;
