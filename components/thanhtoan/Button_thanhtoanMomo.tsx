@@ -3,7 +3,7 @@ import axios from "axios";
 import crypto from "crypto";
 import router from "next/router";
 
-const button_thanhtoanMomo = () => {
+const Button_thanhtoanMomo = () => {
   type DataInfor = {
     _id: string;
     name: string;
@@ -101,4 +101,4 @@ const button_thanhtoanMomo = () => {
   );
 };
 
-export default button_thanhtoanMomo;
+export default Button_thanhtoanMomo;

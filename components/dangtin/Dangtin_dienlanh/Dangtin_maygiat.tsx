@@ -28,7 +28,7 @@ const list_cuagiat = [
   { key: 2, label: "Cửa trên" },
 ];
 
-const dangtin_maygiat = ({
+const Dangtin_maygiat = ({
   settypeHang,
   setkhoiluonggiat,
   setcuagiat,
@@ -169,4 +169,4 @@ const dangtin_maygiat = ({
   );
 };
 
-export default dangtin_maygiat;
+export default Dangtin_maygiat;

@@ -32,7 +32,7 @@ const list_congsuat = [
     label: "trên 20,000 BTU",
   },
 ];
-const filter_maylanh = ({
+const Filter_maylanh = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -146,4 +146,4 @@ const filter_maylanh = ({
   );
 };
 
-export default filter_maylanh;
+export default Filter_maylanh;

@@ -103,7 +103,7 @@ const ram_dienthoai = [
   },
 ];
 
-const dangtin_dienthoai = ({
+const Dangtin_dienthoai = ({
   settypeHang,
   dongmay,
   setdongmay,
@@ -336,4 +336,4 @@ const dangtin_dienthoai = ({
   );
 };
 
-export default dangtin_dienthoai;
+export default Dangtin_dienthoai;

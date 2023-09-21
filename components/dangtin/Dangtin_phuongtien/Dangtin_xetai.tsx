@@ -83,7 +83,7 @@ const list_taitrong = [
   },
 ];
 
-const dangtin_xetai = ({
+const Dangtin_xetai = ({
   settypeHang,
   setNamsanxuat,
   setTaitrong,
@@ -257,4 +257,4 @@ const dangtin_xetai = ({
   );
 };
 
-export default dangtin_xetai;
+export default Dangtin_xetai;

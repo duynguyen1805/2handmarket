@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const dangtin_other = ({ setGiaban }: any) => {
+const Dangtin_other = ({ setGiaban }: any) => {
   return (
     <>
       {/* cho banghe */}
@@ -9,4 +9,4 @@ const dangtin_other = ({ setGiaban }: any) => {
   );
 };
 
-export default dangtin_other;
+export default Dangtin_other;

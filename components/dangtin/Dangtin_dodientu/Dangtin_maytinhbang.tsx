@@ -125,7 +125,7 @@ const manhinh_maytinhbang = [
   },
 ];
 
-const dangtin_maytinhbang = ({
+const Dangtin_maytinhbang = ({
   settypeHang,
   dongmay,
   setdongmay,
@@ -433,4 +433,4 @@ const dangtin_maytinhbang = ({
   );
 };
 
-export default dangtin_maytinhbang;
+export default Dangtin_maytinhbang;

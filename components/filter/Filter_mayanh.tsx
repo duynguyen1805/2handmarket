@@ -3,7 +3,7 @@ import item_list_camera, { camera } from "../obj_data_raw/List_Camera";
 import { useMyContext } from "@/contexts/MyContext";
 const list_mayanh: camera[] = item_list_camera;
 
-const filter_mayanh = ({
+const Filter_mayanh = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -118,4 +118,4 @@ const filter_mayanh = ({
   );
 };
 
-export default filter_mayanh;
+export default Filter_mayanh;

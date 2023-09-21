@@ -22,7 +22,7 @@ const list_giuongnem = [
   },
 ];
 
-const dangtin_giuongnem = ({ setloaichitiet }: any) => {
+const Dangtin_giuongnem = ({ setloaichitiet }: any) => {
   const [openLoaigiuongnem, setopenLoaigiuongnem] = useState(false);
   const [titleLoaigiuongnem, settitleLoaigiuongnem] = useState("");
 
@@ -70,4 +70,4 @@ const dangtin_giuongnem = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_giuongnem;
+export default Dangtin_giuongnem;

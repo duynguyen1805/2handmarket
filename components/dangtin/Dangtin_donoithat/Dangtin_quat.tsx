@@ -42,7 +42,7 @@ const list_quat = [
   },
 ];
 
-const dangtin_quat = ({ setloaichitiet }: any) => {
+const Dangtin_quat = ({ setloaichitiet }: any) => {
   const [openLoaiquat, setopenLoaiquat] = useState(false);
   const [titleLoaiquat, settitleLoaiquat] = useState("");
 
@@ -90,4 +90,4 @@ const dangtin_quat = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_quat;
+export default Dangtin_quat;

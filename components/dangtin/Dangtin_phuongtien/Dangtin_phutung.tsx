@@ -4,7 +4,7 @@ const list_loaiPhutung = [
   { key: 2, label: "Phụ tùng ô tô", type: "phutungoto" },
 ];
 
-const dangtin_phutung = ({ setLoaiphutung }: any) => {
+const Dangtin_phutung = ({ setLoaiphutung }: any) => {
   const [openloaiPhutung, setopenloaiPhutung] = useState(false);
   // chọn loai phutung
   const [titlePhutung, settitlePhutung] = useState("");
@@ -53,4 +53,4 @@ const dangtin_phutung = ({ setLoaiphutung }: any) => {
   );
 };
 
-export default dangtin_phutung;
+export default Dangtin_phutung;

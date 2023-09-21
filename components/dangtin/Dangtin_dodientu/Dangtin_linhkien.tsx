@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import item_list_camera, { camera } from "../../obj_data_raw/List_Camera";
 const list_mayanh: camera[] = item_list_camera;
 
-const dangtin_linhkien = ({ loailinhkien, setloailinhkien }: any) => {
+const Dangtin_linhkien = ({ loailinhkien, setloailinhkien }: any) => {
   return (
     <>
       {/* cho mayanh */}
@@ -49,4 +49,4 @@ const dangtin_linhkien = ({ loailinhkien, setloailinhkien }: any) => {
   );
 };
 
-export default dangtin_linhkien;
+export default Dangtin_linhkien;

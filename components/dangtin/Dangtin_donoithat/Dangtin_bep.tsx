@@ -77,7 +77,7 @@ const list_dodiennhabep = [
   },
 ];
 
-const dangtin_bep = ({ setloaichitiet }: any) => {
+const Dangtin_bep = ({ setloaichitiet }: any) => {
   const [openLoaidodienbep, setopenLoaidodienbep] = useState(false);
   const [titleLoaidodienbep, settitleLoaidodienbep] = useState("");
 
@@ -125,4 +125,4 @@ const dangtin_bep = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_bep;
+export default Dangtin_bep;

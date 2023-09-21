@@ -19,7 +19,7 @@ const list_dungtichxemay = [
   { key: 5, label: "trên 175cc" },
 ];
 
-const filter_xemay = ({
+const Filter_xemay = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -258,4 +258,4 @@ const filter_xemay = ({
   );
 };
 
-export default filter_xemay;
+export default Filter_xemay;

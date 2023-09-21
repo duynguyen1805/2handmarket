@@ -52,7 +52,7 @@ const list_banghe = [
   },
 ];
 
-const dangtin_banghe = ({ setloaichitiet }: any) => {
+const Dangtin_banghe = ({ setloaichitiet }: any) => {
   const [openLoaibanghe, setopenLoaibanghe] = useState(false);
   const [titleLoaibanghe, settitleLoaibanghe] = useState("");
 
@@ -100,4 +100,4 @@ const dangtin_banghe = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_banghe;
+export default Dangtin_banghe;

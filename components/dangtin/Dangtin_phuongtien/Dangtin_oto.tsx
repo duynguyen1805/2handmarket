@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import item_listoto, { oto, dongxe } from "../../obj_data_raw/List_Oto";
 const list_oto: oto[] = item_listoto;
 
-const dangtin_oto = ({
+const Dangtin_oto = ({
   settypeHang,
   dongxe,
   setdongxe,
@@ -234,4 +234,4 @@ const dangtin_oto = ({
   );
 };
 
-export default dangtin_oto;
+export default Dangtin_oto;

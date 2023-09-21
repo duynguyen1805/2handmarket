@@ -32,7 +32,7 @@ const list_congsuat = [
   },
 ];
 
-const dangtin_maylanh = ({ settypeHang, setcongsuat }: any) => {
+const Dangtin_maylanh = ({ settypeHang, setcongsuat }: any) => {
   const [openHangmaylanh, setopenHangmaylanh] = useState(false);
   const [titleHangmaylanh, settitleHangmaylanh] = useState("");
   const setSelectHangmaylanh = (item: maylanh) => {
@@ -127,4 +127,4 @@ const dangtin_maylanh = ({ settypeHang, setcongsuat }: any) => {
   );
 };
 
-export default dangtin_maylanh;
+export default Dangtin_maylanh;

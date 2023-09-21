@@ -157,7 +157,7 @@ const cardmanhinh_laptop = [
   },
 ];
 
-const filter_laptop = ({
+const Filter_laptop = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -611,4 +611,4 @@ const filter_laptop = ({
   );
 };
 
-export default filter_laptop;
+export default Filter_laptop;

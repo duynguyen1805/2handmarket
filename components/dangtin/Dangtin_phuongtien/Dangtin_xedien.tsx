@@ -12,7 +12,7 @@ const dongcoxedien = [
   { key: 6, label: "trên 1000W" },
 ];
 
-const dangtin_xedien = ({ setLoaixedien, setDongcoxedien, setMausac }: any) => {
+const Dangtin_xedien = ({ setLoaixedien, setDongcoxedien, setMausac }: any) => {
   const [openLoaixe, setopenLoaixe] = useState(false);
   const [openloaiDongco, setopenloaiDongco] = useState(false);
   // chọn loaixedien
@@ -116,4 +116,4 @@ const dangtin_xedien = ({ setLoaixedien, setDongcoxedien, setMausac }: any) => {
   );
 };
 
-export default dangtin_xedien;
+export default Dangtin_xedien;

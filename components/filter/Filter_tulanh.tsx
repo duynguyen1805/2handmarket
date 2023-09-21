@@ -33,7 +33,7 @@ const list_thetich = [
   },
 ];
 
-const filter_tulanh = ({
+const Filter_tulanh = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -147,4 +147,4 @@ const filter_tulanh = ({
   );
 };
 
-export default filter_tulanh;
+export default Filter_tulanh;

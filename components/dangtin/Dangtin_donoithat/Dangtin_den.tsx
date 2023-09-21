@@ -47,7 +47,7 @@ const list_den = [
   },
 ];
 
-const dangtin_den = ({ setloaichitiet }: any) => {
+const Dangtin_den = ({ setloaichitiet }: any) => {
   const [openLoaiden, setopenLoaiden] = useState(false);
   const [titleLoaiden, settitleLoaiden] = useState("");
 
@@ -95,4 +95,4 @@ const dangtin_den = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_den;
+export default Dangtin_den;

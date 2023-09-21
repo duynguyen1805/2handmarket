@@ -14,7 +14,7 @@ const list_type = [
   },
 ];
 
-const dangtin_docanhan = ({ setchogioitinh }: any) => {
+const Dangtin_docanhan = ({ setchogioitinh }: any) => {
   const [open, setopen] = useState(false);
   const [title, settitle] = useState("");
 
@@ -62,4 +62,4 @@ const dangtin_docanhan = ({ setchogioitinh }: any) => {
   );
 };
 
-export default dangtin_docanhan;
+export default Dangtin_docanhan;

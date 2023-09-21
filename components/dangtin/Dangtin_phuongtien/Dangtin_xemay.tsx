@@ -18,7 +18,7 @@ const list_dungtichxemay = [
   { key: 5, label: "trên 175cc" },
 ];
 
-const dangtin_xemay = ({
+const Dangtin_xemay = ({
   settypeHang,
   dongxe,
   setdongxe,
@@ -255,4 +255,4 @@ const dangtin_xemay = ({
   );
 };
 
-export default dangtin_xemay;
+export default Dangtin_xemay;

@@ -43,11 +43,10 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
 
   useEffect(() => {
     fetchDataUser();
-  }, []);
+  }, [edit_info]);
   const fetchDataUser = async () => {
     try {
       const response = await API_getUserbyID(edit_info);
-      // console.log("check response fetch API getUser: ", response);
       setinfo_user(response.User[0]);
       setName(response.User[0].name);
       setAccount(response.User[0].account);

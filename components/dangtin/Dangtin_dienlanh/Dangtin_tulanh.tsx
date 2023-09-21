@@ -32,7 +32,7 @@ const list_thetich = [
   },
 ];
 
-const dangtin_tulanh = ({ settypeHang, setthetich }: any) => {
+const Dangtin_tulanh = ({ settypeHang, setthetich }: any) => {
   const [openHangtulanh, setopenHangtulanh] = useState(false);
   const [titleHangtulanh, settitleHangtulanh] = useState("");
 
@@ -129,4 +129,4 @@ const dangtin_tulanh = ({ settypeHang, setthetich }: any) => {
   );
 };
 
-export default dangtin_tulanh;
+export default Dangtin_tulanh;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import item_list_camera, { camera } from "../../obj_data_raw/List_Camera";
 const list_mayanh: camera[] = item_list_camera;
 
-const dangtin_mayanh = ({ settypeHang, loaimayanh, setLoaimayanh }: any) => {
+const Dangtin_mayanh = ({ settypeHang, loaimayanh, setLoaimayanh }: any) => {
   const [openHangmayanh, setopenHangMayanh] = useState(false);
   const [titleHangMayanh, settitleHangMayanh] = useState("");
 
@@ -82,4 +82,4 @@ const dangtin_mayanh = ({ settypeHang, loaimayanh, setLoaimayanh }: any) => {
   );
 };
 
-export default dangtin_mayanh;
+export default Dangtin_mayanh;

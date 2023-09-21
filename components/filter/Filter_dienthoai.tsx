@@ -104,7 +104,7 @@ const ram_dienthoai = [
   },
 ];
 
-const filter_dienthoai = ({
+const Filter_dienthoai = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -398,4 +398,4 @@ const filter_dienthoai = ({
   );
 };
 
-export default filter_dienthoai;
+export default Filter_dienthoai;

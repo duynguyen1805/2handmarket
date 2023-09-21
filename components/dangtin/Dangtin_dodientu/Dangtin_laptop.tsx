@@ -159,7 +159,7 @@ const cardmanhinh_laptop = [
   },
 ];
 
-const dangtin_laptop = ({
+const Dangtin_laptop = ({
   settypeHang,
   dongmay,
   setdongmay,
@@ -515,4 +515,4 @@ const dangtin_laptop = ({
   );
 };
 
-export default dangtin_laptop;
+export default Dangtin_laptop;

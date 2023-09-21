@@ -5,6 +5,7 @@ import router from "next/router";
 import React, { useState } from "react";
 import Image from "next/image";
 import left_back from "../../assets/icon/left-arrow.png";
+import Link from "next/link";
 const Resetpassword = () => {
   const [sendCodeConf, setsendCode] = useState(false);
   const sendCode = () => {
@@ -36,9 +37,9 @@ const Resetpassword = () => {
                 // onClick={handleClickUser}
               />
             </div>
-            <a href="/" className="cursor-pointer hover:text-mauxanhtroi">
+            <Link href="/" className="cursor-pointer hover:text-mauxanhtroi">
               Trang chủ /
-            </a>
+            </Link>
             <p className="ml-2">Đặt lại mật khẩu</p>
           </div>
           <div className="h-auto sm:w-[90%] md:w-[75%] sm:mx-[5%] md:mx-[13%] mt-3 border rounded-lg bg-white">
@@ -65,12 +66,12 @@ const Resetpassword = () => {
                       placeholder="Nhập mã Xác nhận"
                       className="border border-gray-300 rounded-l-md px-3 pr-20 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                     />
-                    <a
+                    <Link
                       href="/"
                       className="cursor-pointer border h-[52px] w-[120px] flex items-center justify-center rounded-r-md"
                     >
                       Gửi lại mã
-                    </a>
+                    </Link>
                   </div>
                 )}
                 {!sendCodeConf ? (
@@ -93,9 +94,12 @@ const Resetpassword = () => {
 
                 <p className="text-lg font-thin">
                   Bạn đã có tài khoản, hãy{" "}
-                  <a href="/account/login" className="text-blue-600 underline">
+                  <Link
+                    href="/account/login"
+                    className="text-blue-600 underline"
+                  >
                     Đăng nhập tại đây
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>

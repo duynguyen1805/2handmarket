@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Dùng cho otp firebase
 import { firebase, auth } from "../../firebase.config";
+import Link from "next/link";
 
 const { PhoneNumberUtil, PhoneNumberFormat } = require("google-libphonenumber");
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -121,12 +122,12 @@ const Register = () => {
                 // onClick={handleClickUser}
               />
             </div>
-            <a
+            <Link
               href="/"
               className="cursor-pointer hover:text-mauxanhtroi sm:text-base md:text-lg"
             >
               Trang chủ /
-            </a>
+            </Link>
             <p className="ml-2 sm:text-base md:text-lg">Đăng ký</p>
           </div>
           <div className="h-auto sm:w-[90%] md:w-[75%] sm:mx-[5%] md:mx-[13%] mt-3 border rounded-lg bg-white">
@@ -240,9 +241,12 @@ const Register = () => {
                 )}
                 <p className="text-lg font-thin">
                   Bạn đã có tài khoản, hãy{" "}
-                  <a href="/account/login" className="text-blue-600 underline">
+                  <Link
+                    href="/account/login"
+                    className="text-blue-600 underline"
+                  >
                     Đăng nhập tại đây
-                  </a>
+                  </Link>
                   <span id="recaptcha-container"></span>
                 </p>
               </div>

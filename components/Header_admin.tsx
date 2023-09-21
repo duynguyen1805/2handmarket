@@ -5,7 +5,6 @@ import telephone from "../assets/icon/telephone.png";
 import location from "../assets/icon/location.png";
 import user from "../assets/icon/user.png";
 import shopping_cart from "../assets/icon/shopping-cart.png";
-import Cart from "./Cart";
 import { redirect } from "next/dist/server/api-utils";
 import Sidebar from "@/components/Sidebar";
 import CustomScrollbar from "./modal/CustomScrollbars";
@@ -259,7 +258,6 @@ const Header_admin: React.FC<ModalProps> = ({ nav_admin_mobile, Open }) => {
                   />{" "}
                   <span className="sm:hidden lg:block">Giỏ hàng</span>
                 </button>
-                {isOpen && <Cart onClose={() => setIsCartVisible(false)} />}
               </div>
             ) : (
               <></>

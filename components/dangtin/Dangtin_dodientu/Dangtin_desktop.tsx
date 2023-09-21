@@ -164,7 +164,7 @@ const cardmanhinh_laptop = [
   },
 ];
 
-const dangtin_desktop = ({
+const Dangtin_desktop = ({
   dungluong,
   setDungluong,
   ram,
@@ -416,4 +416,4 @@ const dangtin_desktop = ({
   );
 };
 
-export default dangtin_desktop;
+export default Dangtin_desktop;

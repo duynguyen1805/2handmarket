@@ -84,7 +84,7 @@ const list_taitrong = [
   },
 ];
 
-const filter_xetai = ({
+const Filter_xetai = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -238,4 +238,4 @@ const filter_xetai = ({
   );
 };
 
-export default filter_xetai;
+export default Filter_xetai;

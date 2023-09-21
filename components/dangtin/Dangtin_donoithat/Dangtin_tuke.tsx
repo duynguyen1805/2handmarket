@@ -42,7 +42,7 @@ const list_tuke = [
   },
 ];
 
-const dangtin_tuke = ({ setloaichitiet }: any) => {
+const Dangtin_tuke = ({ setloaichitiet }: any) => {
   const [openLoaituke, setopenLoaituke] = useState(false);
   const [titleLoaituke, settitleLoaituke] = useState("");
 
@@ -90,4 +90,4 @@ const dangtin_tuke = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_tuke;
+export default Dangtin_tuke;

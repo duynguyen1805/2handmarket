@@ -11,6 +11,7 @@ import left_back from "../../assets/icon/left-arrow.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMyContext } from "@/contexts/MyContext";
+import Link from "next/link";
 
 const Login = () => {
   const [account, setAccount] = useState("");
@@ -102,15 +103,14 @@ const Login = () => {
                 src={left_back}
                 alt="icon"
                 className="h-[25px] w-[25px] cursor-pointer"
-                // onClick={handleClickUser}
               />
             </div>
-            <a
+            <Link
               href="/"
               className="cursor-pointer hover:text-green-600 sm:text-base md:text-lg"
             >
               Trang chủ /
-            </a>
+            </Link>
             <p className="ml-2 sm:text-base md:text-lg">Đăng nhập</p>
           </div>
           <div className="h-auto sm:w-[90%] md:w-[75%] sm:mx-[5%] md:mx-[13%] mt-3 border rounded-lg bg-white">
@@ -159,13 +159,17 @@ const Login = () => {
                 </p>
                 <p className="text-lg font-thin">
                   Bạn chưa có tài khoản, hãy{" "}
-                  <a
+                  <Link
                     href="/account/register"
                     className="text-blue-600 underline"
-                    onClick={clickRegister}
                   >
-                    Đăng kí tại đây
-                  </a>
+                    <p
+                    // className="text-blue-600 underline"
+                    // onClick={clickRegister}
+                    >
+                      Đăng kí tại đây
+                    </p>
+                  </Link>
                 </p>
               </div>
             </div>

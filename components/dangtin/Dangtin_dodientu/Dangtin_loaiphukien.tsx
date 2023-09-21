@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import item_list_phukien, { phukien } from "../../obj_data_raw/List_Phukien";
 const list_phukien: phukien[] = item_list_phukien;
 
-const dangtin_loaiphukien = ({ setloaiphukien }: any) => {
+const Dangtin_loaiphukien = ({ setloaiphukien }: any) => {
   const [openLoaiphukien, setopenLoaiphukien] = useState(false);
   const [titleLoaiphukien, settitleLoaiphukien] = useState("");
 
@@ -82,4 +82,4 @@ const dangtin_loaiphukien = ({ setloaiphukien }: any) => {
   );
 };
 
-export default dangtin_loaiphukien;
+export default Dangtin_loaiphukien;

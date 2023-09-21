@@ -29,7 +29,7 @@ const list_cuagiat = [
   { key: 2, label: "Cửa trên" },
 ];
 
-const filter_maygiat = ({
+const Filter_maygiat = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -188,4 +188,4 @@ const filter_maygiat = ({
   );
 };
 
-export default filter_maygiat;
+export default Filter_maygiat;

@@ -18,7 +18,7 @@ const list_nhaccu = [
   },
 ];
 
-const dangtin_dogiaitri = ({ type, setloainhaccu }: any) => {
+const Dangtin_dogiaitri = ({ type, setloainhaccu }: any) => {
   const [open, setopen] = useState(false);
   const [title, settitle] = useState("");
 
@@ -65,4 +65,4 @@ const dangtin_dogiaitri = ({ type, setloainhaccu }: any) => {
   );
 };
 
-export default dangtin_dogiaitri;
+export default Dangtin_dogiaitri;

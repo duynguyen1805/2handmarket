@@ -13,7 +13,7 @@ const dongcoxedien = [
   { key: 6, label: "trên 1000W" },
 ];
 
-const filter_xedien = ({
+const Filter_xedien = ({
   loaixedien,
   setLoaixedien,
   setFilteredHang,
@@ -126,4 +126,4 @@ const filter_xedien = ({
   );
 };
 
-export default filter_xedien;
+export default Filter_xedien;

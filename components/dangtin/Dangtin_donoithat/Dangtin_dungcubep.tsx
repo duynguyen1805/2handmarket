@@ -52,7 +52,7 @@ const list_dungcunhabep = [
   },
 ];
 
-const dangtin_dungcubep = ({ setloaichitiet }: any) => {
+const Dangtin_dungcubep = ({ setloaichitiet }: any) => {
   const [openLoaidungcubep, setopenLoaidungcubep] = useState(false);
   const [titleLoaidungcubep, settitleLoaidungcubep] = useState("");
 
@@ -100,4 +100,4 @@ const dangtin_dungcubep = ({ setloaichitiet }: any) => {
   );
 };
 
-export default dangtin_dungcubep;
+export default Dangtin_dungcubep;

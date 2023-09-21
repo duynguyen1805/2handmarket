@@ -5,7 +5,7 @@ const list_loaixedap = [
   { key: 3, label: "Xe Đạp Trẻ em", type: "xedaptreem" },
 ];
 
-const dangtin_xedap = ({ setLoaixedap, setMausac }: any) => {
+const Dangtin_xedap = ({ setLoaixedap, setMausac }: any) => {
   const [openLoaixe, setopenLoaixe] = useState(false);
   // chọn loaixedien
   const [titleLoaixe, settitleLoaixe] = useState("");
@@ -68,4 +68,4 @@ const dangtin_xedap = ({ setLoaixedap, setMausac }: any) => {
   );
 };
 
-export default dangtin_xedap;
+export default Dangtin_xedap;

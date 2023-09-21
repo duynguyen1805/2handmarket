@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const dangtin_thietbideothongminh = ({
+const Dangtin_thietbideothongminh = ({
   loaithietbideo,
   setloaithietbideo,
 }: any) => {
@@ -50,4 +50,4 @@ const dangtin_thietbideothongminh = ({
   );
 };
 
-export default dangtin_thietbideothongminh;
+export default Dangtin_thietbideothongminh;

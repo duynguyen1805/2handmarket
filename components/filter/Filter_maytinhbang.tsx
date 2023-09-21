@@ -123,7 +123,7 @@ const manhinh_maytinhbang = [
   },
 ];
 
-const filter_maytinhbang = ({
+const Filter_maytinhbang = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -518,4 +518,4 @@ const filter_maytinhbang = ({
   );
 };
 
-export default filter_maytinhbang;
+export default Filter_maytinhbang;

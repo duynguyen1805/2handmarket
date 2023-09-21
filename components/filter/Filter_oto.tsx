@@ -3,7 +3,7 @@ import item_listoto, { oto, dongxe } from "../obj_data_raw/List_Oto";
 import { useMyContext } from "@/contexts/MyContext";
 const list_oto: oto[] = item_listoto;
 
-const filter_oto = ({
+const Filter_oto = ({
   typeHang,
   settypeHang,
   setFilteredHang,
@@ -271,4 +271,4 @@ const filter_oto = ({
   );
 };
 
-export default filter_oto;
+export default Filter_oto;
