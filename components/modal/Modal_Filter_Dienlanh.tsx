@@ -73,6 +73,10 @@ const Modal_Filter_Dienlanh: React.FC<ModalProps> = ({
       setcuagiat(undefined);
     }
     setopenModalFilter(false);
+    // count_filter(0);
+    reset_count_filter();
+  };
+  const reset_count_filter = () => {
     count_filter(0);
   };
 

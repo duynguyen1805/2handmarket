@@ -100,6 +100,10 @@ const Modal_Filter_Phuongtien: React.FC<ModalProps> = ({
       setDongcoxedien(undefined);
     }
     setopenModalFilter(false);
+    // count_filter(0);
+    reset_count_filter();
+  };
+  const reset_count_filter = () => {
     count_filter(0);
   };
 

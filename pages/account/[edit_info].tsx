@@ -42,20 +42,20 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
   const [info_user, setinfo_user] = useState<any>();
 
   useEffect(() => {
+    const fetchDataUser = async () => {
+      try {
+        const response = await API_getUserbyID(edit_info);
+        setinfo_user(response.User[0]);
+        setName(response.User[0].name);
+        setAccount(response.User[0].account);
+        setAddress(response.User[0].address);
+        setAvatar(response.User[0].img);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
     fetchDataUser();
-  }, [edit_info]);
-  const fetchDataUser = async () => {
-    try {
-      const response = await API_getUserbyID(edit_info);
-      setinfo_user(response.User[0]);
-      setName(response.User[0].name);
-      setAccount(response.User[0].account);
-      setAddress(response.User[0].address);
-      setAvatar(response.User[0].img);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  }, []);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
