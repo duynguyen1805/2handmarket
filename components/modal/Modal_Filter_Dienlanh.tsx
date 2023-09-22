@@ -42,6 +42,7 @@ const Modal_Filter_Dienlanh: React.FC<ModalProps> = ({
   openModalFilter,
   setopenModalFilter,
 }) => {
+  const { countfilter, count_filter } = useMyContext();
   if (!openModalFilter) return null;
 
   const handleClick_Filter = () => {
@@ -54,7 +55,7 @@ const Modal_Filter_Dienlanh: React.FC<ModalProps> = ({
     setpagehientai(1);
     setopenModalFilter(false);
   };
-  const { countfilter, count_filter } = useMyContext();
+
   const handleClick_resetFilter = () => {
     if (type === "tulanh") {
       setHang("ALL");
@@ -73,7 +74,6 @@ const Modal_Filter_Dienlanh: React.FC<ModalProps> = ({
       setcuagiat(undefined);
     }
     setopenModalFilter(false);
-    // count_filter(0);
     reset_count_filter();
   };
   const reset_count_filter = () => {

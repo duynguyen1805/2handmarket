@@ -59,6 +59,7 @@ const Modal_Filter_Phuongtien: React.FC<ModalProps> = ({
   openModalFilter,
   setopenModalFilter,
 }) => {
+  const { countfilter, count_filter } = useMyContext();
   if (!openModalFilter) return null;
 
   const handleClick_Filter = () => {
@@ -71,7 +72,7 @@ const Modal_Filter_Phuongtien: React.FC<ModalProps> = ({
     setpagehientai(1);
     setopenModalFilter(false);
   };
-  const { countfilter, count_filter } = useMyContext();
+
   const handleClick_resetFilter = () => {
     if (type === "xemay") {
       setHang(undefined);
