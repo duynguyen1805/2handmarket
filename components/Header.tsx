@@ -184,7 +184,7 @@ const Header = () => {
                 alt="icon"
                 className="h-[32px] w-[32px] cursor-pointer icon-white"
               />
-              <p className="text-white text-lg">Tin nhắn</p>
+              <p className="text-white text-lg">Tin nhắn test</p>
             </div>
             {/* quanlytin */}
             <div
