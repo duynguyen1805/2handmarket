@@ -30,6 +30,7 @@ import Display_product_horizontal from "@/components/Display_product_horizontal"
 import { API_get_Phuongtien } from "@/service/userService";
 import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien";
 import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 const list_xetai: xetai[] = item_listxetai;
 
@@ -188,8 +189,8 @@ const Xe_tai = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center place-content-between p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between p-1 rounded-lg shadow-md">
               <div className="flex items-end h-full w-auto">
                 <Danhmuc />
                 <p className="h-full w-auto flex items-center ml-3">
@@ -221,9 +222,9 @@ const Xe_tai = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="text-lg font-bold">
+                <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá Xe tải nhiều hãng đa dạng
                 </p>
                 <p
@@ -264,7 +265,7 @@ const Xe_tai = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -276,12 +277,12 @@ const Xe_tai = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1620px] w-[960px] px-2 py-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto  min-h-[355px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-2 overflow-x-hidden">
               {itemXetai &&
                 itemXetai.map((item: any, index: any) => {
                   return (
                     <div key={index}>
-                      <Display_product_horizontal item={item} />
+                      <Display_product_vertical_v2 item={item} />
                     </div>
                   );
                 })}

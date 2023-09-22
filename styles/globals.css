@@ -58,13 +58,13 @@
 }
 @keyframes colorChange {
   0% {
-    color: blue; /* Màu ban đầu (màu xanh) */
+    color: #2374e1; /* Màu ban đầu (màu xanh) */
   }
   50% {
-    color: yellow; /* Màu thay đổi (màu xanh lá cây) */
+    color: white; /* Màu thay đổi (màu xanh lá cây) */
   }
   100% {
-    color: blue; /* Quay lại màu ban đầu (màu xanh) */
+    color: #2374e1; /* Quay lại màu ban đầu (màu xanh) */
   }
 }
 .text-animation {

@@ -37,7 +37,7 @@ const Do_dien_tu = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 3,
+        soluong: 4,
         pagehientai: 1,
       };
       const response = await API_get_Dodientu(build_data);
@@ -76,8 +76,8 @@ const Do_dien_tu = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Đồ điện tử
@@ -93,9 +93,11 @@ const Do_dien_tu = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
-              <p className="text-lg font-bold">Khám phá danh mục Đồ điện tử</p>
-              <div className="h-[140px] w-full pt-3">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
+              <p className="h-[50px] flex items-center text-2xl font-bold">
+                Khám phá danh mục Đồ điện tử
+              </p>
+              <div className="h-[150px] w-full pt-3">
                 <div className="h-full w-full flex items-center place-content-between">
                   {danhmuc_main &&
                     danhmuc_main.map((item_danhmuc: danhmuc) => {
@@ -124,7 +126,7 @@ const Do_dien_tu = () => {
                               />
                             </div>
                           </div>
-                          <p className="h-[40px] w-full flex justify-center text-center cursor-pointer p-1">
+                          <p className="h-[40px] w-full text-xl flex justify-center text-center cursor-pointer p-1">
                             {item_danhmuc.label}
                           </p>
                         </div>
@@ -136,13 +138,13 @@ const Do_dien_tu = () => {
           </div>
           {/* List tin */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto max-h-[2000px] w-[960px] p-2">
-              <div className="h-[40px] w-full flex mb-3">
+            <div className="bg-white shadow-sm h-auto max-h-[2110px] w-[1440px] p-2">
+              <div className="h-[50px] w-[50%] flex mb-3">
                 <p
                   className={
                     active_tab_filter === 0
-                      ? "h-full w-[25%] text-lg font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full w-[25%] text-lg font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(0)}
                 >
@@ -151,15 +153,15 @@ const Do_dien_tu = () => {
                 <p
                   className={
                     active_tab_filter === 1
-                      ? "h-full w-[25%] text-lg font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full w-[25%] text-lg font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(1)}
                 >
                   Mới đăng
                 </p>
               </div>
-              <div className="max-h-[1900px] flex flex-wrap gap-[10px]">
+              <div className="max-h-[2110px] flex flex-wrap gap-[10px]">
                 {itemALLDodientu &&
                   itemALLDodientu.map((item: any, index: any) => {
                     return (

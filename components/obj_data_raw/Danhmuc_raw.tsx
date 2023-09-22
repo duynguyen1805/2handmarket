@@ -143,7 +143,7 @@ const item_danhmuc: danhmuc[] = [
   },
   {
     key: 3,
-    label: "Đồ gia dụng, nội thất",
+    label: "Gia dụng, nội thất",
     type: "donoithat",
     link: "/category/do-noi-that",
     sub_danhmuc: [
@@ -269,7 +269,7 @@ const item_danhmuc: danhmuc[] = [
   },
   {
     key: 6,
-    label: "Giải trí, thể thao, sở thích",
+    label: "Giải trí, thể thao",
     type: "dogiaitri",
     link: "/category/giai-tri",
     sub_danhmuc: [

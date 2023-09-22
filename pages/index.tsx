@@ -118,13 +118,14 @@ const Home = () => {
 
       {/* Banner */}
       <div className="h-[320px] w-full flex items-center justify-center">
-        <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-1">
+        <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-1 flex flex-col items-center justify-center">
           <div className="h-[50px] w-full">
             <Danhmuc />
           </div>
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+            className="h-full w-[960px]"
           >
             <Slider {...settings_slider}>
               <Image
@@ -153,13 +154,15 @@ const Home = () => {
         </div>
       </div>
       {/* Khám phá danh mục */}
-      <div className="h-[290px] w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
-          <p className="text-lg font-bold">Khám phá danh mục</p>
-          <div className="h-[250px] w-full pt-2">
-            <div className="h-[50%] w-full flex items-center">
+      <div className="h-[210px] w-full flex items-center justify-center mt-3">
+        <div className="bg-white shadow-sm h-full w-[1440px] text-xl px-2 pt-2">
+          <p className="h-[50px] w-full text-2xl font-bold flex items-center">
+            Khám phá danh mục
+          </p>
+          <div className="h-[130px] w-full pt-5">
+            <div className="h-full w-full flex items-center">
               {danhmuc &&
-                danhmuc.slice(0, 4).map((item_main: danhmuc) => {
+                danhmuc.slice(0, 8).map((item_main: danhmuc) => {
                   return (
                     <div
                       key={item_main.key}
@@ -191,48 +194,7 @@ const Home = () => {
                           className="h-[80px] w-[80px] rounded-3xl cursor-pointer"
                         />
                       </div>
-                      <p className="h-[30px] w-full flex items-center justify-center cursor-pointer">
-                        {item_main.label}
-                      </p>
-                    </div>
-                  );
-                })}
-            </div>
-            <div className="h-[50%] w-full flex items-center">
-              {danhmuc &&
-                danhmuc.slice(4, 8).map((item_main: danhmuc) => {
-                  return (
-                    <div
-                      key={item_main.key}
-                      className="h-full w-1/4"
-                      onClick={() => router.push(`${item_main.link}`)}
-                    >
-                      <div className="h-[80px] w-full flex items-center justify-center">
-                        <Image
-                          src={
-                            item_main.key === 0
-                              ? icon_lg_hoctap
-                              : "" || item_main.key === 1
-                              ? icon_lg_xeco
-                              : "" || item_main.key === 2
-                              ? icon_lg_dodientu
-                              : "" || item_main.key === 3
-                              ? icon_lg_noithat
-                              : "" || item_main.key === 4
-                              ? icon_lg_tulanh
-                              : "" || item_main.key === 5
-                              ? icon_lg_canhan
-                              : "" || item_main.key === 6
-                              ? icon_lg_giaitri
-                              : "" || item_main.key === 7
-                              ? icon_lg_thucung
-                              : ""
-                          }
-                          alt="icon"
-                          className="h-[80px] w-[80px] rounded-3xl cursor-pointer"
-                        />
-                      </div>
-                      <p className="h-[30px] w-full flex items-center justify-center cursor-pointer">
+                      <p className="h-[50px] w-full flex items-center justify-center text-center cursor-pointer">
                         {item_main.label}
                       </p>
                     </div>
@@ -242,10 +204,12 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* Tin đăng gần đây */}
+      {/* Tin đăng gần đây - 2060px cho 6 item dọc*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-auto max-h-[1880px] w-[960px] p-2">
-          <p className="h-[30px] text-lg font-bold">Tin đăng gần đây</p>
+        <div className="bg-white shadow-sm h-auto max-h-[2110px] w-[1440px] p-2">
+          <p className="h-[50px] w-full flex items-center text-2xl font-bold">
+            Tin đăng gần đây
+          </p>
           <div className="h-auto w-full pt-2 flex flex-wrap gap-[10px]">
             {tindang_ganday &&
               tindang_ganday.map((item: any, index: number) => {

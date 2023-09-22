@@ -8,6 +8,7 @@ import router from "next/router";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
 import { API_get_Dodientu } from "@/service/userService";
 import ReactPaginate from "react-paginate";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 const list_loailinhkien = [
   { key: 1, label: "Linh kiện Máy tính", type: "linhkienmaytinh" },
@@ -16,45 +17,6 @@ const list_loailinhkien = [
 ];
 
 const Linh_kien = () => {
-  const settings_slider = {
-    dots: true,
-    arrows: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 4,
-    autoplay: false,
-    delay: 300,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 530,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-    ],
-  };
   const [itemLinhkien, setitemLinhkien] = useState<any[]>([]);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
@@ -139,8 +101,8 @@ const Linh_kien = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Đồ điện tử / Linh kiện
@@ -156,9 +118,11 @@ const Linh_kien = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="text-lg font-bold">Khám phá Xe điện</p>
+                <p className="h-[50px] flex items-center text-2xl font-bold">
+                  Khám phá Xe điện
+                </p>
                 <p
                   className="text-lg font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
                   onClick={() => Handle_TatcaHang()}
@@ -176,7 +140,7 @@ const Linh_kien = () => {
                       return (
                         <div
                           key={item.key}
-                          className="h-full w-[150px] cursor-pointer"
+                          className="h-full w-[250px] cursor-pointer"
                         >
                           <div className="h-[70px] w-full flex items-center justify-center">
                             <div
@@ -190,7 +154,7 @@ const Linh_kien = () => {
                               {substring_1} {substring_2}
                             </div>
                           </div>
-                          <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                          <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
                             {item.label}
                           </p>
                         </div>
@@ -201,12 +165,12 @@ const Linh_kien = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1620px] w-[960px] p-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] p-2 overflow-x-hidden">
               {itemLinhkien &&
                 itemLinhkien.map((item: any, index: any) => {
                   return (
                     <div key={index}>
-                      <Display_product_horizontal item={item} />
+                      <Display_product_vertical_v2 item={item} />
                     </div>
                   );
                 })}

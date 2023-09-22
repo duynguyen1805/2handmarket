@@ -29,7 +29,7 @@ const NavbarDropdown: React.FC = () => {
       <button
         type="button"
         onClick={toggleDropdown}
-        className="flex items-center justify-center sm:h-[45px] sm:w-[150px]  md:h-auto md:w-auto md:px-4 md:py-2 bg-gradient-to-br from-blue-300 to-blue-800 text-white text-xl transition duration-300 ease-in-out bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-blue-500"
+        className="flex items-center justify-center sm:h-[45px] sm:w-[150px]  md:h-auto md:w-auto md:px-4 md:py-2 bg-gradient-to-br from-blue-300 to-blue-800 text-white text-2xl transition duration-300 ease-in-out bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-blue-500"
       >
         Danh mục
         <svg
@@ -50,7 +50,7 @@ const NavbarDropdown: React.FC = () => {
       </button>
       {isOpen && (
         <motion.div
-          className="absolute sm:h-[500px] sm:w-[200px] md:h-[770px] lg:h-[680px] md:w-[620px] lg:w-[900px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-10"
+          className="absolute sm:h-[500px] sm:w-[200px] md:h-[770px] lg:h-[710px] md:w-[620px] lg:w-[900px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-10"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
           exit={{
@@ -62,11 +62,11 @@ const NavbarDropdown: React.FC = () => {
               return (
                 <div
                   key={item_main.key}
-                  className="sm:h-[200px] md:h-[380px] w-[220px] flex flex-col"
+                  className="sm:h-[200px] md:h-[400px] w-[220px] flex flex-col"
                 >
                   <a
                     href={item_main.link}
-                    className="text-2xl mb-1 cursor-pointer hover:text-blue-500"
+                    className="text-2xl text-mauxanhtroi mb-1 cursor-pointer hover:text-blue-500"
                   >
                     <Image
                       src={
@@ -99,7 +99,7 @@ const NavbarDropdown: React.FC = () => {
                         <a
                           key={item_sub.key}
                           href={item_sub.link}
-                          className="text-lg py-[2px] cursor-pointer hover:border-b-2 hover:border-mauxanhtroi"
+                          className="text-xl py-[5px] cursor-pointer hover:border-b-2 hover:border-mauxanhtroi"
                         >
                           {item_sub.label}
                         </a>

@@ -17,6 +17,8 @@ import item_danhmuc, {
   sub_danhmuc,
 } from "../../components/obj_data_raw/Danhmuc_raw";
 import { API_get_Dohoctap, API_get_Donoithat } from "@/service/userService";
+import Display_product_horizontal_v2 from "@/components/Display_product_vertical_v2";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 const danhmuc_main: any[] = item_danhmuc[0].sub_danhmuc;
 
 const Hoc_tap = () => {
@@ -139,8 +141,8 @@ const Hoc_tap = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Học tập
@@ -156,9 +158,11 @@ const Hoc_tap = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="text-lg font-bold">Khám phá Đồ dùng học tập</p>
+                <p className="h-[50px] flex items-center text-2xl font-bold">
+                  Khám phá Đồ dùng học tập
+                </p>
                 <p
                   className="text-lg font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
                   onClick={() => Handle_TatcaHang()}
@@ -173,12 +177,12 @@ const Hoc_tap = () => {
                       danhmuc_main.map((item: sub_danhmuc) => {
                         return (
                           <div key={item.key} className="h-full w-[150px]">
-                            <div className="h-[70px] w-full flex items-center justify-center">
+                            <div className="h-[80px] w-full flex items-center justify-center">
                               <div
                                 onClick={() =>
                                   Filter_loaiDohoctap(item.key, item.type)
                                 }
-                                className={`h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300 ${
+                                className={`h-[80px] w-[80px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300 ${
                                   item.key === filteredHang ? "bg-gray-300" : ""
                                 }`}
                               >
@@ -187,7 +191,7 @@ const Hoc_tap = () => {
                                   (item.type === "other_hoctap" && "Khác")}
                               </div>
                             </div>
-                            <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -199,12 +203,12 @@ const Hoc_tap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[960px] p-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] p-2 overflow-x-hidden">
               {itemALLDohoctap &&
                 itemALLDohoctap.map((item: any, index: any) => {
                   return (
                     <div key={index}>
-                      <Display_product_horizontal item={item} />
+                      <Display_product_vertical_v2 item={item} />
                     </div>
                   );
                 })}

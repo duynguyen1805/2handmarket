@@ -27,6 +27,7 @@ import item_danhmuc, {
   sub_danhmuc,
 } from "../../components/obj_data_raw/Danhmuc_raw";
 import { API_get_Donoithat } from "@/service/userService";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 const danhmuc_main: any[] = item_danhmuc[3].sub_danhmuc;
 
@@ -151,8 +152,8 @@ const Do_noi_that = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Đồ nội thất
@@ -168,9 +169,9 @@ const Do_noi_that = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="text-lg font-bold">
+                <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá đa dạng đồ nội thất
                 </p>
                 <p
@@ -212,7 +213,7 @@ const Do_noi_that = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -224,12 +225,12 @@ const Do_noi_that = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[960px] p-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] p-2 overflow-x-hidden">
               {itemALLDonoithat &&
                 itemALLDonoithat.map((item: any, index: any) => {
                   return (
                     <div key={index}>
-                      <Display_product_horizontal item={item} />
+                      <Display_product_vertical_v2 item={item} />
                     </div>
                   );
                 })}

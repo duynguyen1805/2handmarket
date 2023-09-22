@@ -13,6 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { API_get_Phuongtien } from "@/service/userService";
 import ReactPaginate from "react-paginate";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 const list_loaixedap = [
   { key: 1, label: "Xe Đạp Phổ thông", type: "xedapphothong" },
@@ -104,8 +105,8 @@ const Xe_dap = () => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Phương tiện / Xe đạp
@@ -121,9 +122,11 @@ const Xe_dap = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[960px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="text-lg font-bold">Khám phá Xe điện</p>
+                <p className="h-[50px] flex items-center text-2xl font-bold">
+                  Khám phá Xe điện
+                </p>
                 <p
                   className="text-lg font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
                   onClick={() => Handle_TatcaHang()}
@@ -141,7 +144,7 @@ const Xe_dap = () => {
                       return (
                         <div
                           key={item.key}
-                          className="h-full w-[150px] cursor-pointer"
+                          className="h-full w-[200px] cursor-pointer"
                         >
                           <div className="h-[70px] w-full flex items-center justify-center">
                             <div
@@ -153,7 +156,7 @@ const Xe_dap = () => {
                               {substring_1} {substring_2}
                             </div>
                           </div>
-                          <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                          <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
                             {item.label}
                           </p>
                         </div>
@@ -164,12 +167,12 @@ const Xe_dap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1620px] w-[960px] px-2 py-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-2 overflow-x-hidden">
               {itemXedap &&
                 itemXedap.map((item: any, index: any) => {
                   return (
                     <div key={index}>
-                      <Display_product_horizontal item={item} />
+                      <Display_product_vertical_v2 item={item} />
                     </div>
                   );
                 })}
