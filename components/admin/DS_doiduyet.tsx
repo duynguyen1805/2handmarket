@@ -271,9 +271,12 @@ const DS_doiduyet: React.FC<any> = ({ selectoption }) => {
           <div className="h-[540px] w-full">
             <Slider {...settings_slider}>
               {img_arr &&
-                img_arr.map((item: any) => {
+                img_arr.map((item: any, index: number) => {
                   return (
-                    <div className="h-[500px] w-[500px] flex justify-center">
+                    <div
+                      key={index}
+                      className="h-[500px] w-[500px] flex justify-center"
+                    >
                       <div
                         className="h-full w-full bg-center bg-contain bg-no-repeat"
                         style={{ backgroundImage: `url(${item})` }}

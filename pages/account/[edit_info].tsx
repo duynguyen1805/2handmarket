@@ -55,7 +55,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
       }
     };
     fetchDataUser();
-  }, []);
+  }, [edit_info]);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);

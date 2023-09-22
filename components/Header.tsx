@@ -15,6 +15,7 @@ import styles from "../styles/Home.module.css";
 import debounce from "lodash/debounce";
 import { API_searchProduct } from "@/service/userService";
 import { motion } from "framer-motion";
+import Link from "next/link";
 // import Modal_Addnewuser from "../components/modal/Modal_Addnewuser";
 
 const Header = () => {
@@ -128,10 +129,10 @@ const Header = () => {
       <div className="h-auto min-h-[80px] w-[100%] bg-mauxanhtroi px-2.5 py-0 border-b sticky top-0 left-0 z-20">
         <div className="w-[100%] h-[80px] flex">
           <div className="w-[60%] flex items-center">
-            <a
+            <Link
               href="/"
               className="lg:h-[100px] lg:w-4/12 lg:scale-95 lg:ml-[2%] cursor-pointer bg-[url('../public/logo_2hand_removebg.png')] bg-no-repeat bg-contain bg-fixed bg-center"
-            ></a>
+            ></Link>
 
             <div className="relative w-8/12 sm:mx-auto sm:w-[80%] md:w-[100%] md:mx-[30px] lg:ml-[5px] lg:mr-[25px] lg:mb-[25px] md:mb-[10px] md:mt-[25px] rounded-[10px] bg-[#e2e2e2]">
               <div className="flex flex-row">
@@ -316,7 +317,7 @@ const Header = () => {
             </div>
             {/* Dangtin */}
             <div className="h-auto w-[25%] flex justify-center">
-              <a
+              <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
                 href="/dang-tin"
               >
@@ -326,7 +327,7 @@ const Header = () => {
                   className="w-[32px] h-[32px] icon-white mr-2"
                 />
                 <span className="text-white text-xl">Đăng tin</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

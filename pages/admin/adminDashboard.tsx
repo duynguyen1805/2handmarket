@@ -103,13 +103,13 @@ const AdminDashboard = () => {
         <div className="sm:hidden md:block">
           <Header />
           <div className="lg:hidden h-[50px] md:w-[100%] p-5 border bg-white flex items-center text-lg">
-            <a
+            <Link
               href="/"
               className="cursor-pointer hover:text-green-600 flex items-center"
             >
               <Image src={Home} alt="icon" className="h-[25px] w-[25px] mr-2" />{" "}
               Trang chủ
-            </a>
+            </Link>
           </div>
           <div className="md:block lg:flex md:h-full lg:h-[955px] bg-white">
             <div className="bg-mauxanhtroi px-2 py-3 text-white flex space-y-1 md:flex-row lg:flex-col md:h-full md:w-[100%] lg:h-auto lg:w-[300px] overflow-y-auto overflow-x-hidden">
