@@ -22,7 +22,10 @@ import Display_product_horizontal from "../Display_product_horizontal";
 import { motion } from "framer-motion";
 import Modal_TuchoiTindang from "../modal/Modal_TuchoiTindang";
 
-const DS_doiduyet: React.FC<any> = ({ selectoption }) => {
+const DS_doiduyet: React.FC<any> = ({
+  selectoption,
+  get_soluongtin_moicollection,
+}) => {
   const settings_slider = {
     dots: true,
     arrows: false,
@@ -164,6 +167,7 @@ const DS_doiduyet: React.FC<any> = ({ selectoption }) => {
             toast.success("Tin đã được ẩn do chưa phù hợp") &&
             Openlidotuchoi();
         }
+        get_soluongtin_moicollection();
         fetchDataProduct();
         setactive(null);
         setdataitem(null);

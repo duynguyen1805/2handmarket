@@ -30,7 +30,7 @@ import item_listphone, {
   phonebrand,
 } from "../../../components/obj_data_raw/List_Phonebrand_raw";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
-import { API_get_Dodientu } from "@/service/userService";
+import { API_getAllcollection, API_get_Dodientu } from "@/service/userService";
 import Modal_Filter_Dodientu from "@/components/modal/Modal_Filter_Dodientu";
 import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
@@ -96,7 +96,7 @@ const Dien_thoai = () => {
       try {
         const build_data = {
           type: "dienthoai",
-          soluong: 10,
+          soluong: 36,
           hang: "ALL",
           pagehientai: pagehientai,
         };
@@ -113,7 +113,7 @@ const Dien_thoai = () => {
   };
   const build_data_filter = {
     type: "dienthoai",
-    soluong: 10,
+    soluong: 36,
     hang: hang,
     dongmay: dongmay,
     mausac: mausac,
@@ -293,7 +293,8 @@ const Dien_thoai = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px]  p-2 overflow-x-hidden">
+            {/* max-h-2140px cho 6 hàng ngang */}
+            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemDienthoai &&
                 itemDienthoai.map((item: any, index: any) => {
                   return (

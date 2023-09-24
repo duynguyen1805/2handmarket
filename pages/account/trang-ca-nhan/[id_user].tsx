@@ -18,6 +18,7 @@ import Danhmuc from "@/components/Danhmuc";
 import { motion } from "framer-motion";
 import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical from "@/components/Display_product_vertical";
+import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 interface infodetailProps {
   id_user: string;
@@ -96,13 +97,13 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
         {/* Điều hướng - show infor */}
         <div className="h-auto w-full flex items-center justify-center">
           <div className="space-y-3">
-            <div className="h-[50px] w-[990px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-[60px] w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Quản lý tin
               </p>
             </div>
-            <div className="h-[160px] w-[990px] bg-white text-lg p-1 rounded-lg shadow-md">
+            <div className="h-[160px] w-[1440px] bg-white text-xl p-1 rounded-lg shadow-md">
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{
@@ -122,7 +123,9 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                 </div>
                 <div className="h-full w-[802px]">
                   <div className="h-2/3 w-full">
-                    <div className="h-auto">{datainforUser?.name}</div>
+                    <div className="h-auto">
+                      {datainforUser?.name} - {datainforUser?.account}
+                    </div>
                     <div className="h-auto">{datainforUser?.address}</div>
                     <div className="h-auto">
                       Tham gia ngày: {formatted_ngaythamgia}
@@ -154,7 +157,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
           </div>
         </div>
         <div className="h-auto w-full flex items-center justify-center mt-1">
-          <div className="h-auto w-[990px] mt-3 px-2 border rounded-lg bg-white overflow-auto">
+          <div className="h-auto w-[1440px] mt-3 px-1 border rounded-lg bg-white overflow-auto">
             {/* display medium */}
             <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 flex-col items-center overflow-auto">
               <motion.div
@@ -184,7 +187,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                   })}
               </motion.div>
 
-              <div className="h-auto w-full flex flex-wrap gap-[10px] overflow-auto pl-1 py-3">
+              <div className="h-auto w-full flex flex-wrap gap-[10px] overflow-auto py-3">
                 {filteredList &&
                   filteredList.lenght !== 0 &&
                   filteredList.map((item: any, index: number) => {

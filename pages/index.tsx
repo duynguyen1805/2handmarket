@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRef, useEffect, useState } from "react";
+require("dotenv").config();
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import styles from "../styles/Home.module.css";
@@ -57,7 +58,7 @@ const Home = () => {
         .slice()
         .sort(
           (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
         );
       setTindang_ganday(sort_response);
     } catch (error) {

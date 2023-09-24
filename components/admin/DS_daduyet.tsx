@@ -23,7 +23,10 @@ import Display_product_horizontal from "../Display_product_horizontal";
 import { motion } from "framer-motion";
 import ReactPaginate from "react-paginate";
 
-const DS_daduyet: React.FC<any> = ({ selectoption }) => {
+const DS_daduyet: React.FC<any> = ({
+  selectoption,
+  get_soluongtin_moicollection,
+}) => {
   const settings_slider = {
     dots: true,
     arrows: false,
@@ -87,7 +90,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 7,
+        soluong: 6,
         trangthai: active_tab_filter,
         pagehientai: pagehientai,
         role: "Admin",
@@ -105,6 +108,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
       if (selectoption === "phuongtien") {
         const response = await API_get_Phuongtien(build_data);
         setitemALL(response.all_phuongtien);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "donoithat") {
         const response = await API_get_Donoithat(build_data);
@@ -114,6 +118,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
       if (selectoption === "dienlanh") {
         const response = await API_get_Dienlanh(build_data);
         setitemALL(response.all_dienlanh);
+        setTotalPages(response.totalpages);
       }
       if (selectoption === "dodungcanhan") {
         const response = await API_get_Docanhan(build_data);
@@ -185,6 +190,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
           response.trangthai === 3 &&
             toast.success("Tin đã được ẩn do chưa phù hợp");
         }
+        get_soluongtin_moicollection();
         fetchDataProduct();
         setdataitem(null);
       } else {
@@ -291,7 +297,7 @@ const DS_daduyet: React.FC<any> = ({ selectoption }) => {
                   return `${weeks} tuần trước`;
                 }
               }
-              const thoigiandadang: string = tinhthoigiandadang(item.createdAt);
+              const thoigiandadang: string = tinhthoigiandadang(item.updatedAt);
 
               return (
                 <motion.div

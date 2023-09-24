@@ -35,7 +35,7 @@ const Xe_dien = () => {
       try {
         const build_data = {
           type: "xedien",
-          soluong: 10,
+          soluong: 36,
           loaixedien: "ALL",
           pagehientai: pagehientai,
         };
@@ -52,7 +52,7 @@ const Xe_dien = () => {
   };
   const build_data_filter = {
     type: "xedien",
-    soluong: 10,
+    soluong: 36,
     loaixedien: loaixedien,
     dongcoxedien: dongcoxedien,
     pagehientai: pagehientai,
@@ -211,7 +211,7 @@ const Xe_dien = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemXedien &&
                 itemXedien.map((item: any, index: any) => {
                   return (

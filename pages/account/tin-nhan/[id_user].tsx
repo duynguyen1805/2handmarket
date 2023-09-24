@@ -155,7 +155,7 @@ const Tin_nhan = ({
       </div>
       <div className="min-h-screen h-auto w-full bg-gray-100 pt-[90px] flex flex-col place-content-between">
         <div className="h-auto w-full flex items-center justify-center">
-          <div className="h-[884px] max-h-[2500px] w-[990px] flex border rounded-lg bg-white">
+          <div className="h-[784px] max-h-[2500px] w-[990px] flex border rounded-lg bg-white">
             {/* display medium */}
             <div className="h-full w-[35%] border-r border-gray-400 overflow-auto">
               {conversationMembers &&

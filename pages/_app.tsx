@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import React from "react";
 import type { AppProps } from "next/app";
+require("dotenv").config();
 import { MyContextProvider } from "../contexts/MyContext";
 import { Provider } from "react-redux";
 import store from "../store/store";

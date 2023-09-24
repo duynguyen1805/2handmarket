@@ -35,7 +35,7 @@ const Phuong_tien = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 4,
+        soluong: 6,
         pagehientai: 1,
       };
       const response = await API_get_Phuongtien(build_data);
@@ -45,7 +45,7 @@ const Phuong_tien = () => {
           .slice()
           .sort(
             (a: any, b: any) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
           );
         setitemALLPhuongtien(sort_response);
       } else {

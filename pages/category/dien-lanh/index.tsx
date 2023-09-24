@@ -35,7 +35,7 @@ const Dien_lanh = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 8,
+        soluong: 10,
         pagehientai: 1,
       };
       const response = await API_get_Dienlanh(build_data);
@@ -45,7 +45,7 @@ const Dien_lanh = () => {
           .slice()
           .sort(
             (a: any, b: any) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
           );
         setitemALLDienlanh(sort_response);
       } else {

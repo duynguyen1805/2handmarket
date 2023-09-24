@@ -41,7 +41,7 @@ const Thu_cung = () => {
       try {
         const build_data = {
           type: "ALL",
-          soluong: 10,
+          soluong: 36,
           pagehientai: pagehientai,
         };
         const response = await API_get_Thucung(build_data);
@@ -59,7 +59,7 @@ const Thu_cung = () => {
     try {
       const build_data = {
         type: type_danhmucthucung,
-        soluong: 10,
+        soluong: 36,
         pagehientai: pagehientai,
       };
       const response = await API_get_Thucung(build_data);
@@ -176,7 +176,7 @@ const Thu_cung = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] p-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemALLThucung &&
                 itemALLThucung.map((item: any, index: any) => {
                   return (

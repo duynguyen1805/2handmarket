@@ -17,7 +17,8 @@ import item_danhmuc, {
   sub_danhmuc,
 } from "../../components/obj_data_raw/Danhmuc_raw";
 import DS_daduyet from "@/components/admin/DS_daduyet";
-
+import { API_get_soluongtin_Allcollection } from "@/service/userService";
+import io from "socket.io-client";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const AdminDashboard = () => {
@@ -27,6 +28,25 @@ const AdminDashboard = () => {
   const [isOpenQuanlyTK, setOpenQuanlyTK] = useState(false);
   const [selectChitietDoiduyet, setselectChitietDoiduyen] = useState<number>();
   const [selectChitietDaduyet, setselectChitietDaduyen] = useState<number>();
+  const [noti_newPostMessage, setNoti_NewPostMessage] = useState<any>();
+
+  useEffect(() => {
+    // Tạo kết nối Socket.io với server backend
+    const socket = io("http://localhost:4000"); // Thay URL phù hợp với server backend của bạn
+
+    // Lắng nghe sự kiện 'new-post' từ server
+    socket.on("new-post", (data) => {
+      // data là thông báo hoặc dữ liệu mới từ server
+      setNoti_NewPostMessage(data.message);
+      toast.success(data.message);
+      get_soluongtin_moicollection();
+    });
+
+    return () => {
+      socket.disconnect(); // Ngắt kết nối khi unmount component (tuỳ vào tình huống)
+    };
+  }, []);
+
   useEffect(() => {
     //lấy thông tin người dùng
     const storedItems = localStorage.getItem("inforUser");
@@ -43,6 +63,35 @@ const AdminDashboard = () => {
     // implement logout logic
     router.push("/login"); // redirect to login page after logout
   };
+
+  const [list_soluongtin_daduyet, setlist_soluongtin_daduyet] = useState<any[]>(
+    []
+  );
+  const [list_soluongtin_doiduyet, setlist_soluongtin_doiduyet] = useState<
+    any[]
+  >([]);
+  useEffect(() => {
+    const get_soluongtin_moicollection = async () => {
+      try {
+        const response = await API_get_soluongtin_Allcollection();
+        setlist_soluongtin_daduyet(response.all_soluongtin_daduyet);
+        setlist_soluongtin_doiduyet(response.all_soluongtin_doiduyet);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    get_soluongtin_moicollection();
+  }, []);
+  const get_soluongtin_moicollection = async () => {
+    try {
+      const response = await API_get_soluongtin_Allcollection();
+      setlist_soluongtin_daduyet(response.all_soluongtin_daduyet);
+      setlist_soluongtin_doiduyet(response.all_soluongtin_doiduyet);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   function handleSelect(value: number) {
     if (value === 0) {
       setOpenDoiduyet(!isOpenDoiduyet);
@@ -102,16 +151,7 @@ const AdminDashboard = () => {
         {/* screen: medium & desktop */}
         <div className="sm:hidden md:block">
           <Header />
-          <div className="lg:hidden h-[50px] md:w-[100%] p-5 border bg-white flex items-center text-lg">
-            <Link
-              href="/"
-              className="cursor-pointer hover:text-green-600 flex items-center"
-            >
-              <Image src={Home} alt="icon" className="h-[25px] w-[25px] mr-2" />{" "}
-              Trang chủ
-            </Link>
-          </div>
-          <div className="md:block lg:flex md:h-full lg:h-[955px] bg-white">
+          <div className="md:block lg:flex md:h-full lg:h-[855px] bg-white">
             <div className="bg-mauxanhtroi px-2 py-3 text-white flex space-y-1 md:flex-row lg:flex-col md:h-full md:w-[100%] lg:h-auto lg:w-[300px] overflow-y-auto overflow-x-hidden">
               {/* doi duyet */}
               <div
@@ -163,7 +203,10 @@ const AdminDashboard = () => {
                             selectChitietDoiduyen("doiduyet", index, item.type)
                           }
                         >
-                          {item.label}
+                          <div className="flex items-center place-content-between">
+                            <p>{item.label}</p>
+                            <p>{list_soluongtin_doiduyet[index]}</p>
+                          </div>
                         </motion.div>
                       );
                     })}
@@ -219,7 +262,10 @@ const AdminDashboard = () => {
                             selectChitietDaduyen("daduyet", index, item.type)
                           }
                         >
-                          {item.label}
+                          <div className="flex items-center place-content-between">
+                            <p>{item.label}</p>
+                            <p>{list_soluongtin_daduyet[index]}</p>
+                          </div>
                         </motion.div>
                       );
                     })}
@@ -247,10 +293,16 @@ const AdminDashboard = () => {
             </div>
             <div className="md:h-[700px] lg:h-full flex-1 p-1 overflow-y-auto">
               {selectoption && selectMain === "doiduyet" && (
-                <DS_doiduyet selectoption={selectoption} />
+                <DS_doiduyet
+                  selectoption={selectoption}
+                  get_soluongtin_moicollection={get_soluongtin_moicollection}
+                />
               )}
               {selectoption && selectMain === "daduyet" && (
-                <DS_daduyet selectoption={selectoption} />
+                <DS_daduyet
+                  selectoption={selectoption}
+                  get_soluongtin_moicollection={get_soluongtin_moicollection}
+                />
               )}
               {isOpenQuanlyTK && <ManageUser />}
             </div>

@@ -230,8 +230,8 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
       <div className="h-auto min-h-screen w-full bg-gray-100 pt-[90px] flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[960px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Quản lý tin
@@ -332,7 +332,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                       }
                     }
                     const thoigiandadang: string = tinhthoigiandadang(
-                      item.createdAt
+                      item.updatedAt
                     );
                     return (
                       <motion.div

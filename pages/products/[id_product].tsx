@@ -147,8 +147,8 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
       <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1100px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Sản phẩm
@@ -156,8 +156,8 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto w-[1100px] flex">
-              <div className="h-full w-[55%] p-2 sticky top-24">
+            <div className="bg-white shadow-sm h-auto w-[1440px] flex">
+              <div className="h-full w-[55%] p-2 sticky top-0">
                 <div className="h-[540px] w-full">
                   <Slider {...settings_slider}>
                     {img_arr &&
@@ -176,20 +176,20 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                       })}
                   </Slider>
                 </div>
-                <div className="h-[80px] w-full p-1 flex items-center border border-gray-400 rounded-md mt-2">
+                <div className="h-[90px] w-full p-1 flex items-center border border-gray-400 rounded-md mt-2">
                   <div className="h-[70px] w-[70px] flex items-center justify-center">
                     <div
                       className="h-full w-full rounded-full bg-center bg-cover bg-no-repeat"
                       style={{ backgroundImage: `url(${infoClient?.img})` }}
                     ></div>
                   </div>
-                  <div className="h-full w-[500px] flex items-center place-content-between">
-                    <div className="w-[200px] space-y-2 px-5">
+                  <div className="h-full w-[680px] flex items-center place-content-between">
+                    <div className="w-[200px] text-lg space-y-2 px-5">
                       <p className="font-bold">{infoClient?.name}</p>
                       <p>Online 5 phút trước</p>
                     </div>
                     <div
-                      className="w-[100px] text-center text-mauxanhtroi py-2 border border-mauxanhtroi rounded-lg hover:bg-mauxanhtroi hover:text-white cursor-pointer"
+                      className="w-auto text-center text-mauxanhtroi text-lg py-2 px-3 border border-mauxanhtroi rounded-lg hover:bg-mauxanhtroi hover:text-white cursor-pointer"
                       onClick={() =>
                         router.push(`/account/trang-ca-nhan/${infoClient?._id}`)
                       }
@@ -199,7 +199,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   </div>
                 </div>
                 <div className="h-auto w-full p-2">
-                  <div className="text-lg font-thin flex items-center space-x-2">
+                  <div className="text-xl font-thin flex items-center space-x-2">
                     <Image
                       src={icon_diachi}
                       alt="diachi"
@@ -211,7 +211,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                 <div className="h-auto w-full px-1 py-2 flex item-center">
                   <div
                     onClick={() => setopenNumber(!openNumber)}
-                    className="h-full w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-lg text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
+                    className="h-full w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-xl text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
                   >
                     {openNumber
                       ? `${
@@ -222,7 +222,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                       : "Bấm để hiện số điện thoại"}
                   </div>
                   <div
-                    className="h-full w-[40%] border border-mauxanhtroi text-lg text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
+                    className="h-full w-[40%] border border-mauxanhtroi text-xl text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
                     onClick={handleClickMessage}
                   >
                     Chat với người bán
@@ -230,22 +230,22 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                 </div>
               </div>
               <div className="h-full w-[45%] px-2 py-2">
-                <p className="h-auto max-h-[60px] w-full overflow-hidden text-xl font-bold">
+                <p className="h-auto max-h-[60px] w-full overflow-hidden text-2xl font-bold">
                   {item.tieude}
                 </p>
                 <div className="h-[60px] w-full flex items-center place-content-between">
-                  <p className="h-full w-auto text-lg flex items-center font-bold text-red-500">
+                  <p className="h-full w-auto text-xl flex items-center font-bold text-red-500">
                     {item.price?.toLocaleString("vi-VN")} đ
                   </p>
-                  <div className="h-auto w-auto px-5 py-1 flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
+                  <div className="h-auto w-auto px-5 py-1 text-xl flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
                     {" "}
                     Lưu tin
                   </div>
                 </div>
                 {/* mô tả sản phẩm */}
-                <p className="w-full font-bold mb-2">Mô tả chi tiết</p>
+                <p className="w-full text-lg font-bold mb-2">Mô tả chi tiết</p>
                 <div className="h-auto w-full overflow-hidden">
-                  <pre className="h-auto w-full break-words whitespace-pre-wrap font-mono">
+                  <pre className="h-auto w-full text-lg break-words whitespace-pre-wrap font-mono">
                     {item.mota}
                   </pre>
                 </div>
@@ -256,11 +256,11 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                     item.type === "meo" ||
                     item.type === "ca"
                   }
-                  className="w-full font-bold mt-5"
+                  className="w-full text-lg font-bold mt-5"
                 >
                   Thông số kỹ thuật
                 </div>
-                <div className="h-auto max-h-[250px] w-full flex flex-wrap">
+                <div className="h-auto max-h-[250px] w-full text-lg flex flex-wrap">
                   <div
                     hidden={
                       item.type === "cho" ||

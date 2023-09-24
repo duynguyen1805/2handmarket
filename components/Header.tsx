@@ -1,3 +1,4 @@
+require("dotenv").config();
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import router, { useRouter } from "next/router";
@@ -17,6 +18,8 @@ import { API_searchProduct } from "@/service/userService";
 import { motion } from "framer-motion";
 import Link from "next/link";
 // import Modal_Addnewuser from "../components/modal/Modal_Addnewuser";
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 const Header = () => {
   //lấy số lượng order qua usecontext
@@ -38,7 +41,6 @@ const Header = () => {
     role: string;
     avatar: string;
   };
-
   const [datainforUser, setdatainforUser] = useState<DataInfor>();
 
   useEffect(() => {
@@ -47,6 +49,21 @@ const Header = () => {
     if (storedItems) {
       setdatainforUser(JSON.parse(storedItems));
     }
+    // const token: any = localStorage.getItem("token");
+    // const env = process.env.JWT_SECRET;
+    // console.log("check dotenv: ", env);
+    // const parse_token = JSON.parse(token);
+    // if (parse_token) {
+    //   let jwt_key = process.env.JWT_SECRET;
+    //   if (!jwt_key) {
+    //     throw new Error(
+    //       "JWT_SECRET is not defined in the environment variables."
+    //     );
+    //   }
+    //   const jwt_secret: Secret = jwt_key;
+    //   const decoded = jwt.verify(parse_token, jwt_secret);
+    //   console.log("check decoded: ", decoded);
+    // }
   }, []);
 
   //mở giỏ hàng
@@ -67,15 +84,27 @@ const Header = () => {
     router.push("/admin/adminDashboard");
   };
   const handleClickMessage = (idUser: any) => {
-    router
-      .push(`/account/tin-nhan/${idUser}`)
-      .then(() => window.location.reload());
+    if (idUser) {
+      router
+        .push(`/account/tin-nhan/${idUser}`)
+        .then(() => window.location.reload());
+    } else {
+      router.push("/account/login");
+    }
   };
   const clickInfoDetail = (idUser: string) => {
-    router.push(`/account/trang-ca-nhan/${idUser}`);
+    if (idUser) {
+      router.push(`/account/trang-ca-nhan/${idUser}`);
+    } else {
+      router.push("/account/login");
+    }
   };
-  const clickQuanly_dangtin = (idUser: string) => {
-    router.push(`/account/quan-ly-tin/${idUser}`);
+  const clickQuanly_dangtin = (idUser: any) => {
+    if (idUser) {
+      router.push(`/account/quan-ly-tin/${idUser}`);
+    } else {
+      router.push("/account/login");
+    }
   };
   const clickItemSearch = (codeSP: string, typeSP: string) => {
     router.push({
@@ -184,15 +213,13 @@ const Header = () => {
                 alt="icon"
                 className="h-[32px] w-[32px] cursor-pointer icon-white"
               />
-              <p className="text-white text-lg">Tin nhắn</p>
+              <p className="text-white text-xl">Tin nhắn</p>
             </div>
             {/* quanlytin */}
             <div
               className="h-auto w-[25%] flex gap-2.5 items-center justify-center cursor-pointer"
               onClick={() => {
-                clickQuanly_dangtin(
-                  datainforUser ? datainforUser?._id : window.location.href
-                );
+                clickQuanly_dangtin(datainforUser?._id);
               }}
             >
               <Image
@@ -200,7 +227,7 @@ const Header = () => {
                 alt="icon"
                 className="h-[32px] w-[32px] cursor-pointer icon-white"
               />
-              <p className="text-white text-lg">Quản lý tin</p>
+              <p className="text-white text-xl">Quản lý tin</p>
             </div>
             {/* login logout */}
             <div className="h-auto w-[25%] flex items-center justify-center gap-2 cursor-pointer">
@@ -234,7 +261,7 @@ const Header = () => {
                   <button
                     type="button"
                     onClick={handleClickUser}
-                    className="flex items-center justify-center h-[45px] w-[150px] md:h-auto md:w-auto md:px-2 md:py-3 bg-mauxanhtroi text-white text-lg transition duration-300 ease-in-out rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-blue-800"
+                    className="flex items-center justify-center h-[45px] w-[150px] md:h-auto md:w-auto md:px-2 md:py-3 bg-mauxanhtroi text-white text-xl transition duration-300 ease-in-out rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-blue-800"
                     // className="flex items-center justify-center h-[45px] w-[150px] md:h-auto md:w-auto md:px-2 md:py-3 bg-gradient-to-br from-green-500 to-blue-500 text-white text-lg transition duration-300 ease-in-out bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-200 focus:ring-green-500"
                   >
                     {/* <Image
@@ -281,14 +308,14 @@ const Header = () => {
                         </p>
                         {datainforUser?.role === "Admin" && (
                           <div
-                            className="h-[50px] border-t border-gray-400 flex justify-center items-center text-lg cursor-pointer hover:text-white hover:bg-blue-500"
+                            className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                             onClick={handleClickManager}
                           >
                             Quản lý website
                           </div>
                         )}
                         <div
-                          className="h-[50px] border-t border-gray-400 flex justify-center items-center text-lg cursor-pointer hover:text-white hover:bg-blue-500"
+                          className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                           onClick={() => {
                             clickInfoDetail(datainforUser?._id);
                           }}
@@ -296,7 +323,7 @@ const Header = () => {
                           Trang cá nhân
                         </div>
                         <div
-                          className="h-[50px] border-t border-gray-400 flex justify-center items-center text-lg cursor-pointer hover:text-white hover:bg-blue-500"
+                          className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                           onClick={() => {
                             clickQuanly_dangtin(datainforUser?._id);
                           }}
@@ -304,7 +331,7 @@ const Header = () => {
                           Quản lý tin đăng
                         </div>
                         <div
-                          className="h-[50px] border-t border-gray-400 rounded-b-md flex justify-center items-center text-lg text-red-500 cursor-pointer hover:bg-red-500 hover:text-white hover:text-xl"
+                          className="h-[50px] border-t border-gray-400 rounded-b-md flex justify-center items-center text-xl text-red-500 cursor-pointer hover:bg-red-500 hover:text-white hover:text-xl"
                           onClick={Logout}
                         >
                           Đăng Xuất
@@ -319,7 +346,7 @@ const Header = () => {
             <div className="h-auto w-[25%] flex justify-center">
               <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
-                href="/dang-tin"
+                href={information_User ? "/dang-tin" : "/account/login"}
               >
                 <Image
                   src={dangtin}

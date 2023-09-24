@@ -8,7 +8,6 @@ type DataInfor = {
   role: string;
   avatar: string;
 };
-
 const Chat = () => {
   const [datainforUser, setdatainforUser] = useState<DataInfor>();
   useEffect(() => {

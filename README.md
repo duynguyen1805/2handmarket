@@ -4,6 +4,7 @@ CHƯA LÀM: (
 -- tin đăng bị admin từ chối sẽ bị xóa sau 1 khoảng thời gian
 -- tin đăng được quảng cáo ? ngày, làm sao xử lý khi hết tg quảng cáo
 -- cần thống kê doanh thu từ quảng cáo hay không ?
+-- sửa lại thời gian đăng tin là thời gian admin duyệt tin
 )
 
 error: (

@@ -384,6 +384,19 @@ export async function API_getAllcollection() {
   }
 }
 
+export async function API_get_soluongtin_Allcollection() {
+  try {
+    const response = await axios.get(
+      "http://localhost:4000/admin/get-all-soluongtin"
+    );
+    const data = await response.data;
+    return data; //data.TableTypes
+  } catch (error) {
+    console.error(error);
+    throw new Error("Lỗi khi call API_get_soluongtin_Allcollection");
+  }
+}
+
 export async function API_getTindangbyIduser(id: string) {
   try {
     const response = await axios.post(

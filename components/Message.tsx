@@ -281,10 +281,10 @@ const Message = ({
           </div>
         </div>
       </div>
-      <div className="relative h-[708px] w-full">
+      <div className="relative h-[630px] w-full">
         <div
           ref={chatContainerRef}
-          className="h-[730px] w-full px-2 py-1 mb-1 overflow-auto"
+          className="h-[630px] w-full px-2 py-1 mb-1 overflow-auto"
         >
           {messages &&
             messages.map((message: any, index: number) => {
@@ -372,7 +372,7 @@ const Message = ({
               );
             })}
         </div>
-        <div className="absolute top-[632px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
+        <div className="absolute top-[532px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
           {reviewImg_arr !== null && reviewImg_arr !== "" ? (
             reviewImg_arr?.map((item_img: any, index: number) => {
               return (

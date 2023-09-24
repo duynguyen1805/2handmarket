@@ -42,7 +42,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       return `${weeks} tuần trước`;
     }
   }
-  const thoigiandadang: string = tinhthoigiandadang(item.createdAt);
+  const thoigiandadang: string = tinhthoigiandadang(item.updatedAt);
 
   return (
     <motion.div

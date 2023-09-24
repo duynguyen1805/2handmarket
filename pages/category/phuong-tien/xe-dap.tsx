@@ -35,7 +35,7 @@ const Xe_dap = () => {
       try {
         const build_data = {
           type: "xedap",
-          soluong: 10,
+          soluong: 36,
           loaixedap: "ALL",
           pagehientai: pagehientai,
         };
@@ -54,7 +54,7 @@ const Xe_dap = () => {
     try {
       const build_data = {
         type: "xedap",
-        soluong: 10,
+        soluong: 36,
         loaixedap: loaixedap,
         pagehientai: pagehientai,
       };
@@ -167,7 +167,7 @@ const Xe_dap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[1940px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-2 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemXedap &&
                 itemXedap.map((item: any, index: any) => {
                   return (
