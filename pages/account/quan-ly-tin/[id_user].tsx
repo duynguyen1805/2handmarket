@@ -32,6 +32,8 @@ import Modal_comfirm_Thanhtoan from "@/components/modal/Modal_comfirm_Thanhtoan"
 
 const { PhoneNumberUtil, PhoneNumberFormat } = require("google-libphonenumber");
 const phoneUtil = PhoneNumberUtil.getInstance();
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 interface infodetailProps {
   id_user: string;
@@ -41,6 +43,29 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any>([]);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
+
+  useEffect(() => {
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded: any = jwt.verify(parse_token, jwt_secret);
+        id_user = decoded._id;
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        router.push("/account/login");
+      }
+    } else {
+      router.push("/account/login");
+    }
+  }, []);
 
   const [itemNangcap, setItemNangcap] = useState<any>();
   useEffect(() => {

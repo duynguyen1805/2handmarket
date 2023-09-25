@@ -36,6 +36,8 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../../../firebase.config";
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 interface infodetailProps {
   id_user: string;
@@ -49,16 +51,34 @@ const Tin_nhan = ({
   id_receiver,
   name_receiver,
 }: infodetailProps) => {
-  const [datainforUser_local, setdatainforUser_local] = useState<any>();
+  const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [conversationMembers, setConversationMembers] = useState<any>([]); // ds từng nhắn tin
   const [selectedUser, setSelectedUser] = useState(id_receiver);
   const [selectedUserName, setSelectedUserName] = useState(name_receiver);
   const [selectedAvatar, setSelectedAvatar] = useState<any>();
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser_local(JSON.parse(storedItems));
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded: any = jwt.verify(parse_token, jwt_secret);
+        id_user = decoded._id;
+        setdatainforUser_current(decoded);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setdatainforUser_current(null);
+        router.push("/account/login");
+      }
+    } else {
+      router.push("/account/login");
     }
   }, []);
   useEffect(() => {
@@ -191,8 +211,8 @@ const Tin_nhan = ({
               {selectedUser && (
                 <Message
                   id_current_user={id_user}
-                  userName_current={datainforUser_local?.name}
-                  avatar_current_user={datainforUser_local?.avatar}
+                  userName_current={datainforUser_current?.name}
+                  avatar_current_user={datainforUser_current?.avatar}
                   id_receiver={selectedUser}
                   userName_receiver={selectedUserName}
                   avatar_receiver={selectedAvatar}

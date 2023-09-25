@@ -30,14 +30,6 @@ const Message = ({
   userName_receiver,
   avatar_receiver,
 }: any) => {
-  const [datainforUser_local, setdatainforUser_local] = useState<any>();
-  useEffect(() => {
-    //lấy thông tin người dùng Đăng nhập
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser_local(JSON.parse(storedItems));
-    }
-  }, []);
   // xử lý chọn ảnh
   async function getBase64(file: any) {
     return new Promise((resolve, reject) => {

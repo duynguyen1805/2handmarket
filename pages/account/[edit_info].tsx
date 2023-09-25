@@ -19,6 +19,8 @@ import { motion } from "framer-motion";
 
 const { PhoneNumberUtil, PhoneNumberFormat } = require("google-libphonenumber");
 const phoneUtil = PhoneNumberUtil.getInstance();
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 interface infodetailProps {
   edit_info: string;
@@ -43,15 +45,38 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
 
   useEffect(() => {
     const fetchDataUser = async () => {
-      try {
-        const response = await API_getUserbyID(edit_info);
-        setinfo_user(response.User[0]);
-        setName(response.User[0].name);
-        setAccount(response.User[0].account);
-        setAddress(response.User[0].address);
-        setAvatar(response.User[0].img);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      //lấy thông tin người dùng
+      const token: any = localStorage.getItem("token");
+      const parse_token = JSON.parse(token);
+      if (parse_token) {
+        let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+        if (!jwt_key) {
+          throw new Error(
+            "JWT_SECRET is not defined in the environment variables."
+          );
+        }
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded: any = jwt.verify(parse_token, jwt_secret);
+          edit_info = decoded._id;
+          if (decoded) {
+            try {
+              const response = await API_getUserbyID(edit_info);
+              setinfo_user(response.User[0]);
+              setName(response.User[0].name);
+              setAccount(response.User[0].account);
+              setAddress(response.User[0].address);
+              setAvatar(response.User[0].img);
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+          }
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          router.push("/account/login");
+        }
+      } else {
+        router.push("/account/login");
       }
     };
     fetchDataUser();
@@ -88,7 +113,6 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
   const handleChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
   };
-
   const ClickUpdate_enableInputPW = (status: any) => {
     {
       status === 0 && setEnableInputPW(true);
@@ -101,7 +125,6 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
         (setEnableInputPW(false), setEnableInputPW_InputNewPW(false));
     }
   };
-
   const hanldeUpdateInforUser = async () => {
     setUpdateInforUser(true);
     if (!name || !account || !address || !password) {
@@ -133,9 +156,6 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
     }
   };
 
-  const goBack = () => {
-    router.back();
-  };
   const [openoptionchangeavatar, setOpenOptionChangeAvatar] = useState(false);
   async function getBase64(file: any) {
     return new Promise((resolve, reject) => {
@@ -168,283 +188,282 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] bg-gray-100 pt-[90px] flex flex-col place-content-between">
-        <div>
-          {/* Điều hướng */}
-          <div className="h-[50px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
-              <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Cập nhật thông tin cá nhân
-              </p>
-            </div>
-          </div>
-          <div className="h-auto w-full mt-3 flex items-center justify-center">
-            <div className="h-[690px] w-[960px] bg-white border rounded-lg p-5 flex flex-col items-center">
-              <div className="flex items-center sm:space-x-2 md:space-x-0 sm:pr-16 md:pr-0 justify-center">
-                <div
-                  className="md:hidden h-[40px] w-[40px]"
-                  onClick={() => ClickUpdate_enableInputPW(2)}
-                >
-                  <Image
-                    src={left_back}
-                    alt="icon"
-                    className="h-[25px] w-[25px] cursor-pointer"
-                    // onClick={handleClickUser}
-                  />
-                </div>
-
-                <p className="sm:text-base md:text-4xl font-medium mb-2">
-                  THÔNG TIN TÀI KHOẢN
+      {info_user && (
+        <div className="h-auto min-h-screen w-[100%] bg-gray-100 pt-[90px] flex flex-col place-content-between">
+          <div>
+            {/* Điều hướng */}
+            <div className="h-[50px] w-full flex items-center justify-center mt-2">
+              <div className="h-full w-[960px] bg-white text-lg flex items-center p-1 rounded-lg shadow-md">
+                <Danhmuc />
+                <p className="h-full w-auto flex items-center ml-3">
+                  Trang chủ / Cập nhật thông tin cá nhân
                 </p>
               </div>
-              {/* hình đại diện */}
-              <div className="h-[120px] w-full mb-2 flex items-center justify-center">
-                <div className="relative flex items-center">
-                  <div
-                    className="h-[120px] w-[120px] border-4 border-mauxanhtroi rounded-full bg-cover bg-no-repeat bg-center hover:opacity-60"
-                    style={{
-                      backgroundImage: `url(${avatar})`,
+            </div>
+            <div className="h-auto w-full mt-3 flex items-center justify-center">
+              <div className="h-[690px] w-[960px] bg-white border rounded-lg p-5 flex flex-col items-center">
+                <div className="flex items-center sm:space-x-2 md:space-x-0 sm:pr-16 md:pr-0 justify-center">
+                  <p className="sm:text-base md:text-4xl font-medium mb-2">
+                    THÔNG TIN TÀI KHOẢN
+                  </p>
+                </div>
+                {/* hình đại diện */}
+                <div className="h-[120px] w-full mb-2 flex items-center justify-center">
+                  <div className="relative flex items-center">
+                    <div
+                      className="h-[120px] w-[120px] border-4 border-mauxanhtroi rounded-full bg-cover bg-no-repeat bg-center hover:opacity-60"
+                      style={{
+                        backgroundImage: `url(${avatar})`,
+                      }}
+                      onClick={() =>
+                        setOpenOptionChangeAvatar(!openoptionchangeavatar)
+                      }
+                    ></div>
+                    {openoptionchangeavatar && (
+                      <div className="absolute h-[50px] w-[200px] px-2 left-32 bg-black rounded-md flex items-center justify-center hover:bg-gray-700 cursor-pointer">
+                        {info_user?.img == avatar && (
+                          <p className="text-white">
+                            Cập nhật ảnh đại diện
+                            <input
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                              type="file"
+                              multiple
+                              onChange={(e) => {
+                                handleFile(e);
+                              }}
+                            />
+                          </p>
+                        )}
+                        {info_user?.img !== avatar && (
+                          <p
+                            className="text-white"
+                            onClick={() => window.location.reload()}
+                          >
+                            Hủy thay đổi
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="sm:text-sm md:text-base sm:w-full md:w-[400px] flex flex-col space-y-5 items-center">
+                  <motion.input
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { duration: 0.5 },
                     }}
-                    onClick={() =>
-                      setOpenOptionChangeAvatar(!openoptionchangeavatar)
-                    }
-                  ></div>
-                  {openoptionchangeavatar && (
-                    <div className="absolute h-[50px] w-[200px] px-2 left-32 bg-black rounded-md flex items-center justify-center hover:bg-gray-700 cursor-pointer">
-                      {info_user?.img == avatar && (
-                        <p className="text-white">
-                          Cập nhật ảnh đại diện
-                          <input
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                            type="file"
-                            multiple
-                            onChange={(e) => {
-                              handleFile(e);
-                            }}
-                          />
+                    exit={{ opacity: 0 }}
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Họ và tên"
+                    value={name}
+                    onChange={handleChangeName}
+                    className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                  />
+                  <motion.input
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
+                    exit={{ opacity: 0 }}
+                    type="text"
+                    id="address"
+                    name="address"
+                    placeholder="Địa chỉ"
+                    value={address}
+                    onChange={handleChangeAddress}
+                    className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                  />
+                  <motion.input
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { duration: 1.5 },
+                    }}
+                    exit={{ opacity: 0 }}
+                    type="text"
+                    id="phonenumber"
+                    name="phonenumber"
+                    placeholder="Nhập số điện thoại"
+                    value={account}
+                    onChange={handleChangeAccount}
+                    className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                  />
+                  {enablePW && !enableNewPW ? (
+                    <>
+                      <motion.input
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 0.5 },
+                        }}
+                        exit={{ opacity: 0 }}
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Nhập mật khẩu hiện tại"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                      />
+                      <motion.input
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 1 },
+                        }}
+                        exit={{ opacity: 0 }}
+                        type="password"
+                        id="Confirmpassword"
+                        name="Confirmpassword"
+                        placeholder="Nhập lại mật khẩu"
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        className={
+                          passwordMatch
+                            ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                            : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
+                        }
+                      />
+                      {!passwordMatch ? (
+                        <p className="text-sm text-red-500">
+                          Mật khẩu không trùng khớp
                         </p>
+                      ) : (
+                        <></>
                       )}
-                      {info_user?.img !== avatar && (
-                        <p
-                          className="text-white"
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {enableNewPW ? (
+                    <>
+                      <motion.input
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 0.5 },
+                        }}
+                        exit={{ opacity: 0 }}
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Nhập mật khẩu hiện tại"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                      />
+                      <motion.input
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 1 },
+                        }}
+                        exit={{ opacity: 0 }}
+                        type="password"
+                        id="newpassword"
+                        name="newpassword"
+                        placeholder="Nhập mật khẩu Mới"
+                        value={newpassword}
+                        onChange={handleNewPasswordChange}
+                        className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                      />
+                      <motion.input
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 1.5 },
+                        }}
+                        exit={{ opacity: 0 }}
+                        type="password"
+                        id="ConfirmNewpassword"
+                        name="ConfirmNewpassword"
+                        placeholder="Nhập lại mật khẩu Mới"
+                        value={confirmNewPassword}
+                        onChange={handleConfirmNewPasswordChange}
+                        className={
+                          newpasswordMatch
+                            ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                            : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
+                        }
+                      />
+                      {!passwordMatch ? (
+                        <p className="text-sm text-red-500">
+                          Mật khẩu không trùng khớp
+                        </p>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {!enablePW &&
+                    !enableNewPW &&
+                    (info_user?.name !== name ||
+                      info_user?.address !== address ||
+                      info_user?.account !== account ||
+                      info_user?.img !== avatar) && (
+                      <div className="h-auto w-full space-y-3">
+                        <button
+                          type="submit"
+                          className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
+                          onClick={() => ClickUpdate_enableInputPW(0)}
+                        >
+                          Cập nhật
+                        </button>
+                        <div
+                          className="h-[50px] w-full flex items-center justify-center bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
                           onClick={() => window.location.reload()}
                         >
                           Hủy thay đổi
-                        </p>
-                      )}
-                    </div>
+                        </div>
+                      </div>
+                    )}
+                  {enablePW && !enableNewPW && (
+                    <button
+                      type="submit"
+                      className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
+                      onClick={hanldeUpdateInforUser}
+                    >
+                      Cập nhật
+                    </button>
+                  )}
+                  {enableNewPW && (
+                    <button
+                      type="submit"
+                      className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
+                      onClick={hanldeUpdateInforUser}
+                    >
+                      Cập nhật mật khẩu
+                    </button>
                   )}
                 </div>
-              </div>
-              <div className="sm:text-sm md:text-base sm:w-full md:w-[400px] flex flex-col space-y-5 items-center">
-                <motion.input
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0, transition: { duration: 0.5 } }}
-                  exit={{ opacity: 0 }}
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Họ và tên"
-                  value={name}
-                  onChange={handleChangeName}
-                  className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                />
-                <motion.input
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0, transition: { duration: 1 } }}
-                  exit={{ opacity: 0 }}
-                  type="text"
-                  id="address"
-                  name="address"
-                  placeholder="Địa chỉ"
-                  value={address}
-                  onChange={handleChangeAddress}
-                  className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                />
-                <motion.input
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0, transition: { duration: 1.5 } }}
-                  exit={{ opacity: 0 }}
-                  type="text"
-                  id="phonenumber"
-                  name="phonenumber"
-                  placeholder="Nhập số điện thoại"
-                  value={account}
-                  onChange={handleChangeAccount}
-                  className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                />
-                {enablePW && !enableNewPW ? (
-                  <>
-                    <motion.input
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { duration: 0.5 },
-                      }}
-                      exit={{ opacity: 0 }}
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Nhập mật khẩu hiện tại"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                    />
-                    <motion.input
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { duration: 1 },
-                      }}
-                      exit={{ opacity: 0 }}
-                      type="password"
-                      id="Confirmpassword"
-                      name="Confirmpassword"
-                      placeholder="Nhập lại mật khẩu"
-                      value={confirmPassword}
-                      onChange={handleConfirmPasswordChange}
-                      className={
-                        passwordMatch
-                          ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                          : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
-                      }
-                    />
-                    {!passwordMatch ? (
-                      <p className="text-sm text-red-500">
-                        Mật khẩu không trùng khớp
-                      </p>
-                    ) : (
-                      <></>
-                    )}
-                  </>
+                {!enableNewPW ? (
+                  <p
+                    className="mt-5 text-lg font-thin text-blue-600 underline cursor-pointer"
+                    onClick={() => ClickUpdate_enableInputPW(1)}
+                  >
+                    Thay đổi mật khẩu
+                  </p>
                 ) : (
                   <></>
                 )}
-                {enableNewPW ? (
-                  <>
-                    <motion.input
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { duration: 0.5 },
-                      }}
-                      exit={{ opacity: 0 }}
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Nhập mật khẩu hiện tại"
-                      value={password}
-                      onChange={handlePasswordChange}
-                      className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                    />
-                    <motion.input
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { duration: 1 },
-                      }}
-                      exit={{ opacity: 0 }}
-                      type="password"
-                      id="newpassword"
-                      name="newpassword"
-                      placeholder="Nhập mật khẩu Mới"
-                      value={newpassword}
-                      onChange={handleNewPasswordChange}
-                      className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                    />
-                    <motion.input
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                        transition: { duration: 1.5 },
-                      }}
-                      exit={{ opacity: 0 }}
-                      type="password"
-                      id="ConfirmNewpassword"
-                      name="ConfirmNewpassword"
-                      placeholder="Nhập lại mật khẩu Mới"
-                      value={confirmNewPassword}
-                      onChange={handleConfirmNewPasswordChange}
-                      className={
-                        newpasswordMatch
-                          ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
-                          : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
-                      }
-                    />
-                    {!passwordMatch ? (
-                      <p className="text-sm text-red-500">
-                        Mật khẩu không trùng khớp
-                      </p>
-                    ) : (
-                      <></>
-                    )}
-                  </>
-                ) : (
-                  <></>
-                )}
-                {!enablePW &&
-                  !enableNewPW &&
-                  (info_user?.name !== name ||
-                    info_user?.address !== address ||
-                    info_user?.account !== account ||
-                    info_user?.img !== avatar) && (
-                    <div className="h-auto w-full space-y-3">
-                      <button
-                        type="submit"
-                        className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
-                        onClick={() => ClickUpdate_enableInputPW(0)}
-                      >
-                        Cập nhật
-                      </button>
-                      <div
-                        className="h-[50px] w-full flex items-center justify-center bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
-                        onClick={() => window.location.reload()}
-                      >
-                        Hủy thay đổi
-                      </div>
-                    </div>
-                  )}
-                {enablePW && !enableNewPW && (
-                  <button
-                    type="submit"
-                    className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
-                    onClick={hanldeUpdateInforUser}
-                  >
-                    Cập nhật
-                  </button>
-                )}
-                {enableNewPW && (
-                  <button
-                    type="submit"
-                    className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
-                    onClick={hanldeUpdateInforUser}
-                  >
-                    Cập nhật mật khẩu
-                  </button>
-                )}
+                <span id="recaptcha-container"></span>
               </div>
-              {!enableNewPW ? (
-                <p
-                  className="mt-5 text-lg font-thin text-blue-600 underline cursor-pointer"
-                  onClick={() => ClickUpdate_enableInputPW(1)}
-                >
-                  Thay đổi mật khẩu
-                </p>
-              ) : (
-                <></>
-              )}
-              <span id="recaptcha-container"></span>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      )}
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

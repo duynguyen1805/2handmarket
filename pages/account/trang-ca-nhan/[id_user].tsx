@@ -19,6 +19,8 @@ import { motion } from "framer-motion";
 import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical from "@/components/Display_product_vertical";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 interface infodetailProps {
   id_user: string;
@@ -28,13 +30,27 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
 
-  const [datainforUser_local, setdatainforUser_local] = useState<any>();
+  const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [datainforUser, setdatainforUser] = useState<any>();
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser_local(JSON.parse(storedItems));
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded = jwt.verify(parse_token, jwt_secret);
+        setdatainforUser_current(decoded);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setdatainforUser_current(null);
+      }
     }
   }, []);
   const inputDate = new Date(datainforUser?.createdAt);
@@ -73,15 +89,19 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   };
 
   const handleClickMessage = () => {
-    const query: any = {
-      current_user_name: datainforUser_local?.name,
-      id_receiver: datainforUser._id,
-      name_receiver: datainforUser.name,
-    };
-    router.push({
-      pathname: `/account/tin-nhan/${datainforUser_local?._id}`,
-      query,
-    });
+    if (datainforUser_current) {
+      const query: any = {
+        current_user_name: datainforUser_current?.name,
+        id_receiver: datainforUser._id,
+        name_receiver: datainforUser.name,
+      };
+      router.push({
+        pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
+        query,
+      });
+    } else {
+      router.push("/account/login");
+    }
   };
 
   return (
@@ -132,7 +152,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                     </div>
                   </div>
                   <div className="h-1/3 w-full flex items-center">
-                    {datainforUser?._id === datainforUser_local?._id && (
+                    {datainforUser?._id === datainforUser_current?._id && (
                       <div
                         className="w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80"
                         onClick={() =>
@@ -142,7 +162,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                         Chỉnh sửa thông tin cá nhân
                       </div>
                     )}
-                    {datainforUser?._id !== datainforUser_local?._id && (
+                    {datainforUser?._id !== datainforUser_current?._id && (
                       <div
                         className="w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80"
                         onClick={handleClickMessage}

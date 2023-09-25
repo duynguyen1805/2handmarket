@@ -11,8 +11,6 @@ import dangtin from "../assets/icon/dangtin.png";
 import manager from "../assets/icon/checklist.png";
 import { useMyContext } from "@/contexts/MyContext";
 import styles from "../styles/Home.module.css";
-// import debounce from "debounce";
-// import debounce from "lodash.debounce";
 import debounce from "lodash/debounce";
 import { API_searchProduct } from "@/service/userService";
 import { motion } from "framer-motion";
@@ -20,6 +18,9 @@ import Link from "next/link";
 // import Modal_Addnewuser from "../components/modal/Modal_Addnewuser";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+// toast thông báo
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   //lấy số lượng order qua usecontext
@@ -41,29 +42,28 @@ const Header = () => {
     role: string;
     avatar: string;
   };
-  const [datainforUser, setdatainforUser] = useState<DataInfor>();
+  const [datainforUser, setdatainforUser] = useState<any>();
 
   useEffect(() => {
     //lấy thông tin người dùng
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser(JSON.parse(storedItems));
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded = jwt.verify(parse_token, jwt_secret);
+        setdatainforUser(decoded);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setdatainforUser(null);
+      }
     }
-    // const token: any = localStorage.getItem("token");
-    // const env = process.env.JWT_SECRET;
-    // console.log("check dotenv: ", env);
-    // const parse_token = JSON.parse(token);
-    // if (parse_token) {
-    //   let jwt_key = process.env.JWT_SECRET;
-    //   if (!jwt_key) {
-    //     throw new Error(
-    //       "JWT_SECRET is not defined in the environment variables."
-    //     );
-    //   }
-    //   const jwt_secret: Secret = jwt_key;
-    //   const decoded = jwt.verify(parse_token, jwt_secret);
-    //   console.log("check decoded: ", decoded);
-    // }
   }, []);
 
   //mở giỏ hàng
@@ -71,9 +71,9 @@ const Header = () => {
   //mở option của người dùng
   const [isOpenOption, setOpenOptionUser] = useState(false);
 
-  const handleToggleCart = () => {
-    setIsCartVisible(!isOpen);
-  };
+  // const handleToggleCart = () => {
+  //   setIsCartVisible(!isOpen);
+  // };
   const clickLogin = () => {
     router.push("/account/login");
   };
@@ -90,6 +90,7 @@ const Header = () => {
         .then(() => window.location.reload());
     } else {
       router.push("/account/login");
+      toast.success("Bạn cần đăng nhập trước khi Nhắn tin.");
     }
   };
   const clickInfoDetail = (idUser: string) => {
@@ -104,6 +105,7 @@ const Header = () => {
       router.push(`/account/quan-ly-tin/${idUser}`);
     } else {
       router.push("/account/login");
+      toast.success("Bạn cần đăng nhập trước khi Quản lý tin đăng.");
     }
   };
   const clickItemSearch = (codeSP: string, typeSP: string) => {
@@ -118,7 +120,7 @@ const Header = () => {
   };
   const Logout = () => {
     localStorage.clear();
-    // window.location.reload();
+    window.location.reload();
     router.push("/");
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -346,7 +348,7 @@ const Header = () => {
             <div className="h-auto w-[25%] flex justify-center">
               <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
-                href={information_User ? "/dang-tin" : "/account/login"}
+                href={datainforUser ? "/dang-tin" : "/account/login"}
               >
                 <Image
                   src={dangtin}

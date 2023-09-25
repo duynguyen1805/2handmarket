@@ -47,7 +47,7 @@ const Login = () => {
         };
 
         // Lưu thông tin người dùng và token vào localStorage hoặc cookie
-        localStorage.setItem("inforUser", JSON.stringify(inforUser));
+        // localStorage.setItem("inforUser", JSON.stringify(inforUser));
         localStorage.setItem("token", JSON.stringify(data.access_token));
 
         // Chuyển hướng đến trang admin hoặc user tùy vào roleId
@@ -158,20 +158,20 @@ const Login = () => {
                 >
                   Quên mật khẩu
                 </p>
-                <p className="text-lg font-thin">
+                <div className="text-lg font-thin">
                   Bạn chưa có tài khoản, hãy{" "}
                   <Link
                     href="/account/register"
                     className="text-blue-600 underline"
                   >
                     <p
-                    // className="text-blue-600 underline"
-                    // onClick={clickRegister}
+                      className="text-blue-600 underline"
+                      onClick={clickRegister}
                     >
                       Đăng kí tại đây
                     </p>
                   </Link>
-                </p>
+                </div>
               </div>
             </div>
           </div>

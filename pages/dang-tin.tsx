@@ -104,6 +104,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button_thanhtoanMomo from "@/components/thanhtoan/Button_thanhtoanMomo";
 import router from "next/router";
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
@@ -590,12 +592,27 @@ const Dang_tin = () => {
     address: string;
     role: string;
   };
-  const [datainforUser, setdatainforUser] = useState<DataInfor>();
+  const [datainforUser, setdatainforUser] = useState<any>();
   useEffect(() => {
-    //lấy thông tin người dùng
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser(JSON.parse(storedItems));
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded = jwt.verify(parse_token, jwt_secret);
+        setdatainforUser(decoded);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setdatainforUser(null);
+      }
+    } else {
+      router.push("/account/login");
     }
   }, []);
   const Dangtin = async () => {

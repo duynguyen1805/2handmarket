@@ -43,6 +43,8 @@ import icon_loainhaccu from "../../assets/icon/ic_thongsokythuat/icon_loaithietb
 
 import { GetServerSideProps } from "next";
 import { API_getProductbyId } from "@/service/userService";
+import jwt from "jsonwebtoken";
+import { sign, verify, Secret } from "jsonwebtoken";
 
 interface CodeProductProps {
   id_product: string;
@@ -112,23 +114,37 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     }
   };
 
-  const [datainforUser_local, setdatainforUser_local] = useState<any>();
+  const [datainforUser_current, setdatainforUser_current] = useState<any>();
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser_local(JSON.parse(storedItems));
+    const token: any = localStorage.getItem("token");
+    const parse_token = JSON.parse(token);
+    if (parse_token) {
+      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      if (!jwt_key) {
+        throw new Error(
+          "JWT_SECRET is not defined in the environment variables."
+        );
+      }
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded = jwt.verify(parse_token, jwt_secret);
+        setdatainforUser_current(decoded);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setdatainforUser_current(null);
+      }
     }
   }, []);
 
   const handleClickMessage = () => {
     const query: any = {
-      current_user_name: datainforUser_local?.name,
+      current_user_name: datainforUser_current?.name,
       id_receiver: infoClient._id,
       name_receiver: infoClient.name,
     };
     router.push({
-      pathname: `/account/tin-nhan/${datainforUser_local?._id}`,
+      pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
       query,
     });
   };

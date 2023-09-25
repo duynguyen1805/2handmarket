@@ -4,22 +4,8 @@ import crypto from "crypto";
 import router from "next/router";
 
 const Button_thanhtoanMomo = () => {
-  type DataInfor = {
-    _id: string;
-    name: string;
-    account: string;
-    address: string;
-    role: string;
-    avatar: string;
-  };
-  const [datainforUser, setdatainforUser] = useState<DataInfor>();
   const [itemnangcap, setitemnangcap] = useState<any>();
   useEffect(() => {
-    //lấy thông tin người dùng
-    const storedItems = localStorage.getItem("inforUser");
-    if (storedItems) {
-      setdatainforUser(JSON.parse(storedItems));
-    }
     //lấy tin đăng cần nâng cấp
     const Items = localStorage.getItem("itemNangcap");
     if (Items) {
@@ -32,7 +18,7 @@ const Button_thanhtoanMomo = () => {
   const secretKey = "at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa";
   const partnerCode = "MOMOBKUN20180529";
   //public
-  const partnerName = "Test";
+  const partnerName = "2handmarket";
   const requestType = "captureWallet";
   const ipnUrl = "http://localhost:4000/admin/phanhoiMomo"; //momo returnInfo khi user thanh toan thanh cong
   const orderId = date;
@@ -70,7 +56,7 @@ const Button_thanhtoanMomo = () => {
         signature: signature,
       });
       if (response) {
-        console.log("check fetch thanh toan momo: ", response.data);
+        // console.log("check fetch thanh toan momo: ", response.data);
         const data: any = response.data;
         router.push(data.payUrl);
         // const newTab = window.open(data.payUrl, "_blank");
