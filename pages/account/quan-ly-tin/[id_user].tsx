@@ -106,7 +106,14 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const fetchdata_tindang_user = async () => {
     try {
       const response = await API_getTindangbyIduser(id_user);
-      setTindang(response.tindang);
+      //sort tất cả theo thời gian mới nhất
+      const sort_response = response.tindang
+        .slice()
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
+      setTindang(sort_response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -252,10 +259,10 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-full bg-gray-100 pt-[90px] flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-full bg-gray-100 pt-[80px] flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
-          <div className="h-[60px] w-full flex items-center justify-center mt-2">
+          <div className="h-[60px] w-full flex items-center justify-center mt-1">
             <div className="h-full w-[960px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
@@ -264,9 +271,9 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-2">
-            <div className="h-auto max-h-[1400px] w-[960px] mt-3 px-2 border rounded-lg bg-white overflow-auto">
+            <div className="h-auto w-[960px] mt-2 px-2 border rounded-lg bg-white">
               {/* display medium */}
-              <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 py-5 flex-col items-center overflow-auto">
+              <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 py-5 flex-col items-center">
                 <div className="flex items-center space-x-5 pr-16">
                   <div className="md:hidden h-[40px] w-[40px]" onClick={goBack}>
                     <Image
@@ -284,10 +291,17 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                       x: 0,
                       transition: { duration: 1, delay: 0.2 },
                     }}
-                    className="uppercase sm:text-lg md:text-2xl font-medium mb-2"
+                    className="uppercase sm:text-lg md:text-3xl font-medium mb-2"
                   >
                     Quản lý tin đăng
                   </motion.p>
+                </div>
+                <div className="h-auto w-full text-lg">
+                  <p>* Tin được duyệt sẽ hiển thị tối đa 30 ngày.</p>
+                  <p>* Tin bị từ chối hoặc được ẩn sẽ bị xóa sau 3 ngày</p>
+                  <p className="text-red-500">
+                    * Đẩy tin ưu tiên trong 7 ngày với 10.000đ
+                  </p>
                 </div>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
@@ -305,8 +319,8 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                           key={item_listFilter.id}
                           className={
                             isOpen !== item_listFilter.id
-                              ? `h-full min-w-[150px] flex items-center justify-center text-lg hover:border-b-2 hover:border-blue-600 cursor-pointer`
-                              : `h-full min-w-[150px] flex items-center justify-center text-lg border-b-4 border-blue-600 cursor-pointer`
+                              ? `h-full min-w-[150px] flex items-center justify-center text-xl hover:border-b-2 hover:border-blue-600 cursor-pointer`
+                              : `h-full min-w-[150px] flex items-center justify-center text-xl border-b-4 border-blue-600 cursor-pointer`
                           }
                           onClick={() => handleClickfilted(item_listFilter.id)}
                         >
@@ -459,7 +473,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                                     Xóa tin
                                   </button>
                                   <button
-                                    className="h-[40px] py-1 w-[140px] text-lg border border-gray-500 rounded-md hover:text-white hover:bg-green-500"
+                                    className="h-[40px] py-1 w-[140px] text-lg border border-gray-500 rounded-md hover:text-white hover:bg-mauxanhtroi"
                                     onClick={() =>
                                       handlebutton_daban(item.type, item._id)
                                     }

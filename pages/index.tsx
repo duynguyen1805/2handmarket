@@ -114,9 +114,7 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
-
       <Header />
-
       {/* Banner */}
       <div className="h-[320px] w-full flex items-center justify-center">
         <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-1 flex flex-col items-center justify-center">
@@ -223,8 +221,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
+      <Footer />;
     </div>
   );
 };

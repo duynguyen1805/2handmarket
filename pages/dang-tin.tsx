@@ -1006,9 +1006,11 @@ const Dang_tin = () => {
           </div>
           <div className="h-auto w-full flex items-center justify-center my-3">
             <div className="bg-white shadow-sm h-auto min-h-[570px] w-[960px] pb-5">
-              <p className="text-xl font-bold p-2">
-                Đăng tin sản phẩm bạn muốn bán
-              </p>
+              <div className=" p-2 py-3 w-full flex place-content-between items-center">
+                <p className="text-xl font-bold">
+                  Đăng tin sản phẩm bạn muốn bán
+                </p>
+              </div>
               <div className="h-auto w-full flex">
                 <div className="h-full w-[320px] px-2 space-y-2">
                   <p className="text-lg font-bold">Hình ảnh sản phẩm</p>

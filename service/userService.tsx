@@ -366,8 +366,7 @@ export async function API_getAllcollection() {
     const data = await response.data;
     return data;
   } catch (error) {
-    console.error(error);
-    throw new Error("Lỗi khi call API_getAllcollection");
+    console.error("Lỗi khi call API_getAllcollection userService: ", error);
   }
 }
 

@@ -18,6 +18,7 @@ import Link from "next/link";
 // import Modal_Addnewuser from "../components/modal/Modal_Addnewuser";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Cookies from "js-cookie";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -120,6 +121,7 @@ const Header = () => {
   };
   const Logout = () => {
     localStorage.clear();
+    Cookies.remove("jwt_token");
     window.location.reload();
     router.push("/");
   };

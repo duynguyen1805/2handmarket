@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 import item_danhmuc, {
   danhmuc,
@@ -80,6 +81,7 @@ const AdminDashboard = () => {
   }, []);
   const handleLogout = () => {
     localStorage.clear();
+    Cookies.remove("jwt_token");
     window.location.reload();
     router.push("/login");
   };
