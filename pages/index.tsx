@@ -58,7 +58,8 @@ const Home = () => {
         .slice()
         .sort(
           (a: any, b: any) =>
-            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+            new Date(b.ngayduyettin).getTime() -
+            new Date(a.ngayduyettin).getTime()
         );
       setTindang_ganday(sort_response);
     } catch (error) {

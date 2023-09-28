@@ -1,9 +1,12 @@
 CHƯA LÀM: (
--- còn authoritation
--- tin đăng ẩn trangthai: 4 kèm lydoantin: "ĐÃ BÁN" sẽ bị xóa sau 1 khoảng thời gian
--- tin đăng bị admin từ chối sẽ bị xóa sau 1 khoảng thời gian
--- tin đăng được quảng cáo ? ngày, làm sao xử lý khi hết tg quảng cáo
+-- authoritation tối ưu hơn
 -- responsive giao diện
+)
+Backend: (
+(1) -- tin đăng tối đa 30 ngày, kể từ ngày duyệt
+(2) -- tin đăng bị từ chối, xóa sau 3 ngày
+(3) -- tin do người dùng ẩn, xóa sau 3 ngày
+(2),(3) -- lưu timestamp riêng không liên quan 30 ngày
 )
 
 error: (

@@ -313,7 +313,9 @@ const DS_daduyet: React.FC<any> = ({
                   return `${weeks} tuần trước`;
                 }
               }
-              const thoigiandadang: string = tinhthoigiandadang(item.updatedAt);
+              let time: any =
+                item.trangthai == 3 ? item.updatedAt : item.ngayduyettin;
+              const thoigiandadang: string = tinhthoigiandadang(time);
 
               return (
                 <motion.div

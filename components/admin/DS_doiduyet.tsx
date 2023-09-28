@@ -224,7 +224,7 @@ const DS_doiduyet: React.FC<any> = ({
                 return `${weeks} tuần trước`;
               }
             }
-            const thoigiandadang: string = tinhthoigiandadang(item.createdAt);
+            const thoigiandadang: string = tinhthoigiandadang(item.updatedAt);
 
             return (
               <motion.div

@@ -45,7 +45,8 @@ const Phuong_tien = () => {
           .slice()
           .sort(
             (a: any, b: any) =>
-              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+              new Date(b.ngayduyettin).getTime() -
+              new Date(a.ngayduyettin).getTime()
           );
         setitemALLPhuongtien(sort_response);
       } else {
@@ -143,7 +144,7 @@ const Phuong_tien = () => {
                   }
                   onClick={() => setActiveTab(0)}
                 >
-                  Tất cả
+                  Gợi ý
                 </p>
                 <p
                   className={

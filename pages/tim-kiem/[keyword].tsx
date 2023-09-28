@@ -28,7 +28,8 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           .slice()
           .sort(
             (a: any, b: any) =>
-              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+              new Date(b.ngayduyettin).getTime() -
+              new Date(a.ngayduyettin).getTime()
           );
         set_kqSearch(sort_response);
         setTotalPages(response.totalPages);
@@ -69,9 +70,11 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
             </div>
           </div>
           <div className="h-[50px] w-full my-2 flex items-center justify-center">
-            <p className="w-[1440px] text-2xl">
-              Kết quả có: {kqSearch.length} tin đăng
-            </p>
+            <div className="w-[1440px] text-2xl flex items-end space-x-2">
+              <p>Kết quả</p>
+              <p className="text-xl font-bold">"{key_word}"</p>
+              <p>có: {kqSearch.length} tin đăng</p>
+            </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center">
             {/* max-h-2140px cho 6 hàng ngang */}

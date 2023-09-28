@@ -378,9 +378,12 @@ export async function API_get_soluongtin_Allcollection() {
 
 export async function API_getTindangbyIduser(id: string) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/get-tindang-by-id-user`, {
-      id,
-    });
+    const response = await axios.post(
+      `${BACKEND_URL}/get-tin-dang-by-id-user`,
+      {
+        id,
+      }
+    );
     const data = await response.data;
     return data;
   } catch (error) {
@@ -396,7 +399,7 @@ export async function API_updateStatusTindang(
 ) {
   try {
     const response = await axios.put(
-      `${BACKEND_URL}/update-status-tindang`,
+      `${BACKEND_URL}/admin/update-status-tindang`,
       build_data
     );
     const data = await response.data;

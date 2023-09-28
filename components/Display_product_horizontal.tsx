@@ -42,7 +42,7 @@ const Display_product_horizontal: React.FC<Props> = ({ item }) => {
       return `${weeks} tuần trước`;
     }
   }
-  const thoigiandadang: string = tinhthoigiandadang(item.updatedAt);
+  const thoigiandadang: string = tinhthoigiandadang(item.ngayduyettin);
 
   return (
     <motion.div

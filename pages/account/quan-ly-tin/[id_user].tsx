@@ -370,9 +370,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                         return `${weeks} tuần trước`;
                       }
                     }
-                    const thoigiandadang: string = tinhthoigiandadang(
-                      item.updatedAt
-                    );
+                    let time: any =
+                      item.trangthai == 1 || item.trangthai == 3
+                        ? item.updatedAt
+                        : item.ngayduyettin;
+                    const thoigiandadang: string = tinhthoigiandadang(time);
                     return (
                       <motion.div
                         key={index}

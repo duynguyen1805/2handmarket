@@ -47,7 +47,8 @@ const Do_dien_tu = () => {
           .slice()
           .sort(
             (a: any, b: any) =>
-              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+              new Date(b.ngayduyettin).getTime() -
+              new Date(a.ngayduyettin).getTime()
           );
         setitemALLDodientu(sort_response);
       } else {
