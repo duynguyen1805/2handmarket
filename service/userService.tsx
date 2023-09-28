@@ -4,18 +4,34 @@ import axios from "../utils/axios";
 // truy cập trên mobile thì thay localhost thành localhost (IP laptop)
 const BACKEND_URL = "http://localhost:4000" || process.env.BACKEND_URL;
 
+export async function Search_tindang_header(
+  keyword: string,
+  soluong: number,
+  pagehientai: number
+) {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/search-tindang-header`, {
+      keyword: keyword,
+      soluong: soluong,
+      pagehientai: pagehientai,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("call Search_tindang_header không thành công");
+  }
+}
+
 export async function Search_tindang_daduyet(
   keyword: string,
   typecollection: string
 ) {
   try {
-    const response = await axios.post(
-      `${BACKEND_URL}/admin/search-tindang-daduyet`,
-      {
-        keyword: keyword,
-        typecollection: typecollection,
-      }
-    );
+    const response = await axios.post(`${BACKEND_URL}/search-tindang-daduyet`, {
+      keyword: keyword,
+      typecollection: typecollection,
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -32,7 +48,7 @@ export async function API_register(
   role: string
 ) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/admin/register-user`, {
+    const response = await axios.post(`${BACKEND_URL}/register-user`, {
       account,
       password,
       name,
@@ -64,7 +80,7 @@ export async function API_login(account: string, password: string) {
 export async function API_Dangtin(id_user: any, type: string, item: object) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/create-dang-tin/${id_user}-${type}`,
+      `${BACKEND_URL}/create-dang-tin/${id_user}-${type}`,
       item
     );
     const data = await response.data;
@@ -87,7 +103,7 @@ export async function API_get_Dohoctap(
 ) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-do-hoc-tap`,
+      `${BACKEND_URL}/get-tin-dang-do-hoc-tap`,
       build_data
     );
     const data = await response.data;
@@ -110,7 +126,7 @@ export async function API_get_Dodientu(
 ) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-do-dien-tu`,
+      `${BACKEND_URL}/get-tin-dang-do-dien-tu`,
       build_data
     );
     const data = await response.data;
@@ -130,7 +146,7 @@ export async function API_get_Phuongtien(
 ) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-phuong-tien`,
+      `${BACKEND_URL}/get-tin-dang-phuong-tien`,
       build_data
     );
     const data = await response.data;
@@ -148,7 +164,7 @@ export async function API_get_Donoithat(
 ) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-do-noi-that`,
+      `${BACKEND_URL}/get-tin-dang-do-noi-that`,
       build_data
     );
     const data = await response.data;
@@ -167,7 +183,7 @@ export async function API_get_Dienlanh(
 ) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-dien-lanh`,
+      `${BACKEND_URL}/get-tin-dang-dien-lanh`,
       build_data
     );
     const data = await response.data;
@@ -181,7 +197,7 @@ export async function API_get_Dienlanh(
 export async function API_get_Docanhan(build_data: object) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-do-ca-nhan`,
+      `${BACKEND_URL}/get-tin-dang-do-ca-nhan`,
       build_data
     );
     const data = await response.data;
@@ -195,7 +211,7 @@ export async function API_get_Docanhan(build_data: object) {
 export async function API_get_Dogiaitri(build_data: object) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-do-giai-tri`,
+      `${BACKEND_URL}/get-tin-dang-do-giai-tri`,
       build_data
     );
     const data = await response.data;
@@ -209,7 +225,7 @@ export async function API_get_Dogiaitri(build_data: object) {
 export async function API_get_Thucung(build_data: object) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-thu-cung`,
+      `${BACKEND_URL}/get-tin-dang-thu-cung`,
       build_data
     );
     const data = await response.data;
@@ -220,18 +236,18 @@ export async function API_get_Thucung(build_data: object) {
   }
 }
 
-export async function API_getProductbyId(type: string | null, id: string) {
+export async function API_getTindangbyId(type: string | null, id: string) {
   //type: dienthoai, laptop, ..., xemay, oto,...
   try {
-    const response = await axios.post(
-      `${BACKEND_URL}/admin/get-product-by-id`,
-      { type, id }
-    );
+    const response = await axios.post(`${BACKEND_URL}/get-tin-dang-by-id`, {
+      type,
+      id,
+    });
     const data = await response.data;
     return data; //data.TableTypes
   } catch (error) {
     console.error(error);
-    throw new Error("Lỗi khi call API getAllProduct");
+    throw new Error("Lỗi khi call API_getTindangbyId");
   }
 }
 
@@ -248,7 +264,7 @@ export async function API_getAllUser() {
 
 export async function API_getUserbyID(id: string) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/admin/get-user-by-id`, {
+    const response = await axios.post(`${BACKEND_URL}/get-user-by-id`, {
       id,
     });
     const data = await response.data;
@@ -261,10 +277,7 @@ export async function API_getUserbyID(id: string) {
 
 export async function API_updateUser(object: any) {
   try {
-    const response = await axios.put(
-      `${BACKEND_URL}/admin/update-user`,
-      object
-    );
+    const response = await axios.put(`${BACKEND_URL}/update-user`, object);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -299,30 +312,12 @@ export async function API_deleteTindang(type: string, id: any) {
   }
 }
 
-export async function API_updateProduct(
-  type: string,
-  id: any,
-  dataUpdate: object
-) {
-  try {
-    const response = await axios.put(
-      `${BACKEND_URL}/admin/product/${type}/${id}`,
-      dataUpdate
-    );
-    const data = await response.data;
-    return data; //data.TableTypes
-  } catch (error) {
-    console.error(error);
-    throw new Error("Lỗi khi call API_updateProduct");
-  }
-}
-
 // lấy typeSP (name: Phân bón, type: phanbon, content: noidung đầu trang mỗi loại sản phẩm)
 export async function API_getTypeSP_content(type: string) {
   try {
     const response = await axios.post(
-      // "${BACKEND_URL}/admin/get-type-product",
-      `${BACKEND_URL}/admin/get-type-product`,
+      // "${BACKEND_URL}/get-type-product",
+      `${BACKEND_URL}/get-type-product`,
       { type }
     );
     const data = await response.data.typeProduct;
@@ -343,7 +338,7 @@ export async function API_Order(
   formatedDate: string
 ) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/admin/create-order`, {
+    const response = await axios.post(`${BACKEND_URL}/create-order`, {
       id_User: id_User,
       name_User: name_User,
       account_User: account_User,
@@ -362,7 +357,7 @@ export async function API_Order(
 
 export async function API_getAllcollection() {
   try {
-    const response = await axios.get(`${BACKEND_URL}/admin/get-all-collection`);
+    const response = await axios.get(`${BACKEND_URL}/get-all-collection`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -372,7 +367,7 @@ export async function API_getAllcollection() {
 
 export async function API_get_soluongtin_Allcollection() {
   try {
-    const response = await axios.get(`${BACKEND_URL}/admin/get-all-soluongtin`);
+    const response = await axios.get(`${BACKEND_URL}/get-all-soluongtin`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -383,10 +378,9 @@ export async function API_get_soluongtin_Allcollection() {
 
 export async function API_getTindangbyIduser(id: string) {
   try {
-    const response = await axios.post(
-      `${BACKEND_URL}/admin/get-tindang-by-id-user`,
-      { id }
-    );
+    const response = await axios.post(`${BACKEND_URL}/get-tindang-by-id-user`, {
+      id,
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -402,7 +396,7 @@ export async function API_updateStatusTindang(
 ) {
   try {
     const response = await axios.put(
-      `${BACKEND_URL}/admin/update-status-tindang`,
+      `${BACKEND_URL}/update-status-tindang`,
       build_data
     );
     const data = await response.data;
@@ -420,7 +414,7 @@ export async function API_Antin(
 ) {
   try {
     const response = await axios.put(
-      `${BACKEND_URL}/admin/update-status-antin-by-user`,
+      `${BACKEND_URL}/update-status-antin-by-user`,
       build_data
     );
     const data = await response.data;
@@ -437,7 +431,7 @@ export async function API_Capnhat_trangthai_thanhtoan(
 ) {
   try {
     const response = await axios.put(
-      `${BACKEND_URL}/admin/update-status-thanhtoan`,
+      `${BACKEND_URL}/update-status-thanhtoan`,
       build_data
     );
     const data = await response.data;
@@ -450,7 +444,7 @@ export async function API_Capnhat_trangthai_thanhtoan(
 
 export async function API_cancelOrder(id: string) {
   try {
-    const response = await axios.put(`${BACKEND_URL}/admin/cancel-order/${id}`);
+    const response = await axios.put(`${BACKEND_URL}/cancel-order/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -461,9 +455,7 @@ export async function API_cancelOrder(id: string) {
 
 export async function API_deleteOrder(id: string) {
   try {
-    const response = await axios.delete(
-      `${BACKEND_URL}/admin/delete-order/${id}`
-    );
+    const response = await axios.delete(`${BACKEND_URL}/delete-order/${id}`);
     const data = await response.data;
     return data;
   } catch (error) {
@@ -475,7 +467,7 @@ export async function API_deleteOrder(id: string) {
 export async function API_createHistoryOrder(item: any) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/create-history-order`,
+      `${BACKEND_URL}/create-history-order`,
       item
     );
     const data = await response.data;
@@ -488,9 +480,7 @@ export async function API_createHistoryOrder(item: any) {
 
 export async function API_getAllHistoryOrder() {
   try {
-    const response = await axios.get(
-      `${BACKEND_URL}/admin/get-all-history-order`
-    );
+    const response = await axios.get(`${BACKEND_URL}/get-all-history-order`);
     const data = await response.data.history_order;
     return data;
   } catch (error) {
@@ -502,7 +492,7 @@ export async function API_getAllHistoryOrder() {
 export async function API_deleteHistoryOrder_Admin(id: any) {
   try {
     const response = await axios.delete(
-      `${BACKEND_URL}/admin/delete-history-order-admin/${id}`
+      `${BACKEND_URL}/delete-history-order-admin/${id}`
     );
     const data = await response.data;
     return data;
@@ -515,7 +505,7 @@ export async function API_deleteHistoryOrder_Admin(id: any) {
 export async function API_getHistoryOrderbyDate(time_order: string | any) {
   try {
     const response = await axios.post(
-      `${BACKEND_URL}/admin/get-history-order-by-date`,
+      `${BACKEND_URL}/get-history-order-by-date`,
       { time_order }
     );
     const data = await response.data;
@@ -528,7 +518,7 @@ export async function API_getHistoryOrderbyDate(time_order: string | any) {
 
 export async function API_searchProduct(keyword: string) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/admin/search-product`, {
+    const response = await axios.post(`${BACKEND_URL}/search-product`, {
       keyword: keyword,
     });
     const data = await response.data;

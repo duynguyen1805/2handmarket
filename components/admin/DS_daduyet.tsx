@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import {
+  API_deleteTindang,
   API_get_Dienlanh,
   API_get_Docanhan,
   API_get_Dodientu,
@@ -229,6 +230,21 @@ const DS_daduyet: React.FC<any> = ({
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+  };
+
+  const handleXoatindang = async (type: string, id: string) => {
+    try {
+      const response = await API_deleteTindang(type, id);
+      if (response) {
+        {
+          response.errCode === 0 &&
+            toast.success(response.message) &&
+            fetchDataProduct();
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -797,6 +813,14 @@ const DS_daduyet: React.FC<any> = ({
           {/* Ẩn tin */}
           <div className="h-auto w-auto sticky bottom-0">
             <div className="relative h-[50px] w-full flex">
+              {(item.trangthai == 3 || item.trangthai == 4) && (
+                <div
+                  className="h-full w-[100%] bg-red-500 text-xl text-white cursor-pointer rounded-md hover:bg-red-600 flex items-center justify-center"
+                  onClick={() => handleXoatindang(item.type, item._id)}
+                >
+                  <p>Xóa tin</p>
+                </div>
+              )}
               {item.trangthai == 2 && (
                 <div
                   className="h-full w-[100%] bg-red-500 text-xl text-white cursor-pointer rounded-md hover:bg-red-600 flex items-center justify-center"

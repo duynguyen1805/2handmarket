@@ -118,7 +118,7 @@ const ManageUser = () => {
                             handleDeleteUser(item._id);
                           }}
                         >
-                          Xóa
+                          Xóa tài khoản
                         </button>
                       </div>
                     </td>

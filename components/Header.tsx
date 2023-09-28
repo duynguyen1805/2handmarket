@@ -43,13 +43,14 @@ const Header = () => {
     role: string;
     avatar: string;
   };
-  const [datainforUser, setdatainforUser] = useState<any>();
+  const [datainforUser, setdatainforUser] = useState<any>(null);
 
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
+    const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token) {
+    if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
@@ -59,11 +60,16 @@ const Header = () => {
       const jwt_secret: Secret = jwt_key;
       try {
         const decoded = jwt.verify(parse_token, jwt_secret);
-        setdatainforUser(decoded);
+        const decoded_cookie = jwt.verify(token_cookie, jwt_secret);
+        if (decoded && decoded_cookie) {
+          setdatainforUser(decoded);
+        }
       } catch (error) {
         console.log("Lỗi decoded token: ", error);
         setdatainforUser(null);
       }
+    } else {
+      setdatainforUser(null);
     }
   }, []);
 
@@ -127,7 +133,8 @@ const Header = () => {
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      handleSearch(searchValue);
+      // handleSearch(searchValue);
+      handle_ClickSearch_pushnewpage();
     }
   };
 
@@ -153,7 +160,11 @@ const Header = () => {
     const value = event.target.value;
     setSearchValue(value);
     setisClickSearch(false);
-    handleSearch(value);
+    // handleSearch(value);
+  };
+
+  const handle_ClickSearch_pushnewpage = () => {
+    router.push({ pathname: `/tim-kiem/${searchValue}` });
   };
 
   return (
@@ -177,7 +188,8 @@ const Header = () => {
                   onKeyDown={handleKeyDown}
                 />
                 <button
-                  onClick={() => handleSearch(searchValue)}
+                  disabled={!searchValue}
+                  onClick={() => handle_ClickSearch_pushnewpage()}
                   className="text-black w-[20%] h-10 bg-[#e9ecef] text-lg cursor-pointer rounded-tr-[10px] rounded-br-[10px] border-[unset] outline-none hover:bg-blue-300 hover:text-white"
                 >
                   Tìm
@@ -235,17 +247,15 @@ const Header = () => {
             </div>
             {/* login logout */}
             <div className="h-auto w-[25%] flex items-center justify-center gap-2 cursor-pointer">
-              {!datainforUser?.name ? (
+              {(!datainforUser || datainforUser == null) && (
                 <Image
                   src={user}
                   alt="icon"
                   className="h-[25px] w-[25px] cursor-pointer icon-white"
                   onClick={handleClickUser}
                 />
-              ) : (
-                <></>
               )}
-              {!datainforUser?.name ? (
+              {(!datainforUser || datainforUser == null) && (
                 <div className="h-auto w-[100px] text-white ml-1 sm:hidden md:block">
                   <div
                     className=" hover:opacity-80 cursor-pointer"
@@ -260,7 +270,8 @@ const Header = () => {
                     Đăng ký
                   </div>
                 </div>
-              ) : (
+              )}
+              {datainforUser && datainforUser !== null && (
                 <div className="relative">
                   <button
                     type="button"

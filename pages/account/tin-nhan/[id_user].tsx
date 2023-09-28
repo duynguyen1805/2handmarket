@@ -38,6 +38,7 @@ import {
 import { db } from "../../../firebase.config";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 interface infodetailProps {
   id_user: string;
@@ -59,8 +60,9 @@ const Tin_nhan = ({
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const token: any = localStorage.getItem("token");
+    const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token) {
+    if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
       if (!jwt_key) {
         throw new Error(

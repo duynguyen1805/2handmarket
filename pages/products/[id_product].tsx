@@ -42,9 +42,10 @@ import icon_chogioitinh from "../../assets/icon/ic_thongsokythuat/icon_loaidocan
 import icon_loainhaccu from "../../assets/icon/ic_thongsokythuat/icon_loaithietbi.png";
 
 import { GetServerSideProps } from "next";
-import { API_getProductbyId } from "@/service/userService";
+import { API_getTindangbyId } from "@/service/userService";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 interface CodeProductProps {
   id_product: string;
@@ -99,11 +100,10 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
 
   useEffect(() => {
     fetchDataProduct();
-    // console.log("check query:", type, id_product);
   }, []);
   const fetchDataProduct = async () => {
     try {
-      const response = await API_getProductbyId(type, id_product);
+      const response = await API_getTindangbyId(type, id_product);
       console.log("check response: ", response);
       setItem(response.dataItem[0]);
       setInfoClient(response.userInfo[0]);
@@ -118,8 +118,9 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const token: any = localStorage.getItem("token");
+    const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token) {
+    if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
       if (!jwt_key) {
         throw new Error(

@@ -106,6 +106,7 @@ import Button_thanhtoanMomo from "@/components/thanhtoan/Button_thanhtoanMomo";
 import router from "next/router";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
@@ -595,8 +596,9 @@ const Dang_tin = () => {
   const [datainforUser, setdatainforUser] = useState<any>();
   useEffect(() => {
     const token: any = localStorage.getItem("token");
+    const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token) {
+    if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
