@@ -5,6 +5,7 @@ require("dotenv").config();
 import { MyContextProvider } from "../contexts/MyContext";
 import { Provider } from "react-redux";
 import store from "../store/store";
+import Nav_mobile from "@/components/Nav_mobile";
 
 // export default function App({ Component, pageProps }: AppProps) {
 //   return (
@@ -19,6 +20,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     <Provider store={store}>
       <MyContextProvider>
         <Component {...pageProps} />
+        <Nav_mobile />
       </MyContextProvider>
     </Provider>
   );

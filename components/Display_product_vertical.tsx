@@ -53,7 +53,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className="h-[330px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
+      className="sm:h-[330px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
       <div className="h-[210px] w-full flex justify-center">
@@ -62,12 +62,14 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
           style={{ backgroundImage: `url(${item.img[0]})` }}
         ></div>
       </div>
-      <p className="h-[60px] w-full text-xl overflow-hidden">{item.tieude}</p>
-      <p className="h-[25px] w-full text-lg font-bold text-red-500">
+      <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
+        {item.tieude}
+      </p>
+      <p className="h-[25px] w-full sm:text-base md:text-lg font-bold text-red-500">
         {item.price.toLocaleString("vi-VN")} đ
       </p>
-      <p className="h-[25px] w-full text-lg font-thin">
-        {thoigiandadang} - Cần Thơ
+      <p className="h-[25px] w-full sm:text-base md:text-lg font-thin">
+        {thoigiandadang}
       </p>
     </motion.div>
   );

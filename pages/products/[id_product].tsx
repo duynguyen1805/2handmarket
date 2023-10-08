@@ -254,10 +254,10 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   <p className="h-full w-auto text-xl flex items-center font-bold text-red-500">
                     {item.price?.toLocaleString("vi-VN")} đ
                   </p>
-                  <div className="h-auto w-auto px-5 py-1 text-xl flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
+                  {/* <div className="h-auto w-auto px-5 py-1 text-xl flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
                     {" "}
                     Lưu tin
-                  </div>
+                  </div> */}
                 </div>
                 {/* mô tả sản phẩm */}
                 <p className="w-full text-lg font-bold mb-2">Mô tả chi tiết</p>

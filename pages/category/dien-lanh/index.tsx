@@ -20,6 +20,7 @@ import item_danhmuc, {
 } from "../../../components/obj_data_raw/Danhmuc_raw";
 import Display_product_vertical from "@/components/Display_product_vertical";
 import { API_get_Dienlanh } from "@/service/userService";
+import Link from "next/link";
 
 const danhmuc_main: any[] = item_danhmuc[4].sub_danhmuc;
 
@@ -60,6 +61,46 @@ const Dien_lanh = () => {
       console.error("Error fetching data:", error);
     }
   };
+  const settings_slider = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: false,
+    delay: 300,
+    responsive: [
+      {
+        breakpoint: 1024, // < 1024
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 767, // < 767
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 375, // < 375
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+
+          dots: true,
+        },
+      },
+    ],
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -72,15 +113,21 @@ const Dien_lanh = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Đồ điện lạnh
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Điện lạnh</p>
+              </div>
             </div>
           </div>
           <div className="text-lg font-bold w-full flex items-center justify-center mt-2">
@@ -92,51 +139,54 @@ const Dien_lanh = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full sm:w-auto md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 pt-2">
               <p className="h-[50px] flex items-center text-2xl font-bold">
                 Khám phá đa dạng tủ lạnh, máy giặt, máy lạnh
               </p>
               <div className="h-[140px] w-full pt-3">
-                <div className="h-full w-full flex">
-                  {danhmuc_main &&
-                    danhmuc_main.map((item: sub_danhmuc) => {
-                      return (
-                        <div
-                          key={item.key}
-                          className="h-full w-[150px]"
-                          onClick={() => router.push(`${item.link}`)}
-                        >
-                          <div className="h-[70px] w-full flex items-center justify-center">
-                            <div className="h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300">
-                              <Image
-                                src={
-                                  (item.key === 1 && icon_tulanh) ||
-                                  (item.key === 2 && icon_maygiat) ||
-                                  (item.key === 3 && icon_maylanh)
-                                }
-                                alt="icon"
-                                className="h-[50px] w-[50px] cursor-pointer"
-                              />
+                <div className="h-full w-full">
+                  <Slider {...settings_slider}>
+                    {danhmuc_main &&
+                      danhmuc_main.map((item: sub_danhmuc) => {
+                        return (
+                          <div
+                            key={item.key}
+                            className="h-full w-[150px]"
+                            onClick={() => router.push(`${item.link}`)}
+                          >
+                            <div className="h-[70px] w-full flex items-center justify-center">
+                              <div className="h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300">
+                                <Image
+                                  src={
+                                    (item.key === 1 && icon_tulanh) ||
+                                    (item.key === 2 && icon_maygiat) ||
+                                    (item.key === 3 && icon_maylanh)
+                                  }
+                                  alt="icon"
+                                  className="h-[50px] w-[50px] cursor-pointer"
+                                />
+                              </div>
                             </div>
+                            <p className="h-[40px] w-full text-2xl flex justify-center cursor-pointer p-1">
+                              {item.label}
+                            </p>
                           </div>
-                          <p className="h-[40px] w-full text-2xl flex justify-center cursor-pointer p-1">
-                            {item.label}
-                          </p>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </Slider>
                 </div>
               </div>
             </div>
           </div>
+          {/* List tin */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto max-h-[2110px] w-[1440px] p-2">
+            <div className="bg-white shadow-sm h-auto w-full lg:w-[1440px] lg:max-h-[2110px] sm:max-h-[4220px] max-w-[1440px] p-2">
               <div className="h-[50px] w-[50%] flex mb-3">
                 <p
                   className={
                     active_tab_filter === 0
-                      ? "h-full w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(0)}
                 >
@@ -145,15 +195,15 @@ const Dien_lanh = () => {
                 <p
                   className={
                     active_tab_filter === 1
-                      ? "h-full w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(1)}
                 >
                   Mới đăng
                 </p>
               </div>
-              <div className="max-h-[2110px] flex flex-wrap gap-[10px]">
+              <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
                 {itemALLDienlanh &&
                   itemALLDienlanh.map((item: any, index: any) => {
                     return (

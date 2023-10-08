@@ -84,7 +84,7 @@ const AdminDashboard = () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
     window.location.reload();
-    router.push("/login");
+    router.push("/");
   };
 
   const [list_soluongtin_daduyet, setlist_soluongtin_daduyet] = useState<any[]>(
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
                   className="md:hidden lg:flex w-full items-center justify-center pt-5"
                 >
                   <p className="bg-white h-full w-[200px] p-2 text-lg text-red-500 rounded-md hover:bg-red-500 hover:text-white">
-                    Logout
+                    Đăng xuất
                   </p>
                 </button>
               </div>

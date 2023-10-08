@@ -3,6 +3,7 @@ require("dotenv").config();
 import axios from "../utils/axios";
 // truy cập trên mobile thì thay localhost thành localhost (IP laptop)
 const BACKEND_URL = "http://localhost:4000" || process.env.BACKEND_URL;
+// const BACKEND_URL = "http://192.168.1.6:4000";
 
 export async function Search_tindang_header(
   keyword: string,
@@ -444,6 +445,7 @@ export async function API_Capnhat_trangthai_thanhtoan(
     throw new Error("Lỗi khi call API_Capnhat_trangthai_thanhtoan");
   }
 }
+//-------------------------------------------------------------------------------
 
 export async function API_cancelOrder(id: string) {
   try {
@@ -516,18 +518,5 @@ export async function API_getHistoryOrderbyDate(time_order: string | any) {
   } catch (error) {
     console.error(error);
     throw new Error("Lỗi khi call API_getHistoryOrderbyDate");
-  }
-}
-
-export async function API_searchProduct(keyword: string) {
-  try {
-    const response = await axios.post(`${BACKEND_URL}/search-product`, {
-      keyword: keyword,
-    });
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Lỗi khi call API getAllProduct");
   }
 }

@@ -12,6 +12,7 @@ import Display_product_horizontal from "@/components/Display_product_horizontal"
 import { API_get_Dodientu } from "@/service/userService";
 import ReactPaginate from "react-paginate";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
+import Link from "next/link";
 
 const Tb_deo_thong_minh = () => {
   const [itemThietbideothongminh, setitemThietbideothongminh] = useState<any[]>(
@@ -96,15 +97,21 @@ const Tb_deo_thong_minh = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Đồ điện tử / Thiết bị đeo thông minh
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Đồ điện tử / Thiết bị đeo thông minh</p>
+              </div>
             </div>
           </div>
           <div className="text-lg font-bold w-full flex items-center justify-center mt-2">
@@ -176,7 +183,7 @@ const Tb_deo_thong_minh = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[355px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:min-w-full lg:min-w-[1440px] lg:max-h-[2140px] sm:max-h-[4280] max-w-[1440px] flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemThietbideothongminh &&
                 itemThietbideothongminh.map((item: any, index: any) => {
                   return (

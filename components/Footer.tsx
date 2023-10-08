@@ -9,13 +9,13 @@ const Footer = () => {
   const [open_gmail, setOpen_gmail] = useState(false);
 
   return (
-    <div className=" h-auto sm:w-[100%] bg-gray-100">
+    <div className=" h-auto sm:w-[100%] bg-gray-100 sm:pb-[60px] md:pb-0">
       <div className="h-auto w-full flex items-center justify-center">
         <div className="h-auto w-[990px] bg-gray-100 flex justify-center text-lg p-1">
-          <p className="h-[50px] w-auto flex items-center">
-            Liên hệ hỗ trợ - đóng góp ý kiến:
+          <p className="h-[40px] w-auto flex items-center text-center">
+            Liên hệ hỗ trợ - đóng góp:
           </p>
-          <div className="ml-4 h-[50px] w-auto flex items-center">
+          <div className="ml-4 h-[40px] w-auto flex items-center">
             <a
               href="https://www.facebook.com/tdn.sb"
               target="_blank"
@@ -28,7 +28,7 @@ const Footer = () => {
               />
             </a>
           </div>
-          <div className="relative ml-4 h-[50px] w-auto flex items-center">
+          <div className="relative ml-4 h-[40px] w-auto flex items-center">
             <Image
               src={gmail}
               alt="Mail cá nhân"
@@ -43,7 +43,7 @@ const Footer = () => {
                 exit={{
                   opacity: 0,
                 }}
-                className="absolute left-10 bg-black text-white px-2 py-1 rounded-md"
+                className="absolute lg:left-10 md:left-[-250%] bg-black text-white px-2 py-1 rounded-md"
               >
                 duynguyenqwert@gmail.com
               </motion.div>

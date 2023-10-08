@@ -8,13 +8,16 @@ import Footer from "@/components/Footer";
 import Danhmuc from "@/components/Danhmuc";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Display_product_vertical from "@/components/Display_product_vertical";
+import router from "next/router";
+import { useMyContext } from "@/contexts/MyContext";
 
 interface Timkiem_Props {
   keyword: string;
 }
 
 const Keyword = ({ keyword }: Timkiem_Props) => {
-  const [key_word, setKeyword] = useState<string>(keyword);
+  //lấy usecontext
+  const { keyword_search, setKeywordSearch } = useMyContext();
   const [kqSearch, set_kqSearch] = useState<any>([]);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
@@ -23,7 +26,11 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
   useEffect(() => {
     const fetch_search_header = async () => {
       try {
-        const response = await Search_tindang_header(key_word, 36, pagehientai);
+        const response = await Search_tindang_header(
+          keyword_search,
+          36,
+          pagehientai
+        );
         const sort_response = response.resultSearch
           .slice()
           .sort(
@@ -38,7 +45,7 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
       }
     };
     fetch_search_header();
-  }, [keyword, pagehientai]);
+  }, [keyword_search, pagehientai]);
 
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
@@ -56,7 +63,7 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] sm:pt-[50px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
@@ -72,13 +79,13 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           <div className="h-[50px] w-full my-2 flex items-center justify-center">
             <div className="w-[1440px] text-2xl flex items-end space-x-2">
               <p>Kết quả</p>
-              <p className="text-xl font-bold">"{key_word}"</p>
+              <p className="text-xl font-bold">"{keyword_search}"</p>
               <p>có: {kqSearch.length} tin đăng</p>
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center">
             {/* max-h-2140px cho 6 hàng ngang */}
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto w-full min-h-[360px] max-h-[2140px] lg:max-w-[1440px] flex flex-wrap gap-[10px] px-2 py-3">
               {kqSearch &&
                 kqSearch.map((item: any, index: any) => {
                   return (

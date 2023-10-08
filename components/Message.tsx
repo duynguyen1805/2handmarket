@@ -21,6 +21,7 @@ import { db } from "../firebase.config";
 import Gallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import router from "next/router";
+import left_back from "../assets/icon/left-arrow.png";
 
 const Message = ({
   id_current_user,
@@ -29,6 +30,7 @@ const Message = ({
   id_receiver,
   userName_receiver,
   avatar_receiver,
+  setSelectedUser,
 }: any) => {
   // xử lý chọn ảnh
   async function getBase64(file: any) {
@@ -254,6 +256,16 @@ const Message = ({
     <>
       <div className="h-[90px] w-full flex items-center space-x-2 px-2 border-b border-gray-300 cursor-pointer">
         <div
+          className="sm:flex md:hidden h-full w-[40px] items-center"
+          onClick={() => setSelectedUser(undefined)}
+        >
+          <Image
+            src={left_back}
+            alt="icon"
+            className="h-[25px] w-[25px] cursor-pointer"
+          />
+        </div>
+        <div
           className="h-[60px] w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
           style={{
             backgroundImage: `url(${avatar_receiver})`,
@@ -273,10 +285,10 @@ const Message = ({
           </div>
         </div>
       </div>
-      <div className="relative h-[630px] w-full">
+      <div className="relative sm:h-[551px] md:h-[630px] w-full">
         <div
           ref={chatContainerRef}
-          className="h-[630px] w-full px-2 py-1 mb-1 overflow-auto"
+          className="sm:h-[551px] md:h-[630px] w-full px-2 py-1 mb-1 overflow-auto"
         >
           {messages &&
             messages.map((message: any, index: number) => {
@@ -364,7 +376,7 @@ const Message = ({
               );
             })}
         </div>
-        <div className="absolute top-[532px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
+        <div className="absolute sm:top-[450px] md:top-[532px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
           {reviewImg_arr !== null && reviewImg_arr !== "" ? (
             reviewImg_arr?.map((item_img: any, index: number) => {
               return (

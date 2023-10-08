@@ -198,6 +198,7 @@ const Dang_tin = () => {
   const handleopenKhoaTruong = () => {
     setopenKhoaTruong(!openKhoaTruong);
     setopenNganh(false);
+    // setErr_miss_input(false);
   };
   const setSelectTruongKhoa = (item: truong) => {
     settitleKhoaTruong(item.label);
@@ -594,6 +595,7 @@ const Dang_tin = () => {
     role: string;
   };
   const [datainforUser, setdatainforUser] = useState<any>();
+  // const [err_miss_input, setErr_miss_input] = useState<boolean>(false);
   useEffect(() => {
     const token: any = localStorage.getItem("token");
     const token_cookie: any = Cookies.get("jwt_token");
@@ -630,7 +632,8 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
+        // setErr_miss_input(true);
       }
     }
     if (typeDanhmucChitiet === "dienthoai") {
@@ -645,7 +648,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "maytinhbang") {
@@ -660,7 +663,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "laptop") {
@@ -675,7 +678,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "desktop") {
@@ -690,7 +693,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "mayanh") {
@@ -705,7 +708,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "thietbideothongminh") {
@@ -720,7 +723,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "phukien") {
@@ -735,7 +738,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "linhkien") {
@@ -750,7 +753,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "oto") {
@@ -772,7 +775,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "xemay") {
@@ -818,7 +821,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "xedien") {
@@ -833,7 +836,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "xedap") {
@@ -848,7 +851,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "phutung") {
@@ -863,7 +866,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmuc === "donoithat") {
@@ -878,7 +881,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "tulanh") {
@@ -893,7 +896,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "maylanh") {
@@ -908,7 +911,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmucChitiet === "maygiat") {
@@ -923,7 +926,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmuc === "dodungcanhan") {
@@ -938,7 +941,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmuc === "dogiaitri") {
@@ -953,7 +956,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
     if (typeDanhmuc === "thucung") {
@@ -968,7 +971,7 @@ const Dang_tin = () => {
           resetState();
         }
       } else {
-        toast.error("Thiếu thông tin bắt buộc. Vui lòng kiểm tra lại.");
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
       }
     }
   };
@@ -982,7 +985,7 @@ const Dang_tin = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -995,11 +998,11 @@ const Dang_tin = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] sm:pt-[60px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[960px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full w-[960px] bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Đăng tin
@@ -1007,16 +1010,16 @@ const Dang_tin = () => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center my-3">
-            <div className="bg-white shadow-sm h-auto min-h-[570px] w-[960px] pb-5">
+            <div className="bg-white shadow-sm h-auto min-h-[570px] w-auto sm:w-full lg:max-w-[960px] pb-5">
               <div className=" p-2 py-3 w-full flex place-content-between items-center">
                 <p className="text-xl font-bold">
                   Đăng tin sản phẩm bạn muốn bán
                 </p>
               </div>
-              <div className="h-auto w-full flex">
-                <div className="h-full w-[320px] px-2 space-y-2">
+              <div className="h-auto w-full flex sm:flex-col md:items-center lg:flex-row lg:items-start">
+                <div className="h-full sm:w-full md:w-[320px] px-2 space-y-2">
                   <p className="text-lg font-bold">Hình ảnh sản phẩm</p>
-                  <div className="h-[230px] w-full border border-dotted border-blue-500">
+                  <div className="lg:h-[230px] sm:h-[130px] w-full border border-dotted border-blue-500">
                     <div className="h-full w-full relative overflow-hidden">
                       <input
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -1077,7 +1080,7 @@ const Dang_tin = () => {
                     )}
                   </div>
                 </div>
-                <div className="h-auto w-[640px] px-2 space-y-3">
+                <div className="h-auto sm:w-full md:w-[640px] px-2 space-y-3">
                   {/* chọn danh mục */}
                   <div className="relative">
                     <div className="mb-2 px-1 flex">
@@ -1115,7 +1118,6 @@ const Dang_tin = () => {
                           className="w-[24px] h-[24px] mr-2"
                         />
                       )}
-
                       {titleDanhmuc}
                     </div>
                     {openDanhmuc && (
@@ -1954,7 +1956,6 @@ const Dang_tin = () => {
                         >
                           Đăng tin
                         </div>
-                        {/* <Button_thanhtoanMomo /> */}
                       </div>
                     </>
                   )}

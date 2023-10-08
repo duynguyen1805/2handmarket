@@ -50,7 +50,7 @@ const NavbarDropdown: React.FC = () => {
       </button>
       {isOpen && (
         <motion.div
-          className="absolute sm:h-[500px] sm:w-[200px] md:h-[770px] lg:h-[710px] md:w-[620px] lg:w-[900px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-10"
+          className="absolute sm:h-[600px] sm:w-[250px] md:h-[710px] lg:h-[710px] md:w-[700px] lg:w-[910px] left-0 mt-2 py-2 px-2 flex flex-wrap bg-white border border-gray-400 rounded-md shadow-2xl z-10 sm:overflow-auto lg:overflow-hidden"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.3 } }}
           exit={{
@@ -62,7 +62,7 @@ const NavbarDropdown: React.FC = () => {
               return (
                 <div
                   key={item_main.key}
-                  className="sm:h-[200px] md:h-[400px] w-[220px] flex flex-col"
+                  className="md:min-h-[300px] lg:h-[400px] w-[220px] flex flex-col"
                 >
                   <a
                     href={item_main.link}

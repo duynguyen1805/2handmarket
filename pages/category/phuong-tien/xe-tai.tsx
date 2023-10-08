@@ -26,11 +26,11 @@ import ReactPaginate from "react-paginate";
 import item_listxetai, {
   xetai,
 } from "../../../components/obj_data_raw/List_Xetai";
-import Display_product_horizontal from "@/components/Display_product_horizontal";
 import { API_get_Phuongtien } from "@/service/userService";
 import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien";
 import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
+import Link from "next/link";
 
 const list_xetai: xetai[] = item_listxetai;
 
@@ -46,28 +46,28 @@ const Xe_tai = () => {
     delay: 300,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // < 1024
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 5,
+          slidesToScroll: 4,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 700,
+        breakpoint: 767, // < 767
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 4,
+          slidesToScroll: 2,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 530,
+        breakpoint: 375, // < 375
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 4,
+          slidesToScroll: 2,
           infinite: true,
           dots: true,
         },
@@ -186,16 +186,22 @@ const Xe_tai = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between p-1 rounded-lg shadow-md">
-              <div className="flex items-end h-full w-auto">
+            <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
+              <div className="flex items-center h-full w-auto">
                 <Danhmuc />
-                <p className="h-full w-auto flex items-center ml-3">
-                  Trang chủ / Phương tiện / Xe tải
-                </p>
+                <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                  <Link
+                    href="/"
+                    className="cursor-pointer hover:text-mauxanhtroi"
+                  >
+                    Trang chủ
+                  </Link>{" "}
+                  <p>/ Phương tiện / Xe tải</p>
+                </div>
               </div>
               <div
                 className="relative h-full w-auto flex items-center space-x-2 px-3 rounded-md bg-white text-mauxanhtroi border border-mauxanhtroi cursor-pointer hover:opacity-80"
@@ -222,7 +228,7 @@ const Xe_tai = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
                 <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá Xe tải nhiều hãng đa dạng
@@ -277,7 +283,7 @@ const Xe_tai = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto  min-h-[355px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-x-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:min-w-full lg:min-w-[1440px] lg:max-h-[2140px] sm:max-h-[4280] max-w-[1440px] flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemXetai &&
                 itemXetai.map((item: any, index: any) => {
                   return (

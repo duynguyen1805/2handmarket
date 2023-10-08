@@ -24,6 +24,7 @@ import item_danhmuc, {
 } from "../../components/obj_data_raw/Danhmuc_raw";
 import { API_get_Thucung } from "@/service/userService";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
+import Link from "next/link";
 
 const danhmuc_main: any[] = item_danhmuc[7].sub_danhmuc;
 
@@ -94,6 +95,45 @@ const Thu_cung = () => {
     const selected = event.selected + 1;
     setpagehientai(selected);
   };
+  const settings_slider = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: false,
+    delay: 300,
+    responsive: [
+      {
+        breakpoint: 1024, // < 1024
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 767, // < 767
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 375, // < 375
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -106,15 +146,21 @@ const Thu_cung = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Thú cưng
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Thú cưng</p>
+              </div>
             </div>
           </div>
           <div className="text-lg font-bold w-full flex items-center justify-center mt-2">
@@ -126,7 +172,7 @@ const Thu_cung = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
                 <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá thú cưng
@@ -139,44 +185,46 @@ const Thu_cung = () => {
                 </p>
               </div>
               <div className="h-[140px] w-full pt-3">
-                <div className="h-full w-full flex justify-center">
-                  {danhmuc_main &&
-                    danhmuc_main.map((item: sub_danhmuc) => {
-                      return (
-                        <div key={item.key} className="h-full w-[250px]">
-                          <div className="h-[70px] w-full flex items-center justify-center">
-                            <div
-                              onClick={() =>
-                                Filter_loaiThucung(item.key, item.type)
-                              }
-                              className={`h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300 ${
-                                item.key === filteredHang ? "bg-gray-300" : ""
-                              }`}
-                            >
-                              <Image
-                                src={
-                                  (item.key === 1 && icon_cho) ||
-                                  (item.key === 2 && icon_meo) ||
-                                  (item.key === 3 && icon_cakieng) ||
-                                  (item.key === 4 && icon_phukienthucan)
+                <div className="h-full w-full">
+                  <Slider {...settings_slider}>
+                    {danhmuc_main &&
+                      danhmuc_main.map((item: sub_danhmuc) => {
+                        return (
+                          <div key={item.key} className="h-full w-[250px]">
+                            <div className="h-[70px] w-full flex items-center justify-center">
+                              <div
+                                onClick={() =>
+                                  Filter_loaiThucung(item.key, item.type)
                                 }
-                                alt="icon"
-                                className="h-[50px] w-[50px] cursor-pointer"
-                              />
+                                className={`h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300 ${
+                                  item.key === filteredHang ? "bg-gray-300" : ""
+                                }`}
+                              >
+                                <Image
+                                  src={
+                                    (item.key === 1 && icon_cho) ||
+                                    (item.key === 2 && icon_meo) ||
+                                    (item.key === 3 && icon_cakieng) ||
+                                    (item.key === 4 && icon_phukienthucan)
+                                  }
+                                  alt="icon"
+                                  className="h-[50px] w-[50px] cursor-pointer"
+                                />
+                              </div>
                             </div>
+                            <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                              {item.label}
+                            </p>
                           </div>
-                          <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
-                            {item.label}
-                          </p>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                  </Slider>
                 </div>
               </div>
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto min-w-full lg:min-w-[1440px] lg:max-h-[2140px] sm:max-h-[4280] max-w-[1440px] flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemALLThucung &&
                 itemALLThucung.map((item: any, index: any) => {
                   return (

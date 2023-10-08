@@ -42,6 +42,7 @@ import item_danhmuc, {
   danhmuc,
   sub_danhmuc,
 } from "../components/obj_data_raw/Danhmuc_raw";
+import Nav_mobile from "@/components/Nav_mobile";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const Home = () => {
@@ -106,6 +107,45 @@ const Home = () => {
       },
     ],
   };
+  const settings_slider_danhmuc = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 8,
+    slidesToScroll: 1,
+    autoplay: true,
+    delay: 300,
+    responsive: [
+      {
+        breakpoint: 1024, // < 1024
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 767, // < 767
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 375, // < 375
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+    ],
+  };
 
   return (
     <div className="bg-gray-100">
@@ -117,104 +157,108 @@ const Home = () => {
       </Head>
       <Header />
       {/* Banner */}
-      <div className="h-[320px] w-full flex items-center justify-center">
-        <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-1 flex flex-col items-center justify-center">
+      <div className="max-h-[330px] h-auto w-full flex items-center justify-center">
+        <div className="bg-white shadow-sm h-full w-auto lg:w-[1440px] sm:min-w-full md:min-w-[767px] max-w-[1440px] px-2 pt-1 flex flex-col items-center justify-center space-y-2">
           <div className="h-[50px] w-full">
             <Danhmuc />
           </div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
-            className="h-full w-[960px]"
-          >
-            <Slider {...settings_slider}>
-              <Image
-                src={dealbatngan}
-                alt=""
-                className="h-full w-full rounded-md"
-              />
-              <Image src={doSV} alt="" className="h-full w-full rounded-md" />
-              <Image
-                src={thuDienthoai}
-                alt=""
-                className="h-full w-full rounded-md"
-              />
-              <Image
-                src={trogantruong}
-                alt=""
-                className="h-full w-full rounded-md"
-              />
-              <Image
-                src={daytinngay}
-                alt=""
-                className="h-fit w-full rounded-md"
-              />
-            </Slider>
-          </motion.div>
+          <div className="h-full w-full pb-8 overflow-hidden flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
+              className="h-full w-auto sm:min-w-full md:min-w-[767px] max-w-[960px]"
+            >
+              <Slider {...settings_slider}>
+                <Image
+                  src={dealbatngan}
+                  alt=""
+                  className="h-full w-full rounded-md"
+                />
+                <Image src={doSV} alt="" className="h-full w-full rounded-md" />
+                <Image
+                  src={thuDienthoai}
+                  alt=""
+                  className="h-full w-full rounded-md"
+                />
+                <Image
+                  src={trogantruong}
+                  alt=""
+                  className="h-full w-full rounded-md"
+                />
+                <Image
+                  src={daytinngay}
+                  alt=""
+                  className="h-fit w-full rounded-md"
+                />
+              </Slider>
+            </motion.div>
+          </div>
         </div>
       </div>
       {/* Khám phá danh mục */}
-      <div className="h-[210px] w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-full w-[1440px] text-xl px-2 pt-2">
-          <p className="h-[50px] w-full text-2xl font-bold flex items-center">
+      <div className="sm:h-[210px] md:h-[240px] lg:h-[210px] w-full flex items-center justify-center mt-3">
+        <div className="bg-white shadow-sm h-full sm:w-auto sm:min-w-full md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 md:pt-2">
+          <p className="h-[50px] w-full sm:text-xl md:text-2xl font-bold flex items-center">
             Khám phá danh mục
           </p>
-          <div className="h-[130px] w-full pt-5">
-            <div className="h-full w-full flex items-center">
-              {danhmuc &&
-                danhmuc.slice(0, 8).map((item_main: danhmuc) => {
-                  return (
-                    <div
-                      key={item_main.key}
-                      className="h-full w-1/4"
-                      onClick={() => router.push(`${item_main.link}`)}
-                    >
-                      <div className="h-[80px] w-full flex items-center justify-center">
-                        <Image
-                          src={
-                            item_main.key === 0
-                              ? icon_lg_hoctap
-                              : "" || item_main.key === 1
-                              ? icon_lg_xeco
-                              : "" || item_main.key === 2
-                              ? icon_lg_dodientu
-                              : "" || item_main.key === 3
-                              ? icon_lg_noithat
-                              : "" || item_main.key === 4
-                              ? icon_lg_tulanh
-                              : "" || item_main.key === 5
-                              ? icon_lg_canhan
-                              : "" || item_main.key === 6
-                              ? icon_lg_giaitri
-                              : "" || item_main.key === 7
-                              ? icon_lg_thucung
-                              : ""
-                          }
-                          alt="icon"
-                          className="h-[80px] w-[80px] rounded-3xl cursor-pointer"
-                        />
+          <div className="h-[130px] w-full lg:pt-5">
+            <div className="h-full w-full">
+              <Slider {...settings_slider_danhmuc}>
+                {danhmuc &&
+                  danhmuc.slice(0, 8).map((item_main: danhmuc) => {
+                    return (
+                      <div
+                        key={item_main.key}
+                        className="h-full w-1/4"
+                        onClick={() => router.push(`${item_main.link}`)}
+                      >
+                        <div className="h-[80px] w-full flex items-center justify-center">
+                          <Image
+                            src={
+                              item_main.key === 0
+                                ? icon_lg_hoctap
+                                : "" || item_main.key === 1
+                                ? icon_lg_xeco
+                                : "" || item_main.key === 2
+                                ? icon_lg_dodientu
+                                : "" || item_main.key === 3
+                                ? icon_lg_noithat
+                                : "" || item_main.key === 4
+                                ? icon_lg_tulanh
+                                : "" || item_main.key === 5
+                                ? icon_lg_canhan
+                                : "" || item_main.key === 6
+                                ? icon_lg_giaitri
+                                : "" || item_main.key === 7
+                                ? icon_lg_thucung
+                                : ""
+                            }
+                            alt="icon"
+                            className="lg:h-[80px] lg:w-[80px] sm:h-[70px] sm:w-[70px] rounded-3xl cursor-pointer"
+                          />
+                        </div>
+                        <p className="h-[50px] w-full lg:text-xl md::text-lg sm:text-base flex items-center justify-center text-center cursor-pointer">
+                          {item_main.label}
+                        </p>
                       </div>
-                      <p className="h-[50px] w-full flex items-center justify-center text-center cursor-pointer">
-                        {item_main.label}
-                      </p>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </Slider>
             </div>
           </div>
         </div>
       </div>
-      {/* Tin đăng gần đây - 2060px cho 6 item dọc*/}
+      {/* Tin đăng gần đây - 2060px cho 6x6 item dọc, small 4220px cho 3x12 item*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-auto max-h-[2110px] w-[1440px] p-2">
-          <p className="h-[50px] w-full flex items-center text-2xl font-bold">
+        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] lg:max-h-[2110px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
+          <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
             Tin đăng gần đây
           </p>
-          <div className="h-auto w-full pt-2 flex flex-wrap gap-[10px]">
+          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
             {tindang_ganday &&
               tindang_ganday.map((item: any, index: number) => {
                 return (
-                  <div key={index}>
+                  <div key={index} className="flex items-center justify-center">
                     <Display_product_vertical item={item} />
                   </div>
                 );
@@ -222,20 +266,9 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />;
+      <Footer />
     </div>
   );
 };
 
 export default Home;
-
-// export const getServerSideProps: GetServerSideProps<Props> = async () => {
-//   const response = await AllUser_API();
-//   const users = response.users;
-
-//   return {
-//     props: {
-//       users,
-//     },
-//   };
-// };

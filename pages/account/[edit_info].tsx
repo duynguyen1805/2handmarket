@@ -4,8 +4,6 @@ import Head from "next/head";
 import router from "next/router";
 import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import left_back from "../../assets/icon/left-arrow.png";
 import "react-phone-input-2/lib/style.css";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
@@ -191,7 +189,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
         <Header />
       </div>
       {info_user && (
-        <div className="h-auto min-h-screen w-[100%] bg-gray-100 pt-[90px] flex flex-col place-content-between">
+        <div className="h-auto min-h-screen w-[100%] bg-gray-100 lg:pt-[90px] md:pt-[115px] flex flex-col place-content-between">
           <div>
             {/* Điều hướng */}
             <div className="h-[50px] w-full flex items-center justify-center mt-2">

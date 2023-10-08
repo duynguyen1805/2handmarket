@@ -19,6 +19,7 @@ import item_danhmuc, {
 import { API_get_Dohoctap, API_get_Donoithat } from "@/service/userService";
 import Display_product_horizontal_v2 from "@/components/Display_product_vertical_v2";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
+import Link from "next/link";
 const danhmuc_main: any[] = item_danhmuc[0].sub_danhmuc;
 
 const Hoc_tap = () => {
@@ -33,7 +34,16 @@ const Hoc_tap = () => {
     delay: 300,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1024, // < 1024
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 767, // < 767
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -42,16 +52,7 @@ const Hoc_tap = () => {
         },
       },
       {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 530,
+        breakpoint: 375, // < 375
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -138,15 +139,21 @@ const Hoc_tap = () => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Học tập
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Học tập</p>
+              </div>
             </div>
           </div>
           <div className="text-lg font-bold w-full flex items-center justify-center mt-2">
@@ -158,7 +165,7 @@ const Hoc_tap = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-[1440px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-[1440px] px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
                 <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá Đồ dùng học tập
@@ -203,7 +210,7 @@ const Hoc_tap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] max-h-[2140px] w-[1440px] flex flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:min-w-full lg:min-w-[1440px] lg:max-h-[2140px] sm:max-h-[4280] max-w-[1440px] flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemALLDohoctap &&
                 itemALLDohoctap.map((item: any, index: any) => {
                   return (

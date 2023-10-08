@@ -6,6 +6,9 @@ interface MyContextValue {
   //trạng thái login và thông tin người dùng
   isLogin: boolean;
   setLogin: (isLogin: boolean) => void;
+  // keyword search header
+  keyword_search: string;
+  setKeywordSearch: any;
   information_User: any;
   setInfoUser: (information_User: any) => void;
 }
@@ -36,6 +39,11 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
   const setLogin = (isLogin: boolean) => {
     setisLogin(isLogin);
   };
+  //trạng thái login và thông tin người dùng
+  const [keyword_search, setKeyword_search] = useState<string>("");
+  const setKeywordSearch = (keyword_search: string) => {
+    setKeyword_search(keyword_search);
+  };
   const [information_User, setinformation_User] = useState<any>();
   const setInfoUser = (information_User: any) => {
     setinformation_User(information_User);
@@ -46,6 +54,8 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
     count_filter,
     isLogin,
     setLogin,
+    keyword_search,
+    setKeywordSearch,
     information_User,
     setInfoUser,
   };

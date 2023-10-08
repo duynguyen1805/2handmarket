@@ -2,24 +2,20 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Head from "next/head";
 import router from "next/router";
-import { NextApiRequest, NextApiResponse } from "next";
 import { authMiddleware } from "@/utils/authMiddleware";
 import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import left_back from "../../../assets/icon/left-arrow.png";
+import more from "../../../assets/icon/more.png";
 import "react-phone-input-2/lib/style.css";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   API_Antin,
-  API_Order,
-  API_cancelOrder,
   API_deleteTindang,
   API_getTindangbyIduser,
-  API_updateStatusTindang,
   API_Capnhat_trangthai_thanhtoan,
 } from "@/service/userService";
 import Danhmuc from "@/components/Danhmuc";
@@ -128,14 +124,21 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     { id: 4, name: "Tin ẩn" },
   ];
   const [isOpen, setIsOpen] = useState<number | null>(2);
+  const [openfilter_mobile, setopenFilter_mobile] = useState(false);
+  const [title_filter, setTitle_filter] = useState<any>(listFilter[0].name);
   const filteredList =
     isOpen === -1
       ? tindang
       : tindang.filter((item: any) => item.trangthai === isOpen);
 
-  const handleClickfilted = (key: number) => {
+  const handleClickfilted = (key: any) => {
     fetchdata_tindang_user();
     setIsOpen(key);
+  };
+  const handleClickfilted_mobile = (key: any, name: any) => {
+    fetchdata_tindang_user();
+    setIsOpen(key);
+    setTitle_filter(name);
   };
   const clickTindang = (type: string, id: string) => {
     router.push({
@@ -248,6 +251,17 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     }
   };
 
+  const [openMore, setopenMore] = useState(false);
+  const [itemselect, setitemselect] = useState<any>(null);
+  const handle_More = (id_item: any) => {
+    if (id_item == itemselect) {
+      setopenMore(!openMore);
+    } else {
+      setopenMore(true);
+    }
+    setitemselect(id_item);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen relative">
       <Head>
@@ -259,11 +273,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-full bg-gray-100 pt-[80px] flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-full bg-gray-100 lg:pt-[80px] md:pt-[125px] sm:pt-[50px] flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-1">
-            <div className="h-full w-[960px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full lg:w-[960px] sm:w-full bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Quản lý tin
@@ -271,7 +285,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-2">
-            <div className="h-auto w-[960px] mt-2 px-2 border rounded-lg bg-white">
+            <div className="h-auto lg:w-[960px] sm:w-full mt-2 px-2 border rounded-lg bg-white">
               {/* display medium */}
               <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 py-5 flex-col items-center">
                 <div className="flex items-center space-x-5 pr-16">
@@ -402,11 +416,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                         </div>
                         <div className="w-[780px] flex items-center place-content-between">
                           <div
-                            className="h-full w-[500px] px-2"
+                            className="h-full lg:w-[500px] md:w-[330px] md:min-w-[330px] px-2"
                             onClick={() => clickTindang(item.type, item._id)}
                           >
                             <div className="h-[50%] w-full">
-                              <p className="h-auto max-h-[50px] w-full text-lg pb-1 overflow-hidden">
+                              <p className="h-auto max-h-[60px] w-full text-lg pb-1 overflow-hidden">
                                 {item.tieude}{" "}
                               </p>
                               <p className="h-[40px] w-full font-bold text-red-500">
@@ -516,6 +530,220 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                               </div>
                             </div>
                           )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+              </div>
+              {/* display mobile */}
+              <div className="md:hidden h-auto w-full min-h-[570px] flex flex-col items-center py-2">
+                <div className="flex items-center justify-center h-full w-full">
+                  <div
+                    className="md:hidden h-[40px] w-[40px] mt-1"
+                    onClick={goBack}
+                  >
+                    <Image
+                      src={left_back}
+                      alt="icon"
+                      className="h-[25px] w-[25px] cursor-pointer"
+                      // onClick={handleClickUser}
+                    />
+                  </div>
+
+                  <motion.p
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      transition: { duration: 1, delay: 0.2 },
+                    }}
+                    className="uppercase sm:text-lg md:text-3xl font-medium mb-2"
+                  >
+                    Quản lý tin đăng
+                  </motion.p>
+                </div>
+                <div className="h-auto w-full">
+                  <p>* Tin được duyệt sẽ hiển thị tối đa 30 ngày.</p>
+                  <p>* Tin bị từ chối hoặc được ẩn sẽ bị xóa sau 3 ngày</p>
+                  <p className="text-red-500">
+                    * Đẩy tin ưu tiên trong 7 ngày với 10.000đ
+                  </p>
+                </div>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { duration: 0.5, delay: 0.2 },
+                  }}
+                  className="h-[40px] w-full flex mt-2"
+                >
+                  <div
+                    className="relative h-full w-[150px] outline-none flex items-center justify-center border border-mauxanhtroi rounded-md"
+                    onClick={() => setopenFilter_mobile(!openfilter_mobile)}
+                  >
+                    <p className="text-lg cursor-pointer">{title_filter}</p>
+                    <svg
+                      className={`w-4 h-4 ml-2 transition-transform duration-200 transform ${
+                        openfilter_mobile ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                    {openfilter_mobile && (
+                      <div className="absolute top-10 left-0 h-auto w-[150px] border border-gray-400 rounded-md bg-white">
+                        {listFilter &&
+                          listFilter.map((item_listFilter: any) => {
+                            return (
+                              <div
+                                key={item_listFilter.id}
+                                onClick={() =>
+                                  handleClickfilted_mobile(
+                                    item_listFilter.id,
+                                    item_listFilter.name
+                                  )
+                                }
+                                className="px-2 py-1 cursor-pointer hover:bg-gray-200"
+                              >
+                                {item_listFilter.name}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+                {filteredList &&
+                  filteredList.lenght !== 0 &&
+                  filteredList.map((item: any, index: number) => {
+                    //handle thời gian đã đăng
+                    function tinhthoigiandadang(time: Date): string {
+                      const timehientai: Date = new Date();
+                      const ngaytao: Date = new Date(time);
+                      const thoigiandadang: number =
+                        timehientai.getTime() - ngaytao.getTime();
+
+                      if (thoigiandadang < 60000) {
+                        // Dưới 1 phút
+                        return `${Math.floor(
+                          thoigiandadang / 1000
+                        )} giây trước`;
+                      } else if (thoigiandadang < 3600000) {
+                        // 1 giờ = 3600000 milli giây
+                        const minutes: number = Math.floor(
+                          thoigiandadang / 60000
+                        ); // 1 phút = 60000 milli giây
+                        return `${minutes} phút trước`;
+                      } else if (thoigiandadang < 86400000) {
+                        // 1 ngày = 86400000 milli giây
+                        const hours: number = Math.floor(
+                          thoigiandadang / 3600000
+                        ); // 1 giờ = 3600000 milli giây
+                        return `${hours} giờ trước`;
+                      } else if (thoigiandadang < 604800000) {
+                        // 1 tuần = 604800000 milli giây
+                        const days: number = Math.floor(
+                          thoigiandadang / 86400000
+                        ); // 1 ngày = 86400000 milli giây
+                        return `${days} ngày trước`;
+                      } else {
+                        const weeks: number = Math.floor(
+                          thoigiandadang / 604800000
+                        ); // 1 tuần = 604800000 milli giây
+                        return `${weeks} tuần trước`;
+                      }
+                    }
+                    let time: any =
+                      item.trangthai == 1 || item.trangthai == 3
+                        ? item.updatedAt
+                        : item.ngayduyettin;
+                    const thoigiandadang: string = tinhthoigiandadang(time);
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.3, delay: 0.1 },
+                        }}
+                        exit={{
+                          opacity: 0,
+                          y: -50,
+                          transition: { duration: 0.3 },
+                        }}
+                        className="h-[140px] w-full p-1 mt-3 flex space-x-2 border border-gray-400 shadow-md rounded-md cursor-pointer overflow-auto"
+                      >
+                        <div
+                          className="h-full w-[100px] max-w-[100px] flex justify-center"
+                          onClick={() => clickTindang(item.type, item._id)}
+                        >
+                          <div
+                            className="h-full w-full bg-center bg-contain bg-no-repeat"
+                            style={{ backgroundImage: `url(${item.img[0]})` }}
+                          ></div>
+                        </div>
+                        <div className="h-full w-full overflow-hidden">
+                          <div className="h-[70px] w-full flex">
+                            <p
+                              className="h-full w-full"
+                              onClick={() => clickTindang(item.type, item._id)}
+                            >
+                              {item.tieude}
+                            </p>
+                            <div className="relative">
+                              <Image
+                                src={more}
+                                alt=""
+                                className="h-[20px] w-[20px] mt-2"
+                                onClick={() => handle_More(item._id)}
+                              />
+                              {item.trangthai == 2 &&
+                                itemselect == item._id &&
+                                openMore && (
+                                  <div className="absolute h-auto w-[100px] bg-white border border-gray-400 rounded-md top-0 right-6">
+                                    <div className="h-auto w-full text-center px-2 py-1 rounded-t-md hover:bg-gray-200">
+                                      Ẩn tin
+                                    </div>
+                                    <div className="h-auto w-full text-center px-2 py-1 hover:bg-gray-200">
+                                      Xóa tin
+                                    </div>
+                                    <div className="h-auto w-full text-center px-2 py-1 hover:bg-gray-200">
+                                      Đẩy tin
+                                    </div>
+                                    <div className="h-auto w-full text-center px-2 py-1 rounded-b-md hover:bg-gray-200">
+                                      Đã bán
+                                    </div>
+                                  </div>
+                                )}
+                              {item.trangthai == 1 &&
+                                itemselect == item._id &&
+                                openMore && (
+                                  <div className="absolute h-auto w-[100px] bg-white border border-gray-400 rounded-md top-0 right-6">
+                                    <div className="h-auto w-full text-center px-2 py-1 rounded-md hover:bg-gray-200">
+                                      Hủy tin
+                                    </div>
+                                  </div>
+                                )}
+                            </div>
+                          </div>
+                          <div
+                            className="h-[70px] w-full overflow-hidden"
+                            onClick={() => clickTindang(item.type, item._id)}
+                          >
+                            <p className="h-[35px] w-full font-bold text-red-500">
+                              {item.price.toLocaleString("vi-VN")} đ
+                            </p>
+                            <p className="h-[35px] w-full">{thoigiandadang}</p>
+                          </div>
                         </div>
                       </motion.div>
                     );

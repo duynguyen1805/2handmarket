@@ -2,24 +2,16 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Head from "next/head";
 import router from "next/router";
-import { NextApiRequest, NextApiResponse } from "next";
-import { authMiddleware } from "@/utils/authMiddleware";
 import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import left_back from "../../../assets/icon/left-arrow.png";
-import addimg from "../../../assets/icon/addimg.png";
-import send_message from "../../../assets/icon/send-message.png";
 import "react-phone-input-2/lib/style.css";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { API_getTindangbyIduser, API_getUserbyID } from "@/service/userService";
-import Danhmuc from "@/components/Danhmuc";
+import { API_getUserbyID } from "@/service/userService";
 import { motion } from "framer-motion";
 import { useMyContext } from "@/contexts/MyContext";
-import Display_product_vertical from "@/components/Display_product_vertical";
 import Message from "@/components/Message";
 import {
   collection,
@@ -175,11 +167,11 @@ const Tin_nhan = ({
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="min-h-screen h-auto w-full bg-gray-100 pt-[90px] flex flex-col place-content-between">
+      <div className="min-h-screen h-auto w-full bg-gray-100 lg:pt-[90px] md:pt-[115px] sm:pt-[50px] flex flex-col place-content-between">
         <div className="h-auto w-full flex items-center justify-center">
-          <div className="h-[784px] max-h-[2500px] w-[990px] flex border rounded-lg bg-white">
+          <div className="sm:h-[705px] sm:min-h-[705px] md:h-[784px] max-h-[2500px] lg:w-[990px] sm:w-full flex border lg:rounded-lg bg-white">
             {/* display medium */}
-            <div className="h-full w-[35%] border-r border-gray-400 overflow-auto">
+            <div className="sm:hidden md:block h-full w-[35%] border-r border-gray-400 overflow-auto">
               {conversationMembers &&
                 conversationMembers.map((receiver: any, index: number) => {
                   return (
@@ -195,7 +187,7 @@ const Tin_nhan = ({
                           backgroundImage: `url(${receiver.avatar})`,
                         }}
                       ></div>
-                      <div className="h-[60px] w-[265px]">
+                      <div className="h-[60px] lg:w-[265px]">
                         <div className="h-[30px] font-bold flex items-center">
                           {receiver.userName}
                         </div>
@@ -209,7 +201,7 @@ const Tin_nhan = ({
                   );
                 })}
             </div>
-            <div className="h-full w-[65%]">
+            <div className="sm:hidden md:block h-full w-[65%]">
               {selectedUser && (
                 <Message
                   id_current_user={id_user}
@@ -221,6 +213,50 @@ const Tin_nhan = ({
                 />
               )}
             </div>
+            {/* display mobile */}
+            <div className="md:hidden h-full w-full border-r border-gray-400 overflow-auto">
+              {conversationMembers &&
+                conversationMembers.map((receiver: any, index: number) => {
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleSelect_receiver(receiver)}
+                      disabled={receiver.userID === selectedUser}
+                      className="h-[90px] w-full flex items-center space-x-1 px-1 border-b border-gray-300 cursor-pointer"
+                    >
+                      <div
+                        className="h-[60px] w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
+                        style={{
+                          backgroundImage: `url(${receiver.avatar})`,
+                        }}
+                      ></div>
+                      <div className="h-[60px] lg:w-[265px]">
+                        <div className="h-[30px] font-bold flex items-center">
+                          {receiver.userName}
+                        </div>
+                        <div className="h-[30px] flex items-center overflow-hidden">
+                          {receiver.latestMessage != ""
+                            ? receiver.latestMessage
+                            : `${receiver.userName} đã gửi một ảnh.`}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+            </div>
+            {selectedUser && (
+              <div className="md:hidden h-full w-full">
+                <Message
+                  id_current_user={id_user}
+                  userName_current={datainforUser_current?.name}
+                  avatar_current_user={datainforUser_current?.avatar}
+                  id_receiver={selectedUser}
+                  userName_receiver={selectedUserName}
+                  avatar_receiver={selectedAvatar}
+                  setSelectedUser={setSelectedUser}
+                />
+              </div>
+            )}
           </div>
         </div>
         <Footer />
