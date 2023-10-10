@@ -143,13 +143,6 @@ const Header = () => {
       toast.success("Bạn cần đăng nhập trước khi Quản lý tin đăng.");
     }
   };
-  const clickItemSearch = (codeSP: string, typeSP: string) => {
-    router.push({
-      pathname: `/products/${codeSP}`,
-      query: { type: typeSP },
-    });
-    window.location.assign(`/products/${codeSP}?type=${typeSP}`);
-  };
   const handleClickUser = () => {
     setOpenOptionUser(!isOpenOption);
   };
@@ -165,11 +158,6 @@ const Header = () => {
       handle_ClickSearch_pushnewpage();
     }
   };
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  function toggleSidebar() {
-    setIsSidebarOpen(!isSidebarOpen);
-  }
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [isClickSearch, setisClickSearch] = useState<boolean>(false);

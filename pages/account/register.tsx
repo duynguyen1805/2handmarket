@@ -32,6 +32,9 @@ const Register = () => {
   const [result_sendOTP, setresult_sendOTP] = useState<any>();
   const [view_password, setview_password] = useState(true);
   const [view_confirm_password, setconfirm_password] = useState(true);
+  const [isvalid_phonenumber, setisvalid_phonenumber] = useState<
+    boolean | null
+  >(null);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -45,6 +48,9 @@ const Register = () => {
   };
   const handleChangeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccount(e.target.value);
+    const regex_phonenumber = /^0\d{9}$/;
+    const isPhoneNumberValid = regex_phonenumber.test(e.target.value);
+    setisvalid_phonenumber(isPhoneNumberValid);
   };
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -168,6 +174,12 @@ const Register = () => {
                   onChange={handleChangeAccount}
                   className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                 />
+                {isvalid_phonenumber == false && (
+                  <p className="text-red-500 text-sm">
+                    Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.
+                  </p>
+                )}
+
                 {!sendCodeConf ? (
                   <>
                     <div className="relative h-auto w-full flex flex-row">

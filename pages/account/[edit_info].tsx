@@ -164,6 +164,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
       });
       if (response.errCode === 0) {
         toast.success(response.message);
+        // localStorage.setItem("token", JSON.stringify(response.access_token));
         window.location.reload();
       }
       if (response.errCode === 1) {

@@ -692,7 +692,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                           ></div>
                         </div>
                         <div className="h-full w-full overflow-hidden">
-                          <div className="h-[70px] w-full flex">
+                          <div className="h-[60px] w-full flex">
                             <p
                               className="h-full w-full"
                               onClick={() => clickTindang(item.type, item._id)}
@@ -700,26 +700,56 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                               {item.tieude}
                             </p>
                             <div className="relative">
-                              <Image
-                                src={more}
-                                alt=""
-                                className="h-[20px] w-[20px] mt-2"
-                                onClick={() => handle_More(item._id)}
-                              />
+                              {item.trangthai !== 3 && (
+                                <Image
+                                  src={more}
+                                  alt=""
+                                  className="h-[20px] w-[20px] mt-2"
+                                  onClick={() => handle_More(item._id)}
+                                />
+                              )}
+
                               {item.trangthai == 2 &&
                                 itemselect == item._id &&
                                 openMore && (
                                   <div className="absolute h-auto w-[100px] bg-white border border-gray-400 rounded-md top-0 right-6">
-                                    <div className="h-auto w-full text-center px-2 py-1 rounded-t-md hover:bg-gray-200">
+                                    <div
+                                      className="h-auto w-full text-center px-2 py-1 rounded-t-md hover:bg-gray-200"
+                                      onClick={() =>
+                                        handlebutton_antin(item.type, item._id)
+                                      }
+                                    >
                                       Ẩn tin
                                     </div>
-                                    <div className="h-auto w-full text-center px-2 py-1 hover:bg-gray-200">
+                                    <div
+                                      className="h-auto w-full text-center px-2 py-1 hover:bg-gray-200"
+                                      onClick={() =>
+                                        handlebutton_huytin(item.type, item._id)
+                                      }
+                                    >
                                       Xóa tin
                                     </div>
-                                    <div className="h-auto w-full text-center px-2 py-1 hover:bg-gray-200">
-                                      Đẩy tin
-                                    </div>
-                                    <div className="h-auto w-full text-center px-2 py-1 rounded-b-md hover:bg-gray-200">
+                                    <button
+                                      disabled={item.trangthaithanhtoan == 1}
+                                      className={` ${
+                                        item.trangthaithanhtoan == 1
+                                          ? "bg-mauxanhtroi text-white"
+                                          : "hover:bg-gray-200"
+                                      } h-auto w-full text-center px-2 py-1 `}
+                                      onClick={() =>
+                                        handlebutton_nangcapTinuutien(item)
+                                      }
+                                    >
+                                      {item.trangthaithanhtoan == 1
+                                        ? "Tin ưu tiên"
+                                        : "Đẩy tin"}
+                                    </button>
+                                    <div
+                                      className="h-auto w-full text-center px-2 py-1 rounded-b-md hover:bg-gray-200"
+                                      onClick={() =>
+                                        handlebutton_daban(item.type, item._id)
+                                      }
+                                    >
                                       Đã bán
                                     </div>
                                   </div>
@@ -728,21 +758,58 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                                 itemselect == item._id &&
                                 openMore && (
                                   <div className="absolute h-auto w-[100px] bg-white border border-gray-400 rounded-md top-0 right-6">
-                                    <div className="h-auto w-full text-center px-2 py-1 rounded-md hover:bg-gray-200">
+                                    <div
+                                      className="h-auto w-full text-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                      onClick={() =>
+                                        handlebutton_huytin(item.type, item._id)
+                                      }
+                                    >
                                       Hủy tin
+                                    </div>
+                                  </div>
+                                )}
+                              {item.trangthai == 4 &&
+                                itemselect == item._id &&
+                                openMore && (
+                                  <div className="absolute h-auto w-[100px] bg-white border border-gray-400 rounded-md top-0 right-6">
+                                    <div
+                                      className="h-auto w-full text-center px-2 py-1 rounded-md hover:bg-gray-200"
+                                      onClick={() =>
+                                        handlebutton_hienthilai(
+                                          item.type,
+                                          item._id
+                                        )
+                                      }
+                                    >
+                                      Hiển thị lại
                                     </div>
                                   </div>
                                 )}
                             </div>
                           </div>
                           <div
-                            className="h-[70px] w-full overflow-hidden"
+                            className="h-[80px] w-full overflow-hidden"
                             onClick={() => clickTindang(item.type, item._id)}
                           >
-                            <p className="h-[35px] w-full font-bold text-red-500">
-                              {item.price.toLocaleString("vi-VN")} đ
-                            </p>
-                            <p className="h-[35px] w-full">{thoigiandadang}</p>
+                            {item.trangthai == 4 || item.trangthai == 3 ? (
+                              <div className="h-full w-full overflow-hidden">
+                                <p className="h-[20px] w-full font-bold text-red-500">
+                                  {item.price.toLocaleString("vi-VN")} đ
+                                </p>
+                                <p className="h-[50px] text-red-500 flex items-center">
+                                  Lý do: {item.lydoantin}
+                                </p>
+                              </div>
+                            ) : (
+                              <>
+                                <p className="h-[35px] w-full font-bold text-red-500">
+                                  {item.price.toLocaleString("vi-VN")} đ
+                                </p>
+                                <p className="h-[35px] w-full">
+                                  {thoigiandadang}
+                                </p>
+                              </>
+                            )}
                           </div>
                         </div>
                       </motion.div>
