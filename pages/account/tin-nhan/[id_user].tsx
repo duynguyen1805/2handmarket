@@ -20,6 +20,7 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  deleteDoc,
   Timestamp,
   query,
   where,
@@ -31,6 +32,8 @@ import { db } from "../../../firebase.config";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
+import icon_more from "../../../assets/icon/more.png";
+import Image from "next/image";
 
 interface infodetailProps {
   id_user: string;
@@ -156,6 +159,43 @@ const Tin_nhan = ({
     setSelectedAvatar(value.avatar);
   };
 
+  const [isOpen_delete_msg, setOpen_delete_msg] = useState(false);
+  const [select, setselect] = useState<any>(null);
+  const handleClick_more = (iduser: any) => {
+    if (iduser == select) {
+      setOpen_delete_msg(!isOpen_delete_msg);
+    } else {
+      setOpen_delete_msg(true);
+    }
+    setselect(iduser);
+  };
+
+  const handle_Delete_chat = async (id_user_receiver: string) => {
+    // xóa như vậy thì cả 2 bên đều bị xóa mất tin nhắn
+    // let sortedIds = [id_user, id_user_receiver].sort();
+    // let conversationID = sortedIds.join("_");
+    // try {
+    //   const conversationRef = doc(db, "conversations", conversationID);
+    //   await deleteDoc(conversationRef);
+    //   console.log("Đoạn chat đã được xóa.");
+    // } catch (error) {
+    //   console.log("Lỗi deleting document: ", error);
+    // }
+    // => xóa trong danh sách list_chatting
+    try {
+      const listUserChatCollectionRef = collection(
+        doc(db, "list_user_chat", id_user),
+        "list_chatting"
+      );
+      const documentRef = doc(listUserChatCollectionRef, id_user_receiver);
+      await deleteDoc(documentRef);
+      setSelectedUser(undefined);
+      console.log("Đoạn chat đã được xóa.");
+    } catch (error) {
+      console.log("Lỗi deleting document: ", error);
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen relative">
       <Head>
@@ -175,29 +215,67 @@ const Tin_nhan = ({
               {conversationMembers &&
                 conversationMembers.map((receiver: any, index: number) => {
                   return (
-                    <button
+                    <div
                       key={index}
                       onClick={() => handleSelect_receiver(receiver)}
-                      disabled={receiver.userID === selectedUser}
+                      // disabled={receiver.userID === selectedUser}
                       className="h-[90px] w-full flex items-center space-x-1 px-1 border-b border-gray-300 cursor-pointer"
                     >
                       <div
-                        className="h-[60px] w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
+                        className="h-[60px] w-[60px] min-w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
                         style={{
                           backgroundImage: `url(${receiver.avatar})`,
                         }}
                       ></div>
-                      <div className="h-[60px] lg:w-[265px]">
-                        <div className="h-[30px] font-bold flex items-center">
-                          {receiver.userName}
+                      <div className="h-[60px] lg:w-[265px] md:min-w-[200px] md:w-full md:max-w-full flex place-content-between">
+                        <div>
+                          <div className="h-[30px] font-bold text-lg flex items-center">
+                            {receiver.userName}
+                          </div>
+                          <div
+                            className={`${
+                              receiver.seen == false ? "font-bold" : "font-thin"
+                            } h-[30px] flex items-center overflow-hidden`}
+                          >
+                            {receiver.latestMessage != ""
+                              ? receiver.latestMessage
+                              : `${receiver.userName} đã gửi một ảnh.`}
+                          </div>
                         </div>
-                        <div className="h-[30px] flex items-center overflow-hidden">
-                          {receiver.latestMessage != ""
-                            ? receiver.latestMessage
-                            : `${receiver.userName} đã gửi một ảnh.`}
+                        <div
+                          className="relative h-[25px]"
+                          onClick={() => handleClick_more(receiver.userID)}
+                        >
+                          <Image
+                            src={icon_more}
+                            alt=""
+                            className="h-[20px] w-[20px] cursor-pointer"
+                          />
+                          {isOpen_delete_msg && select == receiver.userID && (
+                            <motion.div
+                              className="absolute h-auto w-[100px] right-6 top-[-5px] bg-gray-100 border rounded-md shadow-md z-10"
+                              initial={{ opacity: 0 }}
+                              animate={{
+                                opacity: 1,
+                                transition: { duration: 0.4 },
+                              }}
+                              exit={{
+                                opacity: 0,
+                              }}
+                            >
+                              <p
+                                className="h-[40px] w-full text-base flex items-center justify-center cursor-pointer rounded-md hover:bg-gray-200"
+                                onClick={() =>
+                                  handle_Delete_chat(receiver.userID)
+                                }
+                              >
+                                Xóa chat
+                              </p>
+                            </motion.div>
+                          )}
                         </div>
                       </div>
-                    </button>
+                    </div>
                   );
                 })}
             </div>
@@ -234,7 +312,11 @@ const Tin_nhan = ({
                         <div className="h-[30px] font-bold flex items-center">
                           {receiver.userName}
                         </div>
-                        <div className="h-[30px] flex items-center overflow-hidden">
+                        <div
+                          className={`${
+                            receiver.seen == false && "font-bold"
+                          } h-[30px] flex items-center overflow-hidden`}
+                        >
                           {receiver.latestMessage != ""
                             ? receiver.latestMessage
                             : `${receiver.userName} đã gửi một ảnh.`}

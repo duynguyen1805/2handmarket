@@ -147,13 +147,21 @@ const Nav_mobile = () => {
         }`}
         onClick={() => handleClickMessage(datainforUser?._id)}
       >
-        <Image
-          src={icon_message}
-          alt=""
-          className={`h-[25px] w-[25px] ${
-            href_hientai?.includes("tin-nhan") ? "icon-white" : "icon-blue"
-          }`}
-        />
+        <div className="relative">
+          <Image
+            src={icon_message}
+            alt=""
+            className={`h-[25px] w-[25px] ${
+              href_hientai?.includes("tin-nhan") ? "icon-white" : "icon-blue"
+            }`}
+          />
+          <div
+            className={`absolute h-[20px] w-[20px] top-[-8px] right-[-12px] rounded-full bg-red-500 text-white flex items-center justify-center`}
+          >
+            {/* {countmessageunread} */}1
+          </div>
+        </div>
+
         <p>Tin nhắn</p>
       </div>
       {(!datainforUser || datainforUser == null) && (

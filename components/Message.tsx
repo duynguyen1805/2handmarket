@@ -133,7 +133,7 @@ const Message = ({
         // check tồn tại
         const conversationDocSnapshot = await getDoc(conversationDocRef);
         if (!conversationDocSnapshot.exists()) {
-          // chưa có thì tạo members
+          // chưa có thì tạo members, kèm trạng thái đã xem tin nhắn hay chưa.
           const newConversationData = {
             members: [
               {
@@ -148,7 +148,8 @@ const Message = ({
           };
           await setDoc(conversationDocRef, newConversationData);
         }
-        // tạo tham chiếu tới subcollection "list_userchat" của người dùng hiện tại
+
+        //------- tạo tham chiếu tới subcollection "list_userchat" của người dùng hiện tại
         const listUserChatCollectionRef = collection(
           doc(db, "list_user_chat", id_current_user),
           "list_chatting"
@@ -170,6 +171,8 @@ const Message = ({
           if (currentData.avatar !== avatar_receiver) {
             updateData_receiver.avatar = avatar_receiver;
           }
+          updateData_receiver.seen = true;
+
           // updateDoc để cập nhật thông tin
           await updateDoc(currentUserDocRef, updateData_receiver);
         } else {
@@ -178,10 +181,11 @@ const Message = ({
             userName: userName_receiver,
             avatar: avatar_receiver,
             timestamp: serverTimestamp(),
+            seen: true,
           };
           await setDoc(currentUserDocRef, currentUserData);
         }
-        // tạo tham chiếu tới subcollection "list_userchat" của người dùng nhận (receiver)
+        //---------- tạo tham chiếu tới subcollection "list_userchat" của người dùng nhận (receiver)
         const receiverUserChatCollectionRef = collection(
           doc(db, "list_user_chat", id_receiver),
           "list_chatting"
@@ -201,11 +205,13 @@ const Message = ({
           const currentData = receiverUserDocSnapshot.data();
           // check các trường userName và avatar có thay đổi không
           if (currentData.userName !== userName_current) {
-            updateData_receiver.userName = userName_current;
+            updateData_current_user.userName = userName_current;
           }
           if (currentData.avatar !== avatar_current_user) {
-            updateData_receiver.avatar = avatar_current_user;
+            updateData_current_user.avatar = avatar_current_user;
           }
+          updateData_current_user.seen = false;
+
           // updateDoc để cập nhật thông tin
           await updateDoc(receiverUserDocRef, updateData_current_user);
         } else {
@@ -214,6 +220,7 @@ const Message = ({
             userName: userName_current,
             avatar: avatar_current_user,
             timestamp: serverTimestamp(),
+            seen: false,
           };
           await setDoc(receiverUserDocRef, receiverUserData);
         }

@@ -1,7 +1,5 @@
 CHƯA LÀM: (
--- authoritation tối ưu hơn
 -- responsive giao diện (còn resp mobile, quản lý tin, trang cá nhân, chi tiết tin đăng, từng danh mục)
--- noti tin nhắn mới
 )
 Backend: (
 (1) -- tin đăng tối đa 30 ngày, kể từ ngày duyệt

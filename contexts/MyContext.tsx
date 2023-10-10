@@ -9,6 +9,10 @@ interface MyContextValue {
   // keyword search header
   keyword_search: string;
   setKeywordSearch: any;
+  // đếm số tin nhắn chưa đọc
+  countmessageunread: number;
+  count_message_unread: any;
+  // chưa dùng tới
   information_User: any;
   setInfoUser: (information_User: any) => void;
 }
@@ -44,6 +48,11 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
   const setKeywordSearch = (keyword_search: string) => {
     setKeyword_search(keyword_search);
   };
+  //Số lượng filter đang áp dụng
+  const [countmessageunread, setCount_Message_unread] = useState<number>(0);
+  const count_message_unread = (countmessageunread: number) => {
+    setCount_Message_unread(countmessageunread);
+  };
   const [information_User, setinformation_User] = useState<any>();
   const setInfoUser = (information_User: any) => {
     setinformation_User(information_User);
@@ -56,6 +65,8 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
     setLogin,
     keyword_search,
     setKeywordSearch,
+    countmessageunread,
+    count_message_unread,
     information_User,
     setInfoUser,
   };

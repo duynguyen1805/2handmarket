@@ -67,6 +67,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
               setAccount(response.User[0].account);
               setAddress(response.User[0].address);
               setAvatar(response.User[0].img);
+              setImgAvatar(response.User[0].img);
             } catch (error) {
               console.error("Error fetching data:", error);
             }
@@ -125,6 +126,29 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
         (setEnableInputPW(false), setEnableInputPW_InputNewPW(false));
     }
   };
+
+  const [openoptionchangeavatar, setOpenOptionChangeAvatar] = useState(false);
+  async function getBase64(file: any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+  const [img, setImgAvatar] = useState<any>(avatar);
+  const handleFile = async (e: any) => {
+    let file = e.target.files[0];
+    if (file) {
+      let base64 = await getBase64(file);
+      let objectURL = URL.createObjectURL(file);
+      setImgAvatar(base64);
+      setAvatar(objectURL);
+      console.log("check img: ", base64);
+    }
+    setOpenOptionChangeAvatar(false);
+  };
+
   const hanldeUpdateInforUser = async () => {
     setUpdateInforUser(true);
     if (!name || !account || !address || !password) {
@@ -154,27 +178,6 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
         toast.error(response.message);
       }
     }
-  };
-
-  const [openoptionchangeavatar, setOpenOptionChangeAvatar] = useState(false);
-  async function getBase64(file: any) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  }
-  const [img, setImgAvatar] = useState<any>(null);
-  const handleFile = async (e: any) => {
-    let file = e.target.files[0];
-    if (file) {
-      let base64 = await getBase64(file);
-      let objectURL = URL.createObjectURL(file);
-      setImgAvatar(base64);
-      setAvatar(objectURL);
-    }
-    setOpenOptionChangeAvatar(false);
   };
 
   return (
@@ -287,6 +290,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
                     id="phonenumber"
                     name="phonenumber"
                     placeholder="Nhập số điện thoại"
+                    disabled={true}
                     value={account}
                     onChange={handleChangeAccount}
                     className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"

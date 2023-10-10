@@ -16,29 +16,68 @@ import Cookies from "js-cookie";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  Timestamp,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  limit,
+} from "firebase/firestore";
+import { db } from "../firebase.config";
 
 const Header = () => {
   //lấy số lượng order qua usecontext
-  const { information_User, setInfoUser, keyword_search, setKeywordSearch } =
-    useMyContext();
-  //lấy số lượng order lưu vào usecontext
-  useEffect(() => {
-    const inforUser = localStorage.getItem("inforUser");
-    if (inforUser) {
-      const parsedinforUser = JSON.parse(inforUser);
-      setInfoUser(parsedinforUser);
-    }
-  }, []);
-
-  type DataInfor = {
-    _id: string;
-    name: string;
-    account: string;
-    address: string;
-    role: string;
-    avatar: string;
-  };
+  const {
+    countmessageunread,
+    count_message_unread,
+    keyword_search,
+    setKeywordSearch,
+  } = useMyContext();
   const [datainforUser, setdatainforUser] = useState<any>(null);
+
+  useEffect(() => {
+    if (datainforUser?._id) {
+      const listUserChatCollectionRef = collection(
+        db,
+        "list_user_chat",
+        datainforUser?._id,
+        "list_chatting"
+      );
+      const Listchat_Query = query(
+        listUserChatCollectionRef,
+        orderBy("timestamp", "desc")
+      );
+      const unsubscribe = onSnapshot(Listchat_Query, async (snapshot) => {
+        const listchat: any = [];
+        // Mảng chứa tất cả các promises của get_latestMessage. do snapshot.forEach có thể hoàn thành trước khi lấy latestMsg
+        snapshot.forEach((doc) => {
+          const list_chat = doc.data();
+          listchat.push(list_chat);
+        });
+        // console.log("check listchat từ header: ", listchat);
+        // map listchat đếm số seen:false gán vào context
+        if (listchat.length > 0) {
+          let count = 0;
+          for (let i = 0; i < listchat.length; i++) {
+            if (listchat[i].seen == false) {
+              count += 1;
+            }
+          }
+          count_message_unread(count);
+        }
+      });
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [datainforUser]);
 
   useEffect(() => {
     //lấy thông tin người dùng
@@ -149,6 +188,17 @@ const Header = () => {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* display medium/desktop */}
       <div className="sm:hidden md:block h-auto min-h-[80px] w-[100%] bg-mauxanhtroi py-0 border-b sticky top-0 left-0 z-20">
         <div className="w-[100%] lg:h-[80px] sm:h-[115px] lg:flex lg:flex-row lg:py-0 lg:space-y-0 sm:flex sm:flex-col sm:py-2 sm:space-y-2">
@@ -190,8 +240,12 @@ const Header = () => {
                   alt="icon"
                   className="h-[32px] w-[32px] cursor-pointer icon-white"
                 />
-                <div className="absolute h-[23px] w-[23px] top-[-10px] right-[-10px] rounded-full bg-red-500 text-white flex items-center justify-center">
-                  1
+                <div
+                  className={`${
+                    countmessageunread == 0 && "hidden"
+                  } absolute h-[23px] w-[23px] top-[-10px] right-[-10px] rounded-full bg-red-500 text-white flex items-center justify-center`}
+                >
+                  {countmessageunread}
                 </div>
               </div>
 
