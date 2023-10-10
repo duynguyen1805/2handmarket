@@ -296,7 +296,9 @@ const Header = () => {
                         backgroundImage: `url(${datainforUser?.avatar})`,
                       }}
                     ></div>
-                    {datainforUser?.name}
+                    {datainforUser?.name.slice(
+                      datainforUser?.name.lastIndexOf(" ") + 1
+                    )}
                     <svg
                       className={`w-4 h-4 ml-2 transition-transform duration-200 transform ${
                         isOpenOption ? "rotate-180" : ""
