@@ -79,7 +79,7 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           <div className="h-[50px] w-full my-2 flex items-center justify-center">
             <div className="w-[1440px] text-2xl flex items-end space-x-2">
               <p>Kết quả</p>
-              <p className="text-xl font-bold">"{keyword_search}"</p>
+              <p className="text-xl font-bold">{keyword_search}</p>
               <p>có: {kqSearch.length} tin đăng</p>
             </div>
           </div>
