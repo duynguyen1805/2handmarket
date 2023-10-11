@@ -83,7 +83,8 @@ const Header = () => {
   useEffect(() => {
     let token_cookie: any = Cookies.get("jwt_token");
     setToken_cookie(token_cookie);
-  });
+    alert(`day la lay tu cookie: ${token_cookie}`);
+  }, []);
 
   useEffect(() => {
     //lấy thông tin người dùng
