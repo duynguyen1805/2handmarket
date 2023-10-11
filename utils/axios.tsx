@@ -4,7 +4,7 @@ import { error } from "console";
 // import _ from 'lodash';
 
 const instance = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
   withCredentials: true,
 });
 
