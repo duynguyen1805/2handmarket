@@ -121,7 +121,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
-      let jwt_key = "2handmarket_tdn" || process.env.JWT_SECRET;
+      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
           "JWT_SECRET is not defined in the environment variables."
