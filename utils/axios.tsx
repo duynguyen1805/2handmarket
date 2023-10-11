@@ -1,9 +1,7 @@
+require("dotenv").config();
 import axios from "axios";
 import { error } from "console";
 // import _ from 'lodash';
-// toast thông báo
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const instance = axios.create({
   baseURL: process.env.BACKEND_URL,
