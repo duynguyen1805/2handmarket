@@ -79,10 +79,16 @@ const Header = () => {
     }
   }, [datainforUser]);
 
+  const [token_cookie, setToken_cookie] = useState<any>();
+  useEffect(() => {
+    let token_cookie: any = Cookies.get("jwt_token");
+    setToken_cookie(token_cookie);
+  });
+
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
       alert(token_cookie);
@@ -106,7 +112,7 @@ const Header = () => {
     } else {
       setdatainforUser(null);
     }
-  }, []);
+  }, [token_cookie]);
 
   //mở option của người dùng
   const [isOpenOption, setOpenOptionUser] = useState(false);
