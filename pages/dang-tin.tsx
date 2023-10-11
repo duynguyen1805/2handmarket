@@ -598,9 +598,9 @@ const Dang_tin = () => {
   // const [err_miss_input, setErr_miss_input] = useState<boolean>(false);
   useEffect(() => {
     const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
+    const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token) {
+    if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
