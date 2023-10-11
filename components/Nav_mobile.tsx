@@ -29,9 +29,9 @@ const Nav_mobile = () => {
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token && token_cookie) {
+    if (parse_token) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
@@ -41,8 +41,8 @@ const Nav_mobile = () => {
       const jwt_secret: Secret = jwt_key;
       try {
         const decoded = jwt.verify(parse_token, jwt_secret);
-        const decoded_cookie = jwt.verify(token_cookie, jwt_secret);
-        if (decoded && decoded_cookie) {
+        // const decoded_cookie = jwt.verify(token_cookie, jwt_secret);
+        if (decoded) {
           setdatainforUser(decoded);
         }
       } catch (error) {

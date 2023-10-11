@@ -118,9 +118,9 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token && token_cookie) {
+    if (parse_token) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
