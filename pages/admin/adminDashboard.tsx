@@ -1,3 +1,4 @@
+require("dotenv").config();
 import Header from "@/components/Header";
 import DS_doiduyet from "@/components/admin/DS_doiduyet";
 import Head from "next/head";
@@ -35,8 +36,9 @@ const AdminDashboard = () => {
   const [allowed_render, setAllowed_render] = useState(false);
 
   useEffect(() => {
+    const BACKEND_URL: any = process.env.NEXT_PUBLIC_BACKEND_URL;
     // Tạo kết nối Socket.io với server backend
-    const socket = io("http://localhost:4000"); // Thay URL phù hợp với server backend của bạn
+    const socket = io(BACKEND_URL); // Thay URL phù hợp với server backend của bạn
 
     // Lắng nghe sự kiện 'new-post' từ server
     socket.on("new-post", (data) => {
@@ -350,7 +352,7 @@ const AdminDashboard = () => {
       )}
 
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}

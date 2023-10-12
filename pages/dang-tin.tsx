@@ -632,8 +632,25 @@ const Dang_tin = () => {
   }, []);
   const Dangtin = async () => {
     const token_req: any = localStorage.getItem("token_req");
-    if (typeDanhmuc === "hoctap") {
+    if (typeDanhmuc === "hoctap" && !typeDanhmucChitiet) {
       if (KhoaTruong && Nganh && giaban && inputTieude && inputMota) {
+        const response = await API_Dangtin(
+          datainforUser?._id,
+          typeDanhmuc,
+          build_data_hoctap,
+          token_req
+        );
+        if (response.errCode === 0) {
+          toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
+          resetState();
+        }
+      } else {
+        toast.error("Vui lòng điền đủ thông tin có dấu (*)");
+        // setErr_miss_input(true);
+      }
+    }
+    if (typeDanhmuc === "hoctap" && typeDanhmucChitiet) {
+      if (giaban && inputTieude && inputMota) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
