@@ -42,24 +42,25 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
 
   const [info_user, setinfo_user] = useState<any>();
 
-  const [token_cookie, setToken_cookie] = useState<any>();
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token_cookie = Cookies.get("jwt_token");
-      if (token_cookie) {
-        setToken_cookie(token_cookie);
-      }
-    };
-    fetchToken();
-  }, []);
+  // const [token_cookie, setToken_cookie] = useState<any>();
+  // useEffect(() => {
+  //   const fetchToken = async () => {
+  //     const token_cookie = Cookies.get("jwt_token");
+  //     if (token_cookie) {
+  //       setToken_cookie(token_cookie);
+  //     }
+  //   };
+  //   fetchToken();
+  // }, []);
 
   useEffect(() => {
     const fetchDataUser = async () => {
       //lấy thông tin người dùng
       const token: any = localStorage.getItem("token");
+      const token_req: any = localStorage.getItem("token_req");
       // const token_cookie: any = Cookies.get("jwt_token");
       const parse_token = JSON.parse(token);
-      if (parse_token && token_cookie) {
+      if (parse_token) {
         let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
         if (!jwt_key) {
           throw new Error(
@@ -72,7 +73,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
           edit_info = decoded._id;
           if (decoded) {
             try {
-              const response = await API_getUserbyID(edit_info);
+              const response = await API_getUserbyID(edit_info, token_req);
               setinfo_user(response.User[0]);
               setName(response.User[0].name);
               setAccount(response.User[0].account);
@@ -92,7 +93,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
       }
     };
     fetchDataUser();
-  }, [token_cookie, edit_info]);
+  }, [edit_info]);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -162,17 +163,21 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
 
   const hanldeUpdateInforUser = async () => {
     setUpdateInforUser(true);
+    const token_req: any = localStorage.getItem("token_req");
     if (!name || !account || !address || !password) {
       toast.error("Vui lòng điền đủ thông tin !");
     } else {
-      const response = await API_updateUser({
-        account: account,
-        password: password,
-        name: name,
-        address: address,
-        newpassword: newpassword,
-        img: img,
-      });
+      const response = await API_updateUser(
+        {
+          account: account,
+          password: password,
+          name: name,
+          address: address,
+          newpassword: newpassword,
+          img: img,
+        },
+        token_req
+      );
       if (response.errCode === 0) {
         toast.success(response.message);
         // localStorage.setItem("token", JSON.stringify(response.access_token));

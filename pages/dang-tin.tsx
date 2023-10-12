@@ -596,22 +596,22 @@ const Dang_tin = () => {
   };
   const [datainforUser, setdatainforUser] = useState<any>();
   // const [err_miss_input, setErr_miss_input] = useState<boolean>(false);
-  const [token_cookie, setToken_cookie] = useState<any>();
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token_cookie = Cookies.get("jwt_token");
-      if (token_cookie) {
-        setToken_cookie(token_cookie);
-      }
-    };
-    fetchToken();
-  }, []);
+  // const [token_cookie, setToken_cookie] = useState<any>();
+  // useEffect(() => {
+  //   const fetchToken = async () => {
+  //     const token_cookie = Cookies.get("jwt_token");
+  //     if (token_cookie) {
+  //       setToken_cookie(token_cookie);
+  //     }
+  //   };
+  //   fetchToken();
+  // }, []);
 
   useEffect(() => {
     const token: any = localStorage.getItem("token");
     // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token && token_cookie) {
+    if (parse_token) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
@@ -629,14 +629,16 @@ const Dang_tin = () => {
     } else {
       router.push("/account/login");
     }
-  }, [token_cookie]);
+  }, []);
   const Dangtin = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     if (typeDanhmuc === "hoctap") {
       if (KhoaTruong && Nganh && giaban && inputTieude && inputMota) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_hoctap
+          build_data_hoctap,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -652,7 +654,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_dienthoai
+          build_data_dienthoai,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -667,7 +670,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_maytinhbang
+          build_data_maytinhbang,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -682,7 +686,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_laptop
+          build_data_laptop,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -697,7 +702,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_desktop
+          build_data_desktop,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -712,7 +718,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_mayanh
+          build_data_mayanh,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -727,7 +734,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_thietbideothongminh
+          build_data_thietbideothongminh,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -742,7 +750,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_phukien
+          build_data_phukien,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -757,7 +766,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_linhkien
+          build_data_linhkien,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -779,7 +789,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_oto
+          build_data_oto,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -802,7 +813,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_xemay
+          build_data_xemay,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -825,7 +837,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_xetai
+          build_data_xetai,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -840,7 +853,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_xedien
+          build_data_xedien,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -855,7 +869,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_xedap
+          build_data_xedap,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -870,7 +885,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_phutung
+          build_data_phutung,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -885,7 +901,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_donoithat
+          build_data_donoithat,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -900,7 +917,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_tulanh
+          build_data_tulanh,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -915,7 +933,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_maylanh
+          build_data_maylanh,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -930,7 +949,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_maygiat
+          build_data_maygiat,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -945,7 +965,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_docanhan
+          build_data_docanhan,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -960,7 +981,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_dogiaitri
+          build_data_dogiaitri,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
@@ -975,7 +997,8 @@ const Dang_tin = () => {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
-          build_data_thucung
+          build_data_thucung,
+          token_req
         );
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");

@@ -52,6 +52,7 @@ const Login = () => {
         // Lưu thông tin người dùng và token vào localStorage hoặc cookie
         // localStorage.setItem("inforUser", JSON.stringify(inforUser));
         localStorage.setItem("token", JSON.stringify(data.access_token));
+        localStorage.setItem("token_req", JSON.stringify(data.token_req));
 
         // Chuyển hướng đến trang admin hoặc user tùy vào roleId
         if (data.user.role === "Admin") {

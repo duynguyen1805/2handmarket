@@ -79,29 +79,27 @@ const Header = () => {
     }
   }, [datainforUser]);
 
-  const [token_cookie, setToken_cookie] = useState<any>();
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token_cookie = Cookies.get("jwt_token");
-      if (token_cookie) {
-        setToken_cookie(token_cookie);
-        alert(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
-        console.log(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
-      } else {
-        alert(`false cookie: ${token_cookie}`);
-      }
-    };
-    fetchToken();
-  }, []);
+  // const [token_cookie, setToken_cookie] = useState<any>();
+  // useEffect(() => {
+  //   const fetchToken = async () => {
+  //     const token_cookie = Cookies.get("jwt_token");
+  //     if (token_cookie) {
+  //       setToken_cookie(token_cookie);
+  //       alert(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
+  //       console.log(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
+  //     } else {
+  //       alert(`false cookie: ${token_cookie}`);
+  //     }
+  //   };
+  //   fetchToken();
+  // }, []);
 
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
     // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token && token_cookie) {
-      alert(`Đây là giá trị lấy từ localStorage: ${token_cookie}`);
-      console.log(`Đây là giá trị lấy từ localStorage: ${token_cookie}`);
+    if (parse_token) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
@@ -122,7 +120,7 @@ const Header = () => {
     } else {
       setdatainforUser(null);
     }
-  }, [token_cookie]);
+  }, []);
 
   //mở option của người dùng
   const [isOpenOption, setOpenOptionUser] = useState(false);

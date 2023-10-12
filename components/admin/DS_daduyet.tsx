@@ -179,9 +179,11 @@ const DS_daduyet: React.FC<any> = ({
     lydoantin: inputLydoantin,
   };
   const handleUpdateStatusTindang = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
       const response = await API_updateStatusTindang(
-        build_data_update_trangthai
+        build_data_update_trangthai,
+        token_req
       );
       if (response.errCode === 0) {
         {
@@ -233,8 +235,9 @@ const DS_daduyet: React.FC<any> = ({
   };
 
   const handleXoatindang = async (type: string, id: string) => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_deleteTindang(type, id);
+      const response = await API_deleteTindang(type, id, token_req);
       if (response) {
         {
           response.errCode === 0 &&

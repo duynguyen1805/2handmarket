@@ -53,23 +53,23 @@ const Tin_nhan = ({
   const [selectedUserName, setSelectedUserName] = useState(name_receiver);
   const [selectedAvatar, setSelectedAvatar] = useState<any>();
 
-  const [token_cookie, setToken_cookie] = useState<any>();
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token_cookie = Cookies.get("jwt_token");
-      if (token_cookie) {
-        setToken_cookie(token_cookie);
-      }
-    };
-    fetchToken();
-  }, []);
+  // const [token_cookie, setToken_cookie] = useState<any>();
+  // useEffect(() => {
+  //   const fetchToken = async () => {
+  //     const token_cookie = Cookies.get("jwt_token");
+  //     if (token_cookie) {
+  //       setToken_cookie(token_cookie);
+  //     }
+  //   };
+  //   fetchToken();
+  // }, []);
 
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const token: any = localStorage.getItem("token");
     // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
-    if (parse_token && token_cookie) {
+    if (parse_token) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
@@ -89,11 +89,12 @@ const Tin_nhan = ({
     } else {
       router.push("/account/login");
     }
-  }, [token_cookie]);
+  }, []);
   useEffect(() => {
     const fetch_inforuserbyID = async () => {
+      const token_req: any = localStorage.getItem("token_req");
       try {
-        const response = await API_getUserbyID(id_receiver);
+        const response = await API_getUserbyID(id_receiver, token_req);
         setSelectedAvatar(response.User[0].img);
       } catch (error) {
         console.log("error get inforuser by id, ", error);

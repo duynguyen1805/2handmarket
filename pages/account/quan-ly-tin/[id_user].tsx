@@ -83,11 +83,15 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
 
   const [trangthaithanhtoan, settrangthaithanhtoan] = useState<number>();
   const fetch_update_trangthaithanhtoan = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_Capnhat_trangthai_thanhtoan({
-        id: itemNangcap?._id,
-        typeTindang: itemNangcap?.type,
-      });
+      const response = await API_Capnhat_trangthai_thanhtoan(
+        {
+          id: itemNangcap?._id,
+          typeTindang: itemNangcap?.type,
+        },
+        token_req
+      );
       console.log("check response: ", response);
       settrangthaithanhtoan(response.trangthaithanhtoan);
       localStorage.removeItem("itemNangcap");
@@ -147,8 +151,9 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     });
   };
   const handleXoatindang = async (type: string, id: string) => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_deleteTindang(type, id);
+      const response = await API_deleteTindang(type, id, token_req);
       if (response) {
         {
           response.errCode === 0 &&
@@ -224,8 +229,9 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     lydoantin: inputLydoantin,
   };
   const handleUpdateStatus_Antin = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_Antin(build_data_antin);
+      const response = await API_Antin(build_data_antin, token_req);
       if (response.errCode === 0) {
         {
           response.trangthai === 2 && toast.success("Tin đã được Hiển thị lại");

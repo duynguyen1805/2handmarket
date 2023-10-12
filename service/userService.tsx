@@ -78,11 +78,21 @@ export async function API_login(account: string, password: string) {
   }
 }
 
-export async function API_Dangtin(id_user: any, type: string, item: object) {
+export async function API_Dangtin(
+  id_user: any,
+  type: string,
+  item: object,
+  token_req: any
+) {
   try {
     const response = await axios.post(
       `${BACKEND_URL}/create-dang-tin/${id_user}-${type}`,
-      item
+      item,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;
@@ -252,9 +262,13 @@ export async function API_getTindangbyId(type: string | null, id: string) {
   }
 }
 
-export async function API_getAllUser() {
+export async function API_getAllUser(token_req: any) {
   try {
-    const response = await axios.get(`${BACKEND_URL}/admin/get-user`);
+    const response = await axios.post(`${BACKEND_URL}/admin/get-user`, {
+      headers: {
+        Authorization: `Bearer ${token_req}`,
+      },
+    });
     const data = await response.data.users;
     return data; //data.TableTypes
   } catch (error) {
@@ -263,11 +277,19 @@ export async function API_getAllUser() {
   }
 }
 
-export async function API_getUserbyID(id: string) {
+export async function API_getUserbyID(id: string, token_req: any) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/get-user-by-id`, {
-      id,
-    });
+    const response = await axios.post(
+      `${BACKEND_URL}/get-user-by-id`,
+      {
+        id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
+    );
     const data = await response.data;
     return data;
   } catch (error) {
@@ -276,9 +298,13 @@ export async function API_getUserbyID(id: string) {
   }
 }
 
-export async function API_updateUser(object: any) {
+export async function API_updateUser(object: any, token_req: any) {
   try {
-    const response = await axios.put(`${BACKEND_URL}/update-user`, object);
+    const response = await axios.put(`${BACKEND_URL}/update-user`, object, {
+      headers: {
+        Authorization: `Bearer ${token_req}`,
+      },
+    });
     const data = await response.data;
     return data;
   } catch (error) {
@@ -287,10 +313,15 @@ export async function API_updateUser(object: any) {
   }
 }
 
-export async function API_deleteUser(id: any) {
+export async function API_deleteUser(id: any, token_req: any) {
   try {
     const response = await axios.delete(
-      `${BACKEND_URL}/admin/delete-user/${id}`
+      `${BACKEND_URL}/admin/delete-user/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;
@@ -300,10 +331,15 @@ export async function API_deleteUser(id: any) {
   }
 }
 
-export async function API_deleteTindang(type: string, id: any) {
+export async function API_deleteTindang(type: string, id: any, token_req: any) {
   try {
     const response = await axios.delete(
-      `${BACKEND_URL}/admin/delete-tindang/${type}/${id}`
+      `${BACKEND_URL}/admin/delete-tindang/${type}/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;
@@ -396,12 +432,18 @@ export async function API_getTindangbyIduser(id: string) {
 export async function API_updateStatusTindang(
   // id: string,
   // typecollection: string
-  build_data: object
+  build_data: object,
+  token_req: any
 ) {
   try {
     const response = await axios.put(
       `${BACKEND_URL}/admin/update-status-tindang`,
-      build_data
+      build_data,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;
@@ -414,12 +456,18 @@ export async function API_updateStatusTindang(
 export async function API_Antin(
   // id: string,
   // typecollection: string
-  build_data: object
+  build_data: object,
+  token_req: any
 ) {
   try {
     const response = await axios.put(
       `${BACKEND_URL}/update-status-antin-by-user`,
-      build_data
+      build_data,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;
@@ -431,12 +479,18 @@ export async function API_Antin(
 export async function API_Capnhat_trangthai_thanhtoan(
   // id: string,
   // type: string; xemay, dienthoai
-  build_data: object
+  build_data: object,
+  token_req: any
 ) {
   try {
     const response = await axios.put(
       `${BACKEND_URL}/update-status-thanhtoan`,
-      build_data
+      build_data,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
     );
     const data = await response.data;
     return data;

@@ -18,8 +18,9 @@ const ManageUser = () => {
   }, [users]);
 
   const getAllUser = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_getAllUser();
+      const response = await API_getAllUser(token_req);
       setUser(response);
       console.log("check response: ", response);
     } catch (error) {
@@ -28,8 +29,9 @@ const ManageUser = () => {
   };
 
   const handleDeleteUser = async (id: string) => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
-      const response = await API_deleteUser(id);
+      const response = await API_deleteUser(id, token_req);
       {
         response && response.errCode === 0
           ? toast.success("Xóa thành công.") && getAllUser()

@@ -154,9 +154,11 @@ const DS_doiduyet: React.FC<any> = ({
     lydoantin: inputLydoantin,
   };
   const handleUpdateStatusTindang = async () => {
+    const token_req: any = localStorage.getItem("token_req");
     try {
       const response = await API_updateStatusTindang(
-        build_data_update_trangthai
+        build_data_update_trangthai,
+        token_req
       );
       if (response.errCode === 0) {
         {
