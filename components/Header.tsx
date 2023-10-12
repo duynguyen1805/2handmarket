@@ -86,6 +86,9 @@ const Header = () => {
       if (token_cookie) {
         setToken_cookie(token_cookie);
         alert(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
+        console.log(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
+      } else {
+        alert(`false cookie: ${token_cookie}`);
       }
     };
     fetchToken();
@@ -98,6 +101,7 @@ const Header = () => {
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
       alert(`Đây là giá trị lấy từ localStorage: ${token_cookie}`);
+      console.log(`Đây là giá trị lấy từ localStorage: ${token_cookie}`);
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
