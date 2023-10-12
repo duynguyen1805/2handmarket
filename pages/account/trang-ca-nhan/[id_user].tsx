@@ -31,10 +31,21 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
 
   const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [datainforUser, setdatainforUser] = useState<any>();
+
+  const [token_cookie, setToken_cookie] = useState<any>();
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token_cookie = Cookies.get("jwt_token");
+      if (token_cookie) {
+        setToken_cookie(token_cookie);
+      }
+    };
+    fetchToken();
+  }, []);
   useEffect(() => {
     //lấy thông tin người dùng Đăng nhập
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
@@ -52,7 +63,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
         setdatainforUser_current(null);
       }
     }
-  }, []);
+  }, [token_cookie]);
   const inputDate = new Date(datainforUser?.createdAt);
   const day = inputDate.getUTCDate();
   const month = inputDate.getUTCMonth() + 1;

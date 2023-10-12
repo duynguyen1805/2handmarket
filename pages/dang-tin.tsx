@@ -596,9 +596,20 @@ const Dang_tin = () => {
   };
   const [datainforUser, setdatainforUser] = useState<any>();
   // const [err_miss_input, setErr_miss_input] = useState<boolean>(false);
+  const [token_cookie, setToken_cookie] = useState<any>();
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token_cookie = Cookies.get("jwt_token");
+      if (token_cookie) {
+        setToken_cookie(token_cookie);
+      }
+    };
+    fetchToken();
+  }, []);
+
   useEffect(() => {
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
@@ -618,7 +629,7 @@ const Dang_tin = () => {
     } else {
       router.push("/account/login");
     }
-  }, []);
+  }, [token_cookie]);
   const Dangtin = async () => {
     if (typeDanhmuc === "hoctap") {
       if (KhoaTruong && Nganh && giaban && inputTieude && inputMota) {

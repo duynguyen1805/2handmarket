@@ -51,10 +51,21 @@ const AdminDashboard = () => {
     };
   }, []);
 
+  const [token_cookie, setToken_cookie] = useState<any>();
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token_cookie = Cookies.get("jwt_token");
+      if (token_cookie) {
+        setToken_cookie(token_cookie);
+      }
+    };
+    fetchToken();
+  }, []);
+
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
-    const token_cookie: any = Cookies.get("jwt_token");
+    // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
@@ -79,7 +90,7 @@ const AdminDashboard = () => {
     } else {
       router.push("/account/login");
     }
-  }, []);
+  }, [token_cookie]);
   const handleLogout = () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
