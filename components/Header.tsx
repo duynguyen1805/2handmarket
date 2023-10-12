@@ -85,6 +85,7 @@ const Header = () => {
       const token_cookie = Cookies.get("jwt_token");
       if (token_cookie) {
         setToken_cookie(token_cookie);
+        alert(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
       }
     };
     fetchToken();
@@ -96,6 +97,7 @@ const Header = () => {
     // const token_cookie: any = Cookies.get("jwt_token");
     const parse_token = JSON.parse(token);
     if (parse_token && token_cookie) {
+      alert(`Đây là giá trị lấy từ localStorage: ${token_cookie}`);
       let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
       if (!jwt_key) {
         throw new Error(
