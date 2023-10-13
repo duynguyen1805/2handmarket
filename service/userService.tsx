@@ -47,7 +47,7 @@ export async function API_register(
   name: string,
   address: string,
   role: string,
-  img: any
+  img?: any
 ) {
   try {
     const response = await axios.post(`${BACKEND_URL}/register-user`, {
