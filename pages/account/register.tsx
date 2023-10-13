@@ -61,7 +61,14 @@ const Register = () => {
   };
 
   const sendOTP = async () => {
-    if (!name || !account || !address || !password || !confirmPassword || img) {
+    if (
+      !name ||
+      !account ||
+      !address ||
+      !password ||
+      !confirmPassword ||
+      !img
+    ) {
       toast.error("Vui lòng điền đủ thông tin !");
     } else {
       try {
