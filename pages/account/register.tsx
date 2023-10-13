@@ -8,6 +8,7 @@ import Image from "next/image";
 import left_back from "../../assets/icon/left-arrow.png";
 import eye from "../../assets/icon/eye.png";
 import eye_lash from "../../assets/icon/eyelash.png";
+import icon_user_128px from "../../assets/icon/user_128px.png";
 import "react-phone-input-2/lib/style.css";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
@@ -60,7 +61,7 @@ const Register = () => {
   };
 
   const sendOTP = async () => {
-    if (!name || !account || !address || !password) {
+    if (!name || !account || !address || !password || !confirmPassword || img) {
       toast.error("Vui lòng điền đủ thông tin !");
     } else {
       try {
@@ -95,7 +96,14 @@ const Register = () => {
       const confirmationResult = await result_sendOTP.confirm(otp);
       if (confirmationResult) {
         let role: string = "Client";
-        const data = await API_register(account, password, name, address, role);
+        const data = await API_register(
+          account,
+          password,
+          name,
+          address,
+          role,
+          img
+        );
         toast.success(data.message);
         router.push("/account/login");
       } else {
@@ -108,6 +116,28 @@ const Register = () => {
 
   const goBack = () => {
     router.back();
+  };
+
+  const [avatar, setAvatar] = useState<any>();
+  const [img, setImgAvatar] = useState<any>();
+
+  async function getBase64(file: any) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  const handleFile = async (e: any) => {
+    let file = e.target.files[0];
+    if (file) {
+      let base64 = await getBase64(file);
+      let objectURL = URL.createObjectURL(file);
+      setImgAvatar(base64);
+      setAvatar(objectURL);
+    }
   };
 
   return (
@@ -141,10 +171,42 @@ const Register = () => {
             <p className="ml-2 sm:text-base md:text-lg">Đăng ký</p>
           </div>
           <div className="h-auto sm:w-[90%] md:w-[75%] sm:mx-[5%] md:mx-[13%] mt-3 border rounded-lg bg-white">
-            <div className="h-[570px] w-[100%] p-5 flex flex-col items-center">
-              <p className="sm:text-2xl md:text-4xl font-medium mb-5">
+            <div className="h-[690px] w-[100%] p-5 flex flex-col items-center">
+              <p className="sm:text-2xl md:text-4xl font-medium mb-2">
                 ĐĂNG KÝ TÀI KHOẢN
               </p>
+              {/* hình đại diện */}
+              <div className="h-[120px] sm:w-full md:w-[350px] mb-2 flex items-center justify-start">
+                <div className="relative flex items-center">
+                  <div
+                    className="h-[120px] w-[120px] border-4 border-mauxanhtroi rounded-full flex items-center justify-center bg-cover bg-no-repeat bg-center hover:opacity-60"
+                    style={{
+                      backgroundImage: `url(${avatar})`,
+                    }}
+                  >
+                    {!avatar && (
+                      <Image
+                        src={icon_user_128px}
+                        alt=""
+                        className="h-[60px] w-[60px]"
+                      />
+                    )}
+                  </div>
+                  <div className="absolute h-[50px] w-[220px] px-2 left-32 border border-mauxanhtroi text-mauxanhtroi rounded-md flex items-center justify-center hover:bg-blue-500 hover:text-white cursor-pointer">
+                    <p className="">
+                      Đặt ảnh đại diện
+                      <input
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        type="file"
+                        multiple
+                        onChange={(e) => {
+                          handleFile(e);
+                        }}
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
               <div className="sm:w-full md:w-[400px] flex flex-col space-y-5 items-center">
                 <input
                   type="text"

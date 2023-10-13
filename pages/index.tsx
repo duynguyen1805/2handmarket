@@ -250,7 +250,7 @@ const Home = () => {
       </div>
       {/* Tin đăng gần đây - 2060px cho 6x6 item dọc, small 4220px cho 3x12 item*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] lg:max-h-[2110px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
+        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] lg:max-h-[2440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
           <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
             Tin đăng gần đây
           </p>

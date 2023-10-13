@@ -286,7 +286,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   }
                   className="w-full text-lg font-bold mt-5"
                 >
-                  Thông số kỹ thuật
+                  {/* Thông số kỹ thuật */}
                 </div>
                 <div className="h-auto max-h-[250px] w-full text-lg flex flex-wrap">
                   <div
