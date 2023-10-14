@@ -273,7 +273,7 @@ const Header = () => {
               </p>
             </div>
             {/* login logout */}
-            <div className="h-auto w-[25%] flex items-center justify-center gap-1 cursor-pointer">
+            <div className="h-auto w-[25%] ml-2 flex items-center justify-center gap-1 cursor-pointer">
               {(!datainforUser || datainforUser == null) && (
                 <Image
                   src={user}
@@ -332,7 +332,7 @@ const Header = () => {
                   </button>
                   {isOpenOption && (
                     <motion.div
-                      className="absolute h-auto w-[200px] left-[0px] mt-2 flex flex-wrap bg-white border rounded-md shadow-lg z-10"
+                      className="absolute h-auto w-[200px] left-[-15px] mt-2 flex flex-wrap bg-white border rounded-md shadow-lg z-10"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1, transition: { duration: 0.4 } }}
                       exit={{
@@ -380,7 +380,7 @@ const Header = () => {
               )}
             </div>
             {/* Dangtin */}
-            <div className="h-auto w-[25%] flex justify-center">
+            <div className="h-auto w-[25%] flex justify-center ml-2">
               <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
                 href={datainforUser ? "/dang-tin" : "/account/login"}

@@ -172,11 +172,11 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="h-auto min-h-screen w-[100%] pt-[80px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full md:w-full lg:w-[1440px] max-w-full bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Sản phẩm
@@ -184,7 +184,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto w-[1440px] flex">
+            <div className="bg-white shadow-sm h-auto md:w-full lg:w-[1440px] max-w-full flex">
               <div className="h-full w-[55%] p-2 sticky top-0">
                 <div className="h-[540px] w-full">
                   <Slider {...settings_slider}>
@@ -205,16 +205,16 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   </Slider>
                 </div>
                 <div className="h-[90px] w-full p-1 flex items-center border border-gray-400 rounded-md mt-2">
-                  <div className="h-[70px] w-[70px] flex items-center justify-center">
+                  <div className="h-[70px] min-w-[70px] flex items-center justify-center">
                     <div
                       className="h-full w-full rounded-full bg-center bg-cover bg-no-repeat"
                       style={{ backgroundImage: `url(${infoClient?.img})` }}
                     ></div>
                   </div>
                   <div className="h-full w-[680px] flex items-center place-content-between">
-                    <div className="w-[200px] text-lg space-y-2 px-5">
+                    <div className="w-[200px] text-xl space-y-2 px-5">
                       <p className="font-bold">{infoClient?.name}</p>
-                      <p>Online 5 phút trước</p>
+                      {/* <p>Online 5 phút trước</p> */}
                     </div>
                     <div
                       className="w-auto text-center text-mauxanhtroi text-lg py-2 px-3 border border-mauxanhtroi rounded-lg hover:bg-mauxanhtroi hover:text-white cursor-pointer"
@@ -239,7 +239,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                 <div className="h-auto w-full px-1 py-2 flex item-center">
                   <div
                     onClick={() => setopenNumber(!openNumber)}
-                    className="h-full w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-xl text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
+                    className="max-h-full w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-xl text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
                   >
                     {openNumber
                       ? `${
@@ -247,10 +247,10 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                             ? infoClient.account
                             : "Không có thông tin số điện thoại"
                         }`
-                      : "Bấm để hiện số điện thoại"}
+                      : "Liên hệ số điện thoại"}
                   </div>
                   <div
-                    className="h-full w-[40%] border border-mauxanhtroi text-xl text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
+                    className="max-h-full w-[40%] border border-mauxanhtroi text-xl text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
                     onClick={handleClickMessage}
                   >
                     Chat với người bán
@@ -822,7 +822,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                       alt="tinhtrang"
                       className="h-[30px] w-[30px] object-contain"
                     />
-                    <p>Số chỗ ngồi: {item.sochongoi} chỗ</p>
+                    <p>Chỗ ngồi: {item.sochongoi} chỗ</p>
                   </div>
                 </div>
               </div>

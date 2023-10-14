@@ -176,7 +176,7 @@ const Do_noi_that = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-[1440px] px-2 pt-2">
+            <div className="bg-white shadow-sm h-full md:w-full lg:w-[1440px] max-w-full px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
                 <p className="h-[50px] flex items-center text-2xl font-bold">
                   Khám phá đa dạng đồ nội thất
@@ -232,7 +232,7 @@ const Do_noi_that = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto min-w-full lg:min-w-[1440px] lg:max-h-[2140px] sm:max-h-[4280] max-w-[1440px] flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemALLDonoithat &&
                 itemALLDonoithat.map((item: any, index: any) => {
                   return (

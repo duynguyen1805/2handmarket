@@ -220,9 +220,9 @@ const Tin_nhan = ({
       <div className="absolute h-auto w-full top-0 left-0">
         <Header />
       </div>
-      <div className="min-h-screen h-auto w-full bg-gray-100 lg:pt-[90px] md:pt-[115px] sm:pt-[50px] flex flex-col place-content-between">
+      <div className="min-h-screen h-screen w-full bg-gray-100 lg:pt-[90px] md:pt-[115px] sm:pt-[50px] flex flex-col place-content-between">
         <div className="h-auto w-full flex items-center justify-center">
-          <div className="sm:h-[705px] sm:min-h-[705px] md:h-[784px] max-h-[2500px] lg:w-[990px] sm:w-full flex border lg:rounded-lg bg-white">
+          <div className="sm:h-[calc(100vh-90px-50px)] lg:w-[990px] sm:w-full flex border lg:rounded-lg bg-white">
             {/* display medium */}
             <div className="sm:hidden md:block h-full w-[35%] border-r border-gray-400 overflow-auto">
               {conversationMembers &&

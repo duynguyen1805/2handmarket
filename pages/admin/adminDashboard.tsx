@@ -183,12 +183,15 @@ const AdminDashboard = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       {allowed_render && (
-        <div className="lg:bg-gray-50 sm:h-full lg:h-screen">
+        <div className="lg:bg-gray-50 min-h-screen relative">
+          <div className="absolute h-auto w-full top-0 left-0">
+            <Header />
+          </div>
           {/* screen: medium & desktop */}
           <div className="sm:hidden md:block">
-            <Header />
-            <div className="md:block lg:flex md:h-full lg:h-[855px] bg-white">
-              <div className="bg-mauxanhtroi px-2 py-3 text-white flex space-y-1 md:flex-row lg:flex-col md:h-full md:w-[100%] lg:h-auto lg:w-[300px] overflow-y-auto overflow-x-hidden">
+            {/* <Header /> */}
+            <div className="md:block lg:flex min-h-screen h-screen lg:pt-[80px] md:pt-[115px] sm:pt-[50px] bg-white">
+              <div className="bg-mauxanhtroi px-2 py-3 text-white flex space-y-1 md:flex-row lg:flex-col md:h-full md:w-[100%] lg:h-auto lg:w-[280px] lg:max-w-[280px] overflow-y-auto overflow-x-hidden">
                 {/* doi duyet */}
                 <div
                   className={`flex items-center place-content-between py-2 px-2 text-2xl rounded-md cursor-pointer hover:bg-blue-300 ${

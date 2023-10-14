@@ -23,7 +23,7 @@ const role_arr: typeRole[] = [
     type: "Admin",
   },
   {
-    label: "Khách hàng",
+    label: "Người dùng",
     type: "Client",
   },
 ];

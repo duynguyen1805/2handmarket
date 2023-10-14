@@ -260,42 +260,44 @@ const Message = ({
   ];
 
   return (
-    <>
-      <div className="h-[90px] w-full flex items-center space-x-2 px-2 border-b border-gray-300 cursor-pointer">
-        <div
-          className="sm:flex md:hidden h-full w-[40px] items-center"
-          onClick={() => setSelectedUser(undefined)}
-        >
-          <Image
-            src={left_back}
-            alt="icon"
-            className="h-[25px] w-[25px] cursor-pointer"
-          />
-        </div>
-        <div
-          className="h-[60px] w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
-          style={{
-            backgroundImage: `url(${avatar_receiver})`,
-          }}
-          onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
-        ></div>
-        <div className="h-[60px] w-auto max-w-full overflow-x-hidden">
+    <div className="h-full w-full">
+      <div className="relative sm:h-[551px] md:h-full w-full flex flex-col">
+        <div className="bg-white min-h-[90px] w-full flex items-center space-x-2 px-2 border-b border-gray-300 cursor-pointer">
           <div
-            className="h-[30px] w-full font-bold flex items-center"
-            onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
+            className="sm:flex md:hidden h-full w-[40px] items-center"
+            onClick={() => setSelectedUser(undefined)}
           >
-            {userName_receiver}
+            <Image
+              src={left_back}
+              alt="icon"
+              className="h-[25px] w-[25px] cursor-pointer"
+            />
           </div>
-          <div className="h-[30px] w-full flex items-center space-x-2">
-            <span className="h-[10px] w-[10px] bg-green-500 rounded-full"></span>
-            <p>Trạng thái truy cập</p>
+          <div
+            className="h-[60px] w-[60px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
+            style={{
+              backgroundImage: `url(${avatar_receiver})`,
+            }}
+            onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
+          ></div>
+          <div className="h-[60px] w-auto max-w-full overflow-x-hidden">
+            <div
+              className="h-[60px] w-full text-xl font-bold flex items-center"
+              onClick={() =>
+                router.push(`/account/trang-ca-nhan/${id_receiver}`)
+              }
+            >
+              {userName_receiver}
+            </div>
+            {/* <div className="h-[30px] w-full flex items-center space-x-2">
+              <span className="h-[10px] w-[10px] bg-green-500 rounded-full"></span>
+              <p>Trạng thái truy cập</p>
+            </div> */}
           </div>
         </div>
-      </div>
-      <div className="relative sm:h-[551px] md:h-[630px] w-full">
         <div
           ref={chatContainerRef}
-          className="sm:h-[551px] md:h-[630px] w-full px-2 py-1 mb-1 overflow-auto"
+          className="sm:h-[551px] md:h-auto flex-grow w-full px-2 py-1 overflow-auto"
         >
           {messages &&
             messages.map((message: any, index: number) => {
@@ -320,7 +322,7 @@ const Message = ({
                     <div
                       className={`${
                         message.sender == id_current_user && `justify-end`
-                      } min-h-[45px] w-full flex items-center`}
+                      } min-h-[45px] w-full flex items-center justify-start`}
                     >
                       <div
                         className={`${
@@ -332,8 +334,8 @@ const Message = ({
                         <div
                           className={`${
                             message.sender == id_current_user
-                              ? "left-[-130px]"
-                              : "right-[-130px]"
+                              ? "left-[-140px]"
+                              : "right-[-140px]"
                           } absolute bg-gray-400 text-white h-[34px] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100`}
                         >
                           {formattedDate}
@@ -369,8 +371,8 @@ const Message = ({
                             <div
                               className={`${
                                 message.sender == id_current_user
-                                  ? "left-[-130px]"
-                                  : "right-[-130px]"
+                                  ? "left-[-140px]"
+                                  : "right-[-140px]"
                               } absolute bg-gray-400 text-white h-[34px] px-2 py-1 rounded-md opacity-0 group-hover:opacity-100`}
                             >
                               {formattedDate}
@@ -383,7 +385,7 @@ const Message = ({
               );
             })}
         </div>
-        <div className="absolute sm:top-[450px] md:top-[532px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
+        <div className="absolute md:bottom-[50px] h-auto w-full ml-1 flex flex-wrap gap-[5px]">
           {reviewImg_arr !== null && reviewImg_arr !== "" ? (
             reviewImg_arr?.map((item_img: any, index: number) => {
               return (
@@ -408,7 +410,7 @@ const Message = ({
             <></>
           )}
         </div>
-        <div className="h-[50px] w-full flex items-center">
+        <div className="min-h-[50px] w-full flex items-center">
           <input
             placeholder="Nhập tin nhắn ..."
             type="text"
@@ -458,7 +460,7 @@ const Message = ({
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

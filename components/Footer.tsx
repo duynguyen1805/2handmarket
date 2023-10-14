@@ -43,7 +43,7 @@ const Footer = () => {
                 exit={{
                   opacity: 0,
                 }}
-                className="absolute lg:left-10 md:left-[-250%] bg-black text-white px-2 py-1 rounded-md"
+                className="absolute lg:top-0 lg:right-[-260px] sm:top-[-35px] sm:right-0 bg-black text-white px-2 py-1 rounded-md"
               >
                 duynguyenqwert@gmail.com
               </motion.div>

@@ -266,7 +266,7 @@ export async function API_getTindangbyId(type: string | null, id: string) {
 
 export async function API_getAllUser(token_req: any) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/admin/get-user`, {
+    const response = await axios.get(`${BACKEND_URL}/admin/get-user`, {
       headers: {
         Authorization: `Bearer ${token_req}`,
       },

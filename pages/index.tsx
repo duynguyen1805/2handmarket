@@ -158,8 +158,8 @@ const Home = () => {
       <Header />
       {/* Banner */}
       <div className="max-h-[330px] h-auto w-full flex items-center justify-center">
-        <div className="bg-white shadow-sm h-full w-auto lg:w-[1440px] sm:min-w-full md:min-w-[767px] max-w-[1440px] px-2 pt-1 flex flex-col items-center justify-center space-y-2">
-          <div className="h-[50px] w-full">
+        <div className="bg-white shadow-sm h-full w-auto lg:w-[1440px] sm:min-w-full md:min-w-[767px] max-w-full px-2 pt-1 flex flex-col items-center justify-center space-y-2">
+          <div className="h-[50px] w-full py-1">
             <Danhmuc />
           </div>
           <div className="h-full w-full pb-8 overflow-hidden flex items-center justify-center">

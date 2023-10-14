@@ -81,35 +81,83 @@ const DS_doiduyet: React.FC<any> = ({
       };
       if (selectoption === "hoctap") {
         const response = await API_get_Dohoctap(build_data);
-        setitemALL(response.all_dohoctap);
+        let sort_response = response.all_dohoctap
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "dodientu") {
         const response = await API_get_Dodientu(build_data);
-        setitemALL(response.all_dodientu);
+        let sort_response = response.all_dodientu
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "phuongtien") {
         const response = await API_get_Phuongtien(build_data);
-        setitemALL(response.all_phuongtien);
+        let sort_response = response.all_phuongtien
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "donoithat") {
         const response = await API_get_Donoithat(build_data);
-        setitemALL(response.all_donoithat);
+        let sort_response = response.all_donoithat
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "dienlanh") {
         const response = await API_get_Dienlanh(build_data);
-        setitemALL(response.all_dienlanh);
+        let sort_response = response.all_dienlanh
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "dodungcanhan") {
         const response = await API_get_Docanhan(build_data);
-        setitemALL(response.all_docanhan);
+        let sort_response = response.all_docanhan
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "dogiaitri") {
         const response = await API_get_Dogiaitri(build_data);
-        setitemALL(response.all_dogiaitri);
+        let sort_response = response.all_dogiaitri
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
       if (selectoption === "thucung") {
         const response = await API_get_Thucung(build_data);
-        setitemALL(response.all_thucung);
+        let sort_response = response.all_thucung
+          .slice()
+          .sort(
+            (a: any, b: any) =>
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+          );
+        setitemALL(sort_response);
       }
     } catch (error) {
       console.error("Error fetching data:", error);

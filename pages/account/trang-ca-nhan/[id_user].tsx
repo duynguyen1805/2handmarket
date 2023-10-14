@@ -20,6 +20,7 @@ import Display_product_vertical from "@/components/Display_product_vertical";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 interface infodetailProps {
   id_user: string;
@@ -127,13 +128,16 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
       <div className="h-auto w-full bg-gray-100 pt-3">
         {/* Điều hướng - show infor */}
         <div className="h-auto w-full flex flex-col items-center justify-center space-y-3">
-          <div className="h-[60px] w-auto sm:w-full lg:min-w-[1440px] lg:w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+          <div className="h-full w-[1440px] max-w-full bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
             <Danhmuc />
-            <p className="h-full w-auto flex items-center ml-3">
-              Trang chủ / Trang cá nhân
-            </p>
+            <div className="h-full w-auto flex items-center ml-3 space-x-1">
+              <Link href="/" className="cursor-pointer hover:text-mauxanhtroi">
+                Trang chủ
+              </Link>{" "}
+              <p>/ Trang cá nhân</p>
+            </div>
           </div>
-          <div className="h-[160px] w-auto sm:w-full lg:min-w-[1440px] lg:w-[1440px] bg-white text-xl p-1 rounded-lg shadow-md">
+          <div className="h-[160px] w-auto sm:w-full lg:w-[1440px] max-w-full bg-white text-xl p-1 rounded-lg shadow-md">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{
@@ -186,7 +190,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
           </div>
         </div>
         <div className="h-auto w-full flex items-center justify-center mt-1">
-          <div className="h-auto w-[1440px] mt-3 px-1 border rounded-lg bg-white overflow-auto">
+          <div className="h-auto md:w-full lg:w-[1440px] max-w-full mt-3 px-1 border rounded-lg bg-white overflow-auto">
             {/* display medium */}
             <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 flex-col items-center overflow-auto">
               <motion.div

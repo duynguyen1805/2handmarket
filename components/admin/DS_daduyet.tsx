@@ -253,8 +253,8 @@ const DS_daduyet: React.FC<any> = ({
   return (
     <div className="flex sm:h-auto md:h-full sm:w-full sm:pt-5 sm:bg-gray-100 md:bg-white md:pt-0">
       {/* display medium */}
-      <div className="relative w-[40%] h-auto">
-        <div className="h-[50px] w-full flex items-center">
+      <div className="relative w-[40%] h-full flex flex-col space-y-1">
+        <div className="min-h-[50px] w-full flex items-center">
           {listFilter &&
             listFilter.map((item: any, index: number) => {
               return (
@@ -271,7 +271,7 @@ const DS_daduyet: React.FC<any> = ({
             })}
         </div>
         {/* call api search tin đã đăng theo tiêu đề, id */}
-        <div className="h-[50px] w-full px-3 flex flex-row">
+        <div className="min-h-[50px] w-full px-3 flex flex-row">
           <input
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
@@ -286,7 +286,7 @@ const DS_daduyet: React.FC<any> = ({
             Tìm
           </button>
         </div>
-        <div className="w-full h-auto max-h-[800px] p-2 overflow-y-auto overflow-x-hidden">
+        <div className="w-full h-auto flex-grow p-2 overflow-y-auto overflow-x-hidden">
           {itemALL &&
             itemALL.map((item: any, index: number) => {
               //handle thời gian đã đăng
@@ -364,7 +364,7 @@ const DS_daduyet: React.FC<any> = ({
               );
             })}
         </div>
-        <div className="h-auto w-full mt-1 absolute bottom-0">
+        <div className="h-auto w-full mt-1">
           <ReactPaginate
             forcePage={pagehientai - 1}
             breakLabel="..."
