@@ -205,9 +205,9 @@ const DS_daduyet: React.FC<any> = ({
   };
 
   const listFilter = [
-    { id: 2, name: "Đang hiển thị" },
+    { id: 2, name: "Tin hiển thị" },
     { id: 3, name: "Bị từ chối" },
-    { id: 4, name: "Người dùng ẩn" },
+    { id: 4, name: "Tin ẩn" },
   ];
   const [keyword, setKeyword] = useState<string>("");
   const handleSearch = async () => {
@@ -337,7 +337,7 @@ const DS_daduyet: React.FC<any> = ({
                   }`}
                   onClick={() => setData(index, item)}
                 >
-                  <div className="h-[90px] w-[90px] flex justify-center">
+                  <div className="h-[90px] min-w-[60px] flex justify-center">
                     <div
                       className="h-full w-full bg-center bg-contain bg-no-repeat"
                       style={{ backgroundImage: `url(${item.img[0]})` }}

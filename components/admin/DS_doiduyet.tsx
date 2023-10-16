@@ -287,13 +287,12 @@ const DS_doiduyet: React.FC<any> = ({
                 }}
                 exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
                 whileHover={{ scale: 1.01, transition: { duration: 0.3 } }}
-                // className="h-[160px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer"
                 className={`h-[100px] w-full p-1 mt-3 flex border border-gray-400 shadow-md rounded-md cursor-pointer ${
                   index === active ? "bg-gray-100 border-mauxanhtroi" : ""
                 }`}
                 onClick={() => setData(index, item)}
               >
-                <div className="h-[90px] w-[90px] flex justify-center">
+                <div className="h-[90px] min-w-[60px] flex justify-center">
                   <div
                     className="h-full w-full bg-center bg-contain bg-no-repeat"
                     style={{ backgroundImage: `url(${item.img[0]})` }}

@@ -133,7 +133,8 @@ const Tin_nhan = ({
         const latestMessages = await Promise.all(latestMessagePromises);
         // latestMessage cho từng list_chat
         for (let i = 0; i < listchat.length; i++) {
-          listchat[i].latestMessage = latestMessages[i] || "";
+          listchat[i].latestMessage = latestMessages[i].latestMessage || "";
+          listchat[i].id_sender = latestMessages[i].id_sender || "";
         }
         setConversationMembers(listchat);
         console.log("check listchat: ", listchat);
@@ -160,7 +161,8 @@ const Tin_nhan = ({
       const messagesSnapshot = await getDocs(messagesQuery);
       if (!messagesSnapshot.empty) {
         const latestMessage = messagesSnapshot.docs[0].data().text;
-        return latestMessage;
+        const id_sender = messagesSnapshot.docs[0].data().sender;
+        return { latestMessage, id_sender };
       }
     }
     return "";
@@ -252,7 +254,11 @@ const Tin_nhan = ({
                           >
                             {receiver.latestMessage != ""
                               ? receiver.latestMessage
-                              : `${receiver.userName} đã gửi một ảnh.`}
+                              : `${
+                                  receiver.id_sender == id_user
+                                    ? "Bạn đã gửi một ảnh"
+                                    : `${receiver.userName} đã gửi một ảnh`
+                                }`}
                           </div>
                         </div>
                         <div
