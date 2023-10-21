@@ -364,7 +364,7 @@ const DS_doiduyet: React.FC<any> = ({
             >
               Thông số kỹ thuật
             </div>
-            <div className="h-auto max-h-[250px] w-[50%] flex flex-wrap">
+            <div className="h-auto max-h-[250px] w-[100%] flex flex-wrap">
               <div
                 hidden={
                   item.type === "cho" ||

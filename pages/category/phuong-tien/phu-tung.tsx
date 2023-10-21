@@ -7,6 +7,7 @@ import Image from "next/image";
 import router from "next/router";
 import icon_phutungoto from "../../../assets/icon/ic_xeco/ic_phutung/icon_phutungoto.png";
 import icon_phutungxemay from "../../../assets/icon/ic_xeco/ic_phutung/icon_phutungxemay.png";
+import icon_loading from "../../../assets/icon/loading.png";
 import { API_get_Phuongtien } from "@/service/userService";
 import ReactPaginate from "react-paginate";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
@@ -173,6 +174,18 @@ const Phu_tung_xe = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemPhutung && itemPhutung.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemPhutung &&
                 itemPhutung.map((item: any, index: any) => {
                   return (

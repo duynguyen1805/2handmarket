@@ -410,6 +410,11 @@ const DS_daduyet: React.FC<any> = ({
             </Slider>
           </div>
           <div className="h-auto w-full px-2 py-2">
+            {item && item.lydoantin !== "" && (
+              <p className="h-auto max-h-[60px] w-full overflow-hidden text-xl text-center text-red-500 font-bold">
+                Lý do ẩn tin: {item.lydoantin}
+              </p>
+            )}
             <p className="h-auto max-h-[60px] w-full overflow-hidden text-xl font-bold">
               {item.tieude}
             </p>
@@ -434,7 +439,7 @@ const DS_daduyet: React.FC<any> = ({
             >
               Thông số kỹ thuật
             </div>
-            <div className="h-auto max-h-[250px] w-[50%] flex flex-wrap">
+            <div className="h-auto max-h-[250px] w-[100%] flex flex-wrap">
               <div
                 hidden={
                   item.type === "cho" ||

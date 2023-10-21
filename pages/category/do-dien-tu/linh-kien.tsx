@@ -9,6 +9,7 @@ import { API_get_Dodientu } from "@/service/userService";
 import ReactPaginate from "react-paginate";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
+import icon_loading from "../../../assets/icon/loading.png";
 
 const list_loailinhkien = [
   { key: 1, label: "Linh kiện Máy tính", type: "linhkienmaytinh" },
@@ -172,6 +173,18 @@ const Linh_kien = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemLinhkien && itemLinhkien.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemLinhkien &&
                 itemLinhkien.map((item: any, index: any) => {
                   return (

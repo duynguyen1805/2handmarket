@@ -105,3 +105,7 @@
     transform: rotate(360deg);
   }
 }
+
+.loading {
+  animation: border-spin 3s linear infinite; /* 10s animation chạy qua lại một lần*/
+}

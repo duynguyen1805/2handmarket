@@ -13,6 +13,7 @@ import icon_smartwatch from "../../../assets/icon/ic_dodientu/icon_smartwatch.sv
 import icon_camera from "../../../assets/icon/ic_dodientu/icon_camera.svg";
 import icon_phukien from "../../../assets/icon/ic_dodientu/icon_phukien.svg";
 import icon_linhkien from "../../../assets/icon/ic_dodientu/icon_linhkien.svg";
+import icon_loading from "../../../assets/icon/loading.png";
 
 import Display_product_vertical from "@/components/Display_product_vertical";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
@@ -219,6 +220,18 @@ const Do_dien_tu = () => {
                 </p>
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
+                {itemALLDodientu && itemALLDodientu.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <Image
+                      src={icon_loading}
+                      alt=""
+                      className="h-[45px] w-[45px] loading"
+                    />
+                    <p className="">
+                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
                 {itemALLDodientu &&
                   itemALLDodientu.map((item: any, index: any) => {
                     return (

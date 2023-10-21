@@ -24,6 +24,7 @@ import icon_lg_noithat from "../assets/img/icon_lg_noithat.png";
 import icon_lg_thucung from "../assets/img/icon_lg_thucung.png";
 import icon_lg_tulanh from "../assets/img/icon_lg_tulanh.png";
 import icon_lg_xeco from "../assets/img/icon_lg_xeco.png";
+import icon_loading from "../assets/icon/loading.png";
 
 //import css file Slider
 import "slick-carousel/slick/slick.css";
@@ -255,6 +256,18 @@ const Home = () => {
             Tin đăng gần đây
           </p>
           <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
+            {tindang_ganday && tindang_ganday.length == 0 && (
+              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                <Image
+                  src={icon_loading}
+                  alt=""
+                  className="h-[45px] w-[45px] loading"
+                />
+                <p className="">
+                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                </p>
+              </div>
+            )}
             {tindang_ganday &&
               tindang_ganday.map((item: any, index: number) => {
                 return (

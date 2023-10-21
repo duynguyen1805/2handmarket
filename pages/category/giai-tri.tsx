@@ -10,6 +10,7 @@ import icon_dothethao from "../../assets/icon/ic_giaitri_thethao/icon_dothethao.
 import icon_game from "../../assets/icon/ic_giaitri_thethao/icon_game.svg";
 import icon_sach from "../../assets/icon/ic_giaitri_thethao/icon_sach.svg";
 import icon_sothichkhac from "../../assets/icon/ic_giaitri_thethao/icon_sothichkhac.svg";
+import icon_loading from "../../assets/icon/loading.png";
 //import css file Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -223,6 +224,18 @@ const Do_giai_tri = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemALLDogiaitri && itemALLDogiaitri.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemALLDogiaitri &&
                 itemALLDogiaitri.map((item: any, index: any) => {
                   return (

@@ -157,13 +157,25 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
               </div>
               <div className="h-full lg:w-[802px] sm:w-full">
                 <div className="h-2/3 w-full">
-                  <div className="h-auto">
-                    {datainforUser?.name} - {datainforUser?.account}
-                  </div>
-                  <div className="h-auto">{datainforUser?.address}</div>
-                  <div className="h-auto">
-                    Tham gia ngày: {formatted_ngaythamgia}
-                  </div>
+                  {datainforUser?.name ? (
+                    <div className="h-auto">
+                      {datainforUser?.name} - {datainforUser?.account}
+                    </div>
+                  ) : (
+                    <div className="h-auto">Loading...</div>
+                  )}
+                  {datainforUser?.address ? (
+                    <div className="h-auto">{datainforUser?.address}</div>
+                  ) : (
+                    <div className="h-auto">Loading...</div>
+                  )}
+                  {datainforUser?.createdAt ? (
+                    <div className="h-auto">
+                      Tham gia ngày: {formatted_ngaythamgia}
+                    </div>
+                  ) : (
+                    <div className="h-auto">Loading...</div>
+                  )}
                 </div>
                 <div className="h-1/3 w-full flex items-center">
                   {datainforUser?._id === datainforUser_current?._id && (

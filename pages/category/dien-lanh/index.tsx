@@ -8,6 +8,7 @@ import router from "next/router";
 import icon_maygiat from "../../../assets/icon/ic_tulanhmaylanh/icon_maygiat.svg";
 import icon_maylanh from "../../../assets/icon/ic_tulanhmaylanh/icon_maylanh.svg";
 import icon_tulanh from "../../../assets/icon/ic_tulanhmaylanh/icon_tulanh.svg";
+import icon_loading from "../../../assets/icon/loading.png";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
 //import css file Slider
 import "slick-carousel/slick/slick.css";
@@ -204,6 +205,18 @@ const Dien_lanh = () => {
                 </p>
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
+                {itemALLDienlanh && itemALLDienlanh.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <Image
+                      src={icon_loading}
+                      alt=""
+                      className="h-[45px] w-[45px] loading"
+                    />
+                    <p className="">
+                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
                 {itemALLDienlanh &&
                   itemALLDienlanh.map((item: any, index: any) => {
                     return (

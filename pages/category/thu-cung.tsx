@@ -9,7 +9,7 @@ import icon_cakieng from "../../assets/icon/ic_thucung/icon_cakieng.svg";
 import icon_cho from "../../assets/icon/ic_thucung/icon_cho.svg";
 import icon_meo from "../../assets/icon/ic_thucung/icon_meo.svg";
 import icon_phukienthucan from "../../assets/icon/ic_thucung/icon_phukienthucan.svg";
-
+import icon_loading from "../../assets/icon/loading.png";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
 import ReactPaginate from "react-paginate";
 
@@ -225,6 +225,18 @@ const Thu_cung = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemALLThucung && itemALLThucung.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemALLThucung &&
                 itemALLThucung.map((item: any, index: any) => {
                   return (

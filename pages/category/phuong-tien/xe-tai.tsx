@@ -16,6 +16,7 @@ import icon_thaco from "../../../assets/icon/ic_xeco/ic_hangxetai/icon_thaco.png
 import icon_veam from "../../../assets/icon/ic_xeco/ic_hangxetai/icon_veam.png";
 import icon_other from "../../../assets/icon/ic_dodientu/ic_hangdienthoai/other.svg";
 import icon_filter from "../../../assets/icon/icon_filter.svg";
+import icon_loading from "../../../assets/icon/loading.png";
 
 //import css file Slider
 import "slick-carousel/slick/slick.css";
@@ -284,6 +285,18 @@ const Xe_tai = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemXetai && itemXetai.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemXetai &&
                 itemXetai.map((item: any, index: any) => {
                   return (

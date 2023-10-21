@@ -11,6 +11,7 @@ import icon_xedap from "../../../assets/icon/ic_xeco/icon_xedap.svg";
 import icon_xedien from "../../../assets/icon/ic_xeco/icon_xedien.svg";
 import icon_xetai from "../../../assets/icon/ic_xeco/icon_xetai.svg";
 import icon_phutung from "../../../assets/icon/ic_xeco/icon_phutung.svg";
+import icon_loading from "../../../assets//icon/loading.png";
 
 import Display_product_vertical from "@/components/Display_product_vertical";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
@@ -212,6 +213,18 @@ const Phuong_tien = () => {
                 </p>
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
+                {itemALLPhuongtien && itemALLPhuongtien.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <Image
+                      src={icon_loading}
+                      alt=""
+                      className="h-[45px] w-[45px] loading"
+                    />
+                    <p className="">
+                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
                 {itemALLPhuongtien &&
                   itemALLPhuongtien.map((item: any, index: any) => {
                     return (
