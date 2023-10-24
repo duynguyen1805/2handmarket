@@ -39,15 +39,17 @@ const Header = () => {
     count_message_unread,
     keyword_search,
     setKeywordSearch,
+    information_User,
+    setInfoUser,
   } = useMyContext();
-  const [datainforUser, setdatainforUser] = useState<any>(null);
+  const [datainforUser, setdatainforUser] = useState<any>(null); //thay thế bằng information_User
 
   useEffect(() => {
-    if (datainforUser?._id) {
+    if (information_User?._id) {
       const listUserChatCollectionRef = collection(
         db,
         "list_user_chat",
-        datainforUser?._id,
+        information_User?._id,
         "list_chatting"
       );
       const Listchat_Query = query(
@@ -77,7 +79,7 @@ const Header = () => {
         unsubscribe();
       };
     }
-  }, [datainforUser]);
+  }, [information_User]);
 
   // const [token_cookie, setToken_cookie] = useState<any>();
   // useEffect(() => {
@@ -112,13 +114,16 @@ const Header = () => {
         // const decoded_cookie = jwt.verify(token_cookie, jwt_secret);
         if (decoded) {
           setdatainforUser(decoded);
+          setInfoUser(decoded);
         }
       } catch (error) {
         console.log("Lỗi decoded token: ", error);
         setdatainforUser(null);
+        setInfoUser(null);
       }
     } else {
       setdatainforUser(null);
+      setInfoUser(null);
     }
   }, []);
 
@@ -235,7 +240,7 @@ const Header = () => {
             {/* tinnhan */}
             <div
               className="h-auto lg:w-[25%] sm:w-[25%] flex gap-2.5 items-center justify-center cursor-pointer"
-              onClick={() => handleClickMessage(datainforUser?._id)}
+              onClick={() => handleClickMessage(information_User?._id)}
             >
               <div className="relative">
                 <Image
@@ -260,7 +265,7 @@ const Header = () => {
             <div
               className="h-auto w-[25%] flex gap-1 items-center justify-center cursor-pointer"
               onClick={() => {
-                clickQuanly_dangtin(datainforUser?._id);
+                clickQuanly_dangtin(information_User?._id);
               }}
             >
               <Image
@@ -274,7 +279,7 @@ const Header = () => {
             </div>
             {/* login logout */}
             <div className="h-auto w-[25%] ml-2 flex items-center justify-center gap-1 cursor-pointer">
-              {(!datainforUser || datainforUser == null) && (
+              {(!information_User || information_User == null) && (
                 <Image
                   src={user}
                   alt="icon"
@@ -282,7 +287,7 @@ const Header = () => {
                   onClick={handleClickUser}
                 />
               )}
-              {(!datainforUser || datainforUser == null) && (
+              {(!information_User || information_User == null) && (
                 <div className="h-auto w-[100px] text-white ml-1 sm:hidden md:block">
                   <div
                     className=" hover:opacity-80 cursor-pointer"
@@ -298,7 +303,7 @@ const Header = () => {
                   </div>
                 </div>
               )}
-              {datainforUser && datainforUser !== null && (
+              {information_User && information_User !== null && (
                 <div className="relative">
                   <button
                     type="button"
@@ -308,11 +313,11 @@ const Header = () => {
                     <div
                       className="lg:h-[50px] lg:w-[50px] md:h-[40px] md:w-[40px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
                       style={{
-                        backgroundImage: `url(${datainforUser?.avatar})`,
+                        backgroundImage: `url(${information_User?.avatar})`,
                       }}
                     ></div>
-                    {datainforUser?.name.slice(
-                      datainforUser?.name.lastIndexOf(" ") + 1
+                    {information_User?.name.slice(
+                      information_User?.name.lastIndexOf(" ") + 1
                     )}
                     <svg
                       className={`w-4 h-4 ml-2 transition-transform duration-200 transform ${
@@ -341,9 +346,9 @@ const Header = () => {
                     >
                       <div className="h-full w-full flex flex-col">
                         <p className="h-[50px] text-xl flex items-center justify-center cursor-pointer hover:text-blue-500">
-                          SĐT: {datainforUser?.account}
+                          SĐT: {information_User?.account}
                         </p>
-                        {datainforUser?.role === "Admin" && (
+                        {information_User?.role === "Admin" && (
                           <div
                             className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                             onClick={handleClickManager}
@@ -354,7 +359,7 @@ const Header = () => {
                         <div
                           className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                           onClick={() => {
-                            clickInfoDetail(datainforUser?._id);
+                            clickInfoDetail(information_User?._id);
                           }}
                         >
                           Trang cá nhân
@@ -362,7 +367,7 @@ const Header = () => {
                         <div
                           className="h-[50px] border-t border-gray-400 flex justify-center items-center text-xl cursor-pointer hover:text-white hover:bg-blue-500"
                           onClick={() => {
-                            clickQuanly_dangtin(datainforUser?._id);
+                            clickQuanly_dangtin(information_User?._id);
                           }}
                         >
                           Quản lý tin đăng
@@ -383,7 +388,7 @@ const Header = () => {
             <div className="h-auto w-[25%] flex justify-center ml-2">
               <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
-                href={datainforUser ? "/dang-tin" : "/account/login"}
+                href={information_User ? "/dang-tin" : "/account/login"}
               >
                 <Image
                   src={dangtin}

@@ -73,7 +73,7 @@ const May_lanh = () => {
       },
     ],
   };
-  const [itemMaylanh, setitemMaylanh] = useState<any[]>([]);
+  const [itemMaylanh, setitemMaylanh] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [hang, setHang] = useState<string>();
@@ -122,7 +122,7 @@ const May_lanh = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Hang = async (key: number, tenHang: string) => {
-    setitemMaylanh([]);
+    setitemMaylanh(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setHang(undefined);
@@ -138,13 +138,14 @@ const May_lanh = () => {
   };
   const Handle_TatcaHang = async () => {
     setFilteredHang(0);
-    setitemMaylanh([]);
+    setitemMaylanh(null);
     fetchDataProduct();
     count_filter(0);
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemMaylanh(null);
   };
   const [openModalFilter, setopenModalFilter] = useState<boolean>(false);
   const handleClick_btnFilter = () => {
@@ -274,7 +275,7 @@ const May_lanh = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemMaylanh && itemMaylanh.length == 0 && (
+              {itemMaylanh == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -283,6 +284,13 @@ const May_lanh = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemMaylanh && itemMaylanh.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

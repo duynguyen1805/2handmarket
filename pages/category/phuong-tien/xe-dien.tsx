@@ -20,7 +20,7 @@ import Display_product_vertical_v2 from "@/components/Display_product_vertical_v
 import Link from "next/link";
 
 const Xe_dien = () => {
-  const [itemXedien, setitemXedien] = useState<any[]>([]);
+  const [itemXedien, setitemXedien] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loaixedien, setloaixedien] = useState<string>();
@@ -69,7 +69,7 @@ const Xe_dien = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Hang = async (key: number, loaixedien: string) => {
-    setitemXedien([]);
+    setitemXedien(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloaixedien(undefined);
@@ -87,13 +87,14 @@ const Xe_dien = () => {
     setFilteredHang(0);
     setloaixedien(undefined);
     setpagehientai(1);
-    setitemXedien([]);
+    setitemXedien(null);
     fetchDataProduct();
     count_filter(0);
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemXedien(null);
   };
   const [openModalFilter, setopenModalFilter] = useState<boolean>(false);
   const handleClick_btnFilter = () => {
@@ -219,7 +220,7 @@ const Xe_dien = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemXedien && itemXedien.length == 0 && (
+              {itemXedien == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -228,6 +229,13 @@ const Xe_dien = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemXedien && itemXedien.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

@@ -23,7 +23,7 @@ const list_loaixedap = [
 ];
 
 const Xe_dap = () => {
-  const [itemXedap, setitemXedap] = useState<any[]>([]);
+  const [itemXedap, setitemXedap] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loaixedap, setloaixedap] = useState<string>();
@@ -43,7 +43,6 @@ const Xe_dap = () => {
         const response = await API_get_Phuongtien(build_data);
         setitemXedap(response.xedap);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -62,14 +61,13 @@ const Xe_dap = () => {
       const response = await API_get_Phuongtien(build_data);
       setitemXedap(response.xedap);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Hang = async (key: number, loaixedap: string) => {
-    setitemXedap([]);
+    setitemXedap(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloaixedap(undefined);
@@ -84,12 +82,13 @@ const Xe_dap = () => {
     setFilteredHang(0);
     setloaixedap(undefined);
     setpagehientai(1);
-    setitemXedap([]);
+    setitemXedap(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemXedap(null);
   };
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -175,7 +174,7 @@ const Xe_dap = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemXedap && itemXedap.length == 0 && (
+              {itemXedap == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -184,6 +183,13 @@ const Xe_dap = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemXedap && itemXedap.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

@@ -18,7 +18,7 @@ const list_loailinhkien = [
 ];
 
 const Linh_kien = () => {
-  const [itemLinhkien, setitemLinhkien] = useState<any[]>([]);
+  const [itemLinhkien, setitemLinhkien] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loailinhkien, setloailinhkien] = useState<string>();
@@ -38,7 +38,6 @@ const Linh_kien = () => {
         const response = await API_get_Dodientu(build_data);
         setitemLinhkien(response.linhkien);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -57,14 +56,13 @@ const Linh_kien = () => {
       const response = await API_get_Dodientu(build_data);
       setitemLinhkien(response.linhkien);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Linhkien = async (key: number, loailinhkien: string) => {
-    setitemLinhkien([]);
+    setitemLinhkien(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloailinhkien(undefined);
@@ -76,7 +74,7 @@ const Linh_kien = () => {
     }
   };
   const Handle_TatcaHang = async () => {
-    setitemLinhkien([]);
+    setitemLinhkien(null);
     setFilteredHang(0);
     setloailinhkien(undefined);
     setpagehientai(1);
@@ -85,6 +83,7 @@ const Linh_kien = () => {
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemLinhkien(null);
   };
 
   return (
@@ -173,7 +172,7 @@ const Linh_kien = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemLinhkien && itemLinhkien.length == 0 && (
+              {itemLinhkien == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -182,6 +181,13 @@ const Linh_kien = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemLinhkien && itemLinhkien.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

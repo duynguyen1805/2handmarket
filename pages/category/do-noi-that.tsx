@@ -72,7 +72,7 @@ const Do_noi_that = () => {
       },
     ],
   };
-  const [itemALLDonoithat, setitemALLDonoithat] = useState<any[]>([]);
+  const [itemALLDonoithat, setitemALLDonoithat] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [type_danhmucdonoithat, settype_danhmucdonoithat] = useState<string>();
@@ -116,7 +116,7 @@ const Do_noi_that = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiDonoithat = async (key: number, tenloai: string) => {
-    setitemALLDonoithat([]);
+    setitemALLDonoithat(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       settype_danhmucdonoithat(undefined);
@@ -131,12 +131,13 @@ const Do_noi_that = () => {
     setFilteredHang(0);
     settype_danhmucdonoithat(undefined);
     setpagehientai(1);
-    setitemALLDonoithat([]);
+    setitemALLDonoithat(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemALLDonoithat(null);
   };
 
   return (
@@ -233,7 +234,7 @@ const Do_noi_that = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLDonoithat && itemALLDonoithat.length == 0 && (
+              {itemALLDonoithat == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -242,6 +243,13 @@ const Do_noi_that = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLDonoithat && itemALLDonoithat.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

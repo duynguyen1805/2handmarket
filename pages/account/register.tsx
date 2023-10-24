@@ -36,10 +36,17 @@ const Register = () => {
   const [isvalid_phonenumber, setisvalid_phonenumber] = useState<
     boolean | null
   >(null);
+  const [isvalid_pwd, setisvalid_pwd] = useState<boolean | null>(null);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
     // setPasswordMatch(event.target.value === confirmPassword);
+    const length_pwd = event.target.value;
+    if (length_pwd.length < 8) {
+      setisvalid_pwd(false);
+    } else {
+      setisvalid_pwd(true);
+    }
   };
   const handleConfirmPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -67,9 +74,10 @@ const Register = () => {
       !address ||
       !password ||
       !confirmPassword ||
-      !img
+      !img ||
+      !isvalid_phonenumber
     ) {
-      toast.error("Vui lòng điền đủ thông tin !");
+      toast.error("Vui lòng điền đủ và chính xác thông tin !");
     } else {
       try {
         //format 090XXX >>>> +8490XXX
@@ -178,7 +186,7 @@ const Register = () => {
             <p className="ml-2 sm:text-base md:text-lg">Đăng ký</p>
           </div>
           <div className="h-auto sm:w-[90%] md:w-[75%] sm:mx-[5%] md:mx-[13%] mt-3 border rounded-lg bg-white">
-            <div className="h-[690px] w-[100%] p-5 flex flex-col items-center">
+            <div className="min-h-[690px] w-[100%] p-5 flex flex-col items-center">
               <p className="sm:text-2xl md:text-4xl font-medium mb-2">
                 ĐĂNG KÝ TÀI KHOẢN
               </p>
@@ -270,6 +278,11 @@ const Register = () => {
                         />
                       </div>
                     </div>
+                    {isvalid_pwd == false && (
+                      <p className="text-red-500 text-sm">
+                        Mật khẩu phải có từ 8 ký tự.
+                      </p>
+                    )}
                     <div className="relative h-auto w-full flex flex-row">
                       <input
                         type={view_confirm_password ? "password" : "text"}

@@ -29,7 +29,7 @@ import Link from "next/link";
 const danhmuc_main: any[] = item_danhmuc[7].sub_danhmuc;
 
 const Thu_cung = () => {
-  const [itemALLThucung, setitemALLThucung] = useState<any[]>([]);
+  const [itemALLThucung, setitemALLThucung] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [type_danhmucthucung, settype_danhmucthucung] = useState<string>();
@@ -73,7 +73,7 @@ const Thu_cung = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiThucung = async (key: number, tenloai: string) => {
-    setitemALLThucung([]);
+    setitemALLThucung(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       settype_danhmucthucung(undefined);
@@ -88,12 +88,13 @@ const Thu_cung = () => {
     setFilteredHang(0);
     settype_danhmucthucung(undefined);
     setpagehientai(1);
-    setitemALLThucung([]);
+    setitemALLThucung(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemALLThucung(null);
   };
   const settings_slider = {
     dots: true,
@@ -225,7 +226,7 @@ const Thu_cung = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLThucung && itemALLThucung.length == 0 && (
+              {itemALLThucung == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -234,6 +235,13 @@ const Thu_cung = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLThucung && itemALLThucung.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

@@ -36,6 +36,7 @@ const Login = () => {
           account: data.user.account,
           address: data.user.address,
           role: data.user.role,
+          avatar: data.user.img,
           createdAt: data.user.createdAt,
         });
 

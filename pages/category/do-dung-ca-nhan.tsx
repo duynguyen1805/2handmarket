@@ -42,7 +42,7 @@ const list_filter_docanhan = [
 ];
 
 const Do_dung_ca_nhan = () => {
-  const [itemALLDocanhan, setitemALLDocanhan] = useState<any[]>([]);
+  const [itemALLDocanhan, setitemALLDocanhan] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [type_danhmuccanhan, settype_danhmuccanhan] = useState<
@@ -89,7 +89,7 @@ const Do_dung_ca_nhan = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiDocanhan = async (key: number, tenloai: string) => {
-    setitemALLDocanhan([]);
+    setitemALLDocanhan(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       settype_danhmuccanhan(undefined);
@@ -104,12 +104,13 @@ const Do_dung_ca_nhan = () => {
     setFilteredHang(0);
     settype_danhmuccanhan(undefined);
     setpagehientai(1);
-    setitemALLDocanhan([]);
+    setitemALLDocanhan(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemALLDocanhan(null);
   };
   const [openModalFilter, setopenModalFilter] = useState<boolean>(false);
   const handleClick_btnFilter = () => {
@@ -280,7 +281,7 @@ const Do_dung_ca_nhan = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLDocanhan && itemALLDocanhan.length == 0 && (
+              {itemALLDocanhan == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -289,6 +290,13 @@ const Do_dung_ca_nhan = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLDocanhan && itemALLDocanhan.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

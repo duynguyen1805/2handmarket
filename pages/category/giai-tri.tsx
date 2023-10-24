@@ -27,7 +27,7 @@ import Link from "next/link";
 const danhmuc_main: any[] = item_danhmuc[6].sub_danhmuc;
 
 const Do_giai_tri = () => {
-  const [itemALLDogiaitri, setitemALLDogiaitri] = useState<any[]>([]);
+  const [itemALLDogiaitri, setitemALLDogiaitri] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [type_danhmucgiaitri, settype_danhmucgiaitri] = useState<string>();
@@ -71,7 +71,7 @@ const Do_giai_tri = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiDogiaitri = async (key: number, tenloai: string) => {
-    setitemALLDogiaitri([]);
+    setitemALLDogiaitri(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       settype_danhmucgiaitri(undefined);
@@ -86,12 +86,13 @@ const Do_giai_tri = () => {
     setFilteredHang(0);
     settype_danhmucgiaitri(undefined);
     setpagehientai(1);
-    setitemALLDogiaitri([]);
+    setitemALLDogiaitri(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemALLDogiaitri(null);
   };
   const settings_slider = {
     dots: true,
@@ -224,7 +225,7 @@ const Do_giai_tri = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLDogiaitri && itemALLDogiaitri.length == 0 && (
+              {itemALLDogiaitri == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -233,6 +234,13 @@ const Do_giai_tri = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLDogiaitri && itemALLDogiaitri.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

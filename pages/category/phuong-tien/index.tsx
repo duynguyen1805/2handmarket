@@ -30,11 +30,13 @@ import Slider from "react-slick";
 const danhmuc_main: any[] = item_danhmuc[1].sub_danhmuc;
 
 const Phuong_tien = () => {
-  const [itemALLPhuongtien, setitemALLPhuongtien] = useState<any[]>([]);
+  const [itemALLPhuongtien, setitemALLPhuongtien] = useState<any[] | null>(
+    null
+  );
   const [active_tab_filter, setActiveTab] = useState<number>(0);
 
   useEffect(() => {
-    setitemALLPhuongtien([]);
+    setitemALLPhuongtien(null);
     fetchDataProduct();
   }, [active_tab_filter]);
   const fetchDataProduct = async () => {
@@ -213,7 +215,7 @@ const Phuong_tien = () => {
                 </p>
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
-                {itemALLPhuongtien && itemALLPhuongtien.length == 0 && (
+                {itemALLPhuongtien == null && (
                   <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                     <Image
                       src={icon_loading}
@@ -222,6 +224,13 @@ const Phuong_tien = () => {
                     />
                     <p className="">
                       Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
+                {itemALLPhuongtien && itemALLPhuongtien.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <p className="">
+                      Danh mục hiện tại không có tin đăng nào hiển thị !
                     </p>
                   </div>
                 )}

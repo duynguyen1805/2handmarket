@@ -64,7 +64,7 @@ const Phu_kien = () => {
       },
     ],
   };
-  const [itemPhukien, setitemPhukien] = useState<any[]>([]);
+  const [itemPhukien, setitemPhukien] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loaiphukien, setloaiphukien] = useState<string>();
@@ -84,7 +84,6 @@ const Phu_kien = () => {
         const response = await API_get_Dodientu(build_data);
         setitemPhukien(response.phukien);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -103,14 +102,13 @@ const Phu_kien = () => {
       const response = await API_get_Dodientu(build_data);
       setitemPhukien(response.phukien);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Phukien = async (key: number, loaiphukien: string) => {
-    setitemPhukien([]);
+    setitemPhukien(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloaiphukien(undefined);
@@ -122,7 +120,7 @@ const Phu_kien = () => {
     }
   };
   const Handle_TatcaHang = async () => {
-    setitemPhukien([]);
+    setitemPhukien(null);
     setFilteredHang(0);
     setloaiphukien(undefined);
     setpagehientai(1);
@@ -131,6 +129,7 @@ const Phu_kien = () => {
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemPhukien(null);
   };
 
   return (
@@ -227,7 +226,7 @@ const Phu_kien = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemPhukien && itemPhukien.length == 0 && (
+              {itemPhukien == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -236,6 +235,13 @@ const Phu_kien = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemPhukien && itemPhukien.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

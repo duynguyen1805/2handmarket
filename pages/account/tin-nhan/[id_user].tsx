@@ -33,6 +33,7 @@ import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
 import icon_more from "../../../assets/icon/more.png";
+import icon_loading from "../../../assets/icon/loading.png";
 import Image from "next/image";
 
 interface infodetailProps {
@@ -48,7 +49,9 @@ const Tin_nhan = ({
   name_receiver,
 }: infodetailProps) => {
   const [datainforUser_current, setdatainforUser_current] = useState<any>();
-  const [conversationMembers, setConversationMembers] = useState<any>([]); // ds từng nhắn tin
+  const [conversationMembers, setConversationMembers] = useState<any[] | null>(
+    null
+  ); // ds từng nhắn tin
   const [selectedUser, setSelectedUser] = useState(id_receiver);
   const [selectedUserName, setSelectedUserName] = useState(name_receiver);
   const [selectedAvatar, setSelectedAvatar] = useState<any>();
@@ -137,7 +140,7 @@ const Tin_nhan = ({
           listchat[i].id_sender = latestMessages[i].id_sender || "";
         }
         setConversationMembers(listchat);
-        console.log("check listchat: ", listchat);
+        // console.log("check listchat: ", listchat);
       });
       return () => {
         unsubscribe();
@@ -297,6 +300,16 @@ const Tin_nhan = ({
                     </div>
                   );
                 })}
+              {conversationMembers == null && (
+                <div className="h-[90px] w-full flex items-center justify-center space-x-2 border-b border-gray-300">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="text-2xl">Loading...</p>
+                </div>
+              )}
             </div>
             <div className="sm:hidden md:block h-full w-[65%]">
               {selectedUser && (

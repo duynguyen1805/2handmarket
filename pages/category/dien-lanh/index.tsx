@@ -26,11 +26,11 @@ import Link from "next/link";
 const danhmuc_main: any[] = item_danhmuc[4].sub_danhmuc;
 
 const Dien_lanh = () => {
-  const [itemALLDienlanh, setitemALLDienlanh] = useState<any[]>([]);
+  const [itemALLDienlanh, setitemALLDienlanh] = useState<any[] | null>(null);
   const [active_tab_filter, setActiveTab] = useState<number>(0);
 
   useEffect(() => {
-    setitemALLDienlanh([]);
+    setitemALLDienlanh(null);
     fetchDataProduct();
   }, [active_tab_filter]);
   const fetchDataProduct = async () => {
@@ -205,7 +205,7 @@ const Dien_lanh = () => {
                 </p>
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
-                {itemALLDienlanh && itemALLDienlanh.length == 0 && (
+                {itemALLDienlanh == null && (
                   <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                     <Image
                       src={icon_loading}
@@ -214,6 +214,13 @@ const Dien_lanh = () => {
                     />
                     <p className="">
                       Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
+                {itemALLDienlanh && itemALLDienlanh.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <p className="">
+                      Danh mục hiện tại không có tin đăng nào hiển thị !
                     </p>
                   </div>
                 )}

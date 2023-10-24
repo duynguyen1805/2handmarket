@@ -20,6 +20,7 @@ const phoneUtil = PhoneNumberUtil.getInstance();
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { useMyContext } from "@/contexts/MyContext";
 
 interface infodetailProps {
   edit_info: string;
@@ -53,6 +54,9 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
   //   fetchToken();
   // }, []);
 
+  //lấy số lượng order qua usecontext
+  const { information_User, setInfoUser } = useMyContext();
+
   useEffect(() => {
     const fetchDataUser = async () => {
       //lấy thông tin người dùng
@@ -80,6 +84,15 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
               setAddress(response.User[0].address);
               setAvatar(response.User[0].img);
               setImgAvatar(response.User[0].img);
+              setInfoUser({
+                _id: response.User[0]._id,
+                name: response.User[0].name,
+                account: response.User[0].account,
+                address: response.User[0].address,
+                role: response.User[0].role,
+                avatar: response.User[0].img,
+                createdAt: response.User[0].createdAt,
+              });
             } catch (error) {
               console.error("Error fetching data:", error);
             }
@@ -94,6 +107,8 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
     };
     fetchDataUser();
   }, [edit_info]);
+
+  const [isvalid_pwd, setisvalid_pwd] = useState<boolean | null>(null);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -110,6 +125,12 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
   ) => {
     setNewPassword(event.target.value);
     // setPasswordMatch(event.target.value === confirmPassword);
+    const length_pwd = event.target.value;
+    if (length_pwd.length < 8) {
+      setisvalid_pwd(false);
+    } else {
+      setisvalid_pwd(true);
+    }
   };
   const handleConfirmNewPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -164,7 +185,49 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
   const hanldeUpdateInforUser = async () => {
     setUpdateInforUser(true);
     const token_req: any = localStorage.getItem("token_req");
-    if (!name || !account || !address || !password) {
+    if (!name || !account || !address || !password || !confirmPassword) {
+      toast.error("Vui lòng điền đủ thông tin !");
+    } else {
+      const response = await API_updateUser(
+        {
+          account: account,
+          password: password,
+          name: name,
+          address: address,
+          newpassword: newpassword,
+          img: img,
+        },
+        token_req
+      );
+      if (response.errCode === 0) {
+        toast.success(response.message);
+        // localStorage.setItem("token", JSON.stringify(response.access_token));
+        window.location.reload();
+      }
+      if (response.errCode === 1) {
+        toast.error(response.message);
+        window.location.reload();
+      }
+      if (response.errCode === 2) {
+        toast.error(response.message);
+        window.location.reload();
+      }
+      if (response.errCode === 3) {
+        toast.error(response.message);
+      }
+    }
+  };
+  const hanldeUpdateInforUser_thaydoimatkhau = async () => {
+    setUpdateInforUser(true);
+    const token_req: any = localStorage.getItem("token_req");
+    if (
+      !name ||
+      !account ||
+      !address ||
+      !password ||
+      !newpassword ||
+      !confirmNewPassword
+    ) {
       toast.error("Vui lòng điền đủ thông tin !");
     } else {
       const response = await API_updateUser(
@@ -221,7 +284,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
               </div>
             </div>
             <div className="h-auto w-full mt-3 flex items-center justify-center">
-              <div className="h-[690px] w-[960px] bg-white border rounded-lg p-5 flex flex-col items-center">
+              <div className="min-h-[690px] w-[960px] bg-white border rounded-lg p-5 flex flex-col items-center">
                 <div className="flex items-center sm:space-x-2 md:space-x-0 sm:pr-16 md:pr-0 justify-center">
                   <p className="sm:text-base md:text-4xl font-medium mb-2">
                     THÔNG TIN TÀI KHOẢN
@@ -395,6 +458,11 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
                         onChange={handleNewPasswordChange}
                         className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
                       />
+                      {isvalid_pwd == false && (
+                        <p className="text-red-500 text-sm">
+                          Mật khẩu phải có từ 8 ký tự.
+                        </p>
+                      )}
                       <motion.input
                         initial={{ opacity: 0, x: 50 }}
                         animate={{
@@ -415,7 +483,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
                             : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
                         }
                       />
-                      {!passwordMatch ? (
+                      {!newpasswordMatch ? (
                         <p className="text-sm text-red-500">
                           Mật khẩu không trùng khớp
                         </p>
@@ -450,6 +518,7 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
                     )}
                   {enablePW && !enableNewPW && (
                     <button
+                      disabled={passwordMatch == false}
                       type="submit"
                       className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
                       onClick={hanldeUpdateInforUser}
@@ -459,9 +528,10 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
                   )}
                   {enableNewPW && (
                     <button
+                      disabled={newpasswordMatch == false}
                       type="submit"
                       className="h-[50px] w-full bg-blue-600 border border-blue-600 rounded-md text-white hover:opacity-90"
-                      onClick={hanldeUpdateInforUser}
+                      onClick={hanldeUpdateInforUser_thaydoimatkhau}
                     >
                       Cập nhật mật khẩu
                     </button>

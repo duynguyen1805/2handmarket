@@ -73,7 +73,7 @@ const May_tinh_bang = () => {
       },
     ],
   };
-  const [itemMaytinhbang, setitemMaytinhbang] = useState<any[]>([]);
+  const [itemMaytinhbang, setitemMaytinhbang] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [hang, setHang] = useState<string>();
@@ -132,7 +132,7 @@ const May_tinh_bang = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Hang = async (key: number, tenHang: string) => {
-    setitemMaytinhbang([]);
+    setitemMaytinhbang(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setHang(undefined);
@@ -154,13 +154,14 @@ const May_tinh_bang = () => {
     setFilteredHang(0);
     setHang(undefined);
     setpagehientai(1);
-    setitemMaytinhbang([]);
+    setitemMaytinhbang(null);
     fetchDataProduct();
     count_filter(0);
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemMaytinhbang(null);
   };
   const [openModalFilter, setopenModalFilter] = useState<boolean>(false);
   const handleClick_btnFilter = () => {
@@ -302,7 +303,7 @@ const May_tinh_bang = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemMaytinhbang && itemMaytinhbang.length == 0 && (
+              {itemMaytinhbang == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -311,6 +312,13 @@ const May_tinh_bang = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemMaytinhbang && itemMaytinhbang.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

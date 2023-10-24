@@ -13,7 +13,7 @@ import ReactPaginate from "react-paginate";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 
 const Phu_tung_xe = () => {
-  const [itemPhutung, setitemPhutung] = useState<any[]>([]);
+  const [itemPhutung, setitemPhutung] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loaiphutung, setloaiphutung] = useState<string>();
@@ -33,7 +33,6 @@ const Phu_tung_xe = () => {
         const response = await API_get_Phuongtien(build_data);
         setitemPhutung(response.phutung);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -52,14 +51,13 @@ const Phu_tung_xe = () => {
       const response = await API_get_Phuongtien(build_data);
       setitemPhutung(response.phutung);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiphutung = async (key: number, loaiphutung: string) => {
-    setitemPhutung([]);
+    setitemPhutung(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloaiphutung(undefined);
@@ -74,12 +72,13 @@ const Phu_tung_xe = () => {
     setFilteredHang(0);
     setloaiphutung(undefined);
     setpagehientai(1);
-    setitemPhutung([]);
+    setitemPhutung(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemPhutung(null);
   };
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -174,7 +173,7 @@ const Phu_tung_xe = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemPhutung && itemPhutung.length == 0 && (
+              {itemPhutung == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -183,6 +182,13 @@ const Phu_tung_xe = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemPhutung && itemPhutung.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

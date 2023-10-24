@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import left_back from "../../../assets/icon/left-arrow.png";
 import more from "../../../assets/icon/more.png";
+import icon_loading from "../../../assets/icon/loading.png";
 import "react-phone-input-2/lib/style.css";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
@@ -36,7 +37,7 @@ interface infodetailProps {
 }
 const Quanly_tindang = ({ id_user }: infodetailProps) => {
   //history_order: là id của User
-  const [tindang, setTindang] = useState<any>([]);
+  const [tindang, setTindang] = useState<any[] | null>(null);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
 
@@ -133,7 +134,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const filteredList =
     isOpen === -1
       ? tindang
-      : tindang.filter((item: any) => item.trangthai === isOpen);
+      : tindang?.filter((item: any) => item.trangthai === isOpen);
 
   const handleClickfilted = (key: any) => {
     fetchdata_tindang_user();
@@ -349,9 +350,27 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                       );
                     })}
                 </motion.div>
-
+                {filteredList == null && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <Image
+                      src={icon_loading}
+                      alt=""
+                      className="h-[45px] w-[45px] loading"
+                    />
+                    <p className="">
+                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                    </p>
+                  </div>
+                )}
+                {filteredList && filteredList.length == 0 && (
+                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                    <p className="">
+                      Danh mục hiện tại không có tin đăng nào hiển thị !
+                    </p>
+                  </div>
+                )}
                 {filteredList &&
-                  filteredList.lenght !== 0 &&
+                  filteredList.length !== 0 &&
                   filteredList.map((item: any, index: number) => {
                     //handle thời gian đã đăng
                     function tinhthoigiandadang(time: Date): string {
@@ -628,7 +647,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                   </div>
                 </motion.div>
                 {filteredList &&
-                  filteredList.lenght !== 0 &&
+                  filteredList.length !== 0 &&
                   filteredList.map((item: any, index: number) => {
                     //handle thời gian đã đăng
                     function tinhthoigiandadang(time: Date): string {

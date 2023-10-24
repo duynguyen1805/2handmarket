@@ -75,7 +75,7 @@ const May_giat = () => {
       },
     ],
   };
-  const [itemMaygiat, setitemMaygiat] = useState<any[]>([]);
+  const [itemMaygiat, setitemMaygiat] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [hang, setHang] = useState<string>();
@@ -125,7 +125,7 @@ const May_giat = () => {
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_Hang = async (key: number, tenHang: string) => {
-    setitemMaygiat([]);
+    setitemMaygiat(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setHang(undefined);
@@ -142,13 +142,14 @@ const May_giat = () => {
   };
   const Handle_TatcaHang = async () => {
     setFilteredHang(0);
-    setitemMaygiat([]);
+    setitemMaygiat(null);
     fetchDataProduct();
     count_filter(0);
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemMaygiat(null);
   };
   const [openModalFilter, setopenModalFilter] = useState<boolean>(false);
   const handleClick_btnFilter = () => {
@@ -284,7 +285,7 @@ const May_giat = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemMaygiat && itemMaygiat.length == 0 && (
+              {itemMaygiat == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -293,6 +294,13 @@ const May_giat = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemMaygiat && itemMaygiat.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

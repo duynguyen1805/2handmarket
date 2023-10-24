@@ -63,7 +63,7 @@ const Hoc_tap = () => {
       },
     ],
   };
-  const [itemALLDohoctap, setitemALLDohoctap] = useState<any[]>([]);
+  const [itemALLDohoctap, setitemALLDohoctap] = useState<any[] | null>(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [type_danhmuchoctap, settype_danhmuchoctap] = useState<string>();
@@ -99,14 +99,13 @@ const Hoc_tap = () => {
       const response = await API_get_Dohoctap(build_data);
       setitemALLDohoctap(response.all_dohoctap);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaiDohoctap = async (key: number, tenloai: string) => {
-    setitemALLDohoctap([]);
+    setitemALLDohoctap(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       settype_danhmuchoctap(undefined);
@@ -121,12 +120,13 @@ const Hoc_tap = () => {
     setFilteredHang(0);
     settype_danhmuchoctap(undefined);
     setpagehientai(1);
-    setitemALLDohoctap([]);
+    setitemALLDohoctap(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemALLDohoctap(null);
   };
 
   return (
@@ -212,7 +212,7 @@ const Hoc_tap = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLDohoctap && itemALLDohoctap.length == 0 && (
+              {itemALLDohoctap == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -221,6 +221,13 @@ const Hoc_tap = () => {
                   />
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLDohoctap && itemALLDohoctap.length == 0 && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
                   </p>
                 </div>
               )}

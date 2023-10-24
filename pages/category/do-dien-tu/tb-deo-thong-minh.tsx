@@ -15,9 +15,9 @@ import Display_product_vertical_v2 from "@/components/Display_product_vertical_v
 import Link from "next/link";
 
 const Tb_deo_thong_minh = () => {
-  const [itemThietbideothongminh, setitemThietbideothongminh] = useState<any[]>(
-    []
-  );
+  const [itemThietbideothongminh, setitemThietbideothongminh] = useState<
+    any[] | null
+  >(null);
   const [pagehientai, setpagehientai] = useState<number>(1);
   const [totalpages, setTotalPages] = useState<number>(1);
   const [loaithietbideo, setloaithietbideo] = useState<string>();
@@ -37,7 +37,6 @@ const Tb_deo_thong_minh = () => {
         const response = await API_get_Dodientu(build_data);
         setitemThietbideothongminh(response.thietbideothongminh);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -56,14 +55,13 @@ const Tb_deo_thong_minh = () => {
       const response = await API_get_Dodientu(build_data);
       setitemThietbideothongminh(response.thietbideothongminh);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
   const [filteredHang, setFilteredHang] = useState<number | null>(null);
   const Filter_loaivongdeo = async (key: number, loaivongdeo: string) => {
-    setitemThietbideothongminh([]);
+    setitemThietbideothongminh(null);
     if (filteredHang === key) {
       setFilteredHang(null);
       setloaithietbideo(undefined);
@@ -78,12 +76,13 @@ const Tb_deo_thong_minh = () => {
     setFilteredHang(0);
     setloaithietbideo(undefined);
     setpagehientai(1);
-    setitemThietbideothongminh([]);
+    setitemThietbideothongminh(null);
     fetchDataProduct();
   };
   const handlePageClick = (event: any) => {
     const selected = event.selected + 1;
     setpagehientai(selected);
+    setitemThietbideothongminh(null);
   };
 
   return (
@@ -184,16 +183,23 @@ const Tb_deo_thong_minh = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              {itemThietbideothongminh == null && (
+                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
               {itemThietbideothongminh &&
                 itemThietbideothongminh.length == 0 && (
                   <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                    <Image
-                      src={icon_loading}
-                      alt=""
-                      className="h-[45px] w-[45px] loading"
-                    />
                     <p className="">
-                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                      Danh mục hiện tại không có tin đăng nào hiển thị !
                     </p>
                   </div>
                 )}
