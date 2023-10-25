@@ -12,6 +12,9 @@ const Footer = () => {
     <div className=" h-auto sm:w-[100%] bg-gray-100 sm:pb-[60px] md:pb-0">
       <div className="h-auto w-full flex items-center justify-center">
         <div className="h-auto w-[990px] bg-gray-100 flex justify-center text-lg p-1">
+          <h1 className="h-[40px] flex items-center mr-2">
+            2handmarket là sản phẩm phục vụ Đồ án tốt nghiệp -
+          </h1>
           <p className="h-[40px] w-auto flex items-center text-center">
             Liên hệ hỗ trợ - đóng góp:
           </p>
