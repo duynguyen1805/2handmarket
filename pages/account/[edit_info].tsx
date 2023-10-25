@@ -22,6 +22,9 @@ import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
 import { useMyContext } from "@/contexts/MyContext";
 
+import Image from "next/image";
+import left_back from "../../assets/icon/left-arrow.png";
+
 interface infodetailProps {
   edit_info: string;
 }
@@ -286,6 +289,16 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
             <div className="h-auto w-full mt-3 flex items-center justify-center">
               <div className="min-h-[690px] w-[960px] bg-white border rounded-lg p-5 flex flex-col items-center">
                 <div className="flex items-center sm:space-x-2 md:space-x-0 sm:pr-16 md:pr-0 justify-center">
+                  <div
+                    className="h-full w-[40px] flex items-center mb-2"
+                    onClick={() => ClickUpdate_enableInputPW(2)}
+                  >
+                    <Image
+                      src={left_back}
+                      alt="icon"
+                      className="h-[25px] w-[25px] cursor-pointer"
+                    />
+                  </div>
                   <p className="sm:text-base md:text-4xl font-medium mb-2">
                     THÔNG TIN TÀI KHOẢN
                   </p>

@@ -410,7 +410,7 @@ const DS_daduyet: React.FC<any> = ({
             </Slider>
           </div>
           <div className="h-auto w-full px-2 py-2">
-            {item && item.lydoantin !== "" && (
+            {item && item.trangthai !== 2 && (
               <p className="h-auto max-h-[60px] w-full overflow-hidden text-xl text-center text-red-500 font-bold">
                 Lý do ẩn tin: {item.lydoantin}
               </p>
