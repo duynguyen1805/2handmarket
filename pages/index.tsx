@@ -31,6 +31,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "2Hand Market",
+  description: "Website mua bán đồ qua sử dụng",
+};
+
 type DataInfor = {
   _id: string;
   name: string;

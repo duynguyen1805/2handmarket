@@ -278,9 +278,18 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   <p className="h-auto max-h-[60px] w-full overflow-hidden text-2xl font-bold">
                     {item.tieude}
                   </p>
-                  <div className="h-[60px] w-full flex items-center place-content-between">
+                  <div className="h-[60px] w-full flex flex-col items-start justify-center my-2">
+                    {item.new_pur_price && (
+                      <p className="h-full w-auto text-xl flex items-center space-x-1">
+                        <span>Giá mua mới:</span>
+
+                        <span className="font-bold">
+                          {item.new_pur_price?.toLocaleString("vi-VN")} đ
+                        </span>
+                      </p>
+                    )}
                     <p className="h-full w-auto text-xl flex items-center font-bold text-red-500">
-                      {item.price?.toLocaleString("vi-VN")} đ
+                      Giá bán lại: {item.price?.toLocaleString("vi-VN")} đ
                     </p>
                     {/* <div className="h-auto w-auto px-5 py-1 text-xl flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
                     {" "}

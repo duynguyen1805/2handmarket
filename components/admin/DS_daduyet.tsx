@@ -418,9 +418,14 @@ const DS_daduyet: React.FC<any> = ({
             <p className="h-auto max-h-[60px] w-full overflow-hidden text-xl font-bold">
               {item.tieude}
             </p>
-            <div className="h-[60px] w-full flex items-center place-content-between">
+            <div className="h-[60px] w-full flex flex-col items-start justify-center my-2">
+              {item.new_pur_price && (
+                <p className="h-full w-auto text-lg flex items-center font-bold text-red-500">
+                  Giá mua mới: {item.new_pur_price?.toLocaleString("vi-VN")} đ
+                </p>
+              )}
               <p className="h-full w-auto text-lg flex items-center font-bold text-red-500">
-                {item.price?.toLocaleString("vi-VN")}
+                Giá bán lại: {item.price?.toLocaleString("vi-VN")} đ
               </p>
             </div>
             {/* mô tả sản phẩm */}

@@ -112,7 +112,7 @@ const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
   useEffect(() => {
     const { resultCode } = router.query;
-    console.log("resultCode:", resultCode);
+    // console.log("resultCode:", resultCode);
   }, []);
 
   const [keyDanhmuc, setkeyDanhmuc] = useState<number>(0);
@@ -171,7 +171,12 @@ const Dang_tin = () => {
   // cho dogiaitri
   const [loainhaccu, setloainhaccu] = useState(); // guitar, piano,...
   // chon giaban
-  const [giaban, setGiaban] = useState<number | any>(0);
+  const [giaban_muamoi, setGiaban_muamoi] = useState<number | any>();
+  const [giaban, setGiaban] = useState<number | any>();
+  const [label_giaban_muamoi, setlabel_Giaban_muamoi] = useState<
+    string | any
+  >();
+  const [label_giaban, setlabel_Giaban] = useState<string | any>();
 
   const setSelectDanhmuc = (item: danhmuc) => {
     settitleDanhmuc(item.label);
@@ -288,6 +293,7 @@ const Dang_tin = () => {
     mota: inputMota,
     type: typeDanhmucChitiet,
     tinhtrang: tinhtrang,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     img: img_arr,
     truong: KhoaTruong, //neu la giaotrinh
@@ -296,6 +302,7 @@ const Dang_tin = () => {
   const build_data_dienthoai = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     dongmay: dongmay,
@@ -309,6 +316,7 @@ const Dang_tin = () => {
   const build_data_maytinhbang = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     dongmay: dongmay,
@@ -324,6 +332,7 @@ const Dang_tin = () => {
   const build_data_laptop = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     dongmay: dongmay,
@@ -340,6 +349,7 @@ const Dang_tin = () => {
   const build_data_desktop = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     ram: ram,
@@ -354,6 +364,7 @@ const Dang_tin = () => {
   const build_data_mayanh = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     tinhtrang: tinhtrang,
@@ -364,6 +375,7 @@ const Dang_tin = () => {
   const build_data_thietbideothongminh = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaithietbideo: loaithietbideo,
@@ -373,6 +385,7 @@ const Dang_tin = () => {
   const build_data_phukien = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaiphukien: loaiphukien,
@@ -382,6 +395,7 @@ const Dang_tin = () => {
   const build_data_linhkien = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loailinhkien: loailinhkien,
@@ -391,6 +405,7 @@ const Dang_tin = () => {
   const build_data_oto = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     dongxe: dongxe,
@@ -408,6 +423,7 @@ const Dang_tin = () => {
   const build_data_xemay = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     dongxe: dongxe,
@@ -424,6 +440,7 @@ const Dang_tin = () => {
   const build_data_xetai = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     hang: typeHang,
     tinhtrang: tinhtrang,
@@ -439,6 +456,7 @@ const Dang_tin = () => {
   const build_data_xedien = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaixedien: loaixedien,
@@ -450,6 +468,7 @@ const Dang_tin = () => {
   const build_data_xedap = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaixedap: loaixedap,
@@ -460,6 +479,7 @@ const Dang_tin = () => {
   const build_data_phutung = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaiphutung: loaiphutung,
@@ -469,6 +489,7 @@ const Dang_tin = () => {
   const build_data_donoithat = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loaichitiet: loaichitiet,
@@ -478,6 +499,7 @@ const Dang_tin = () => {
   const build_data_maylanh = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     hang: typeHang,
     price: giaban,
     tinhtrang: tinhtrang,
@@ -488,6 +510,7 @@ const Dang_tin = () => {
   const build_data_tulanh = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     hang: typeHang,
     price: giaban,
     tinhtrang: tinhtrang,
@@ -498,6 +521,7 @@ const Dang_tin = () => {
   const build_data_maygiat = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     hang: typeHang,
     price: giaban,
     tinhtrang: tinhtrang,
@@ -509,6 +533,7 @@ const Dang_tin = () => {
   const build_data_docanhan = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     chogioitinh: chogioitinh,
@@ -518,6 +543,7 @@ const Dang_tin = () => {
   const build_data_dogiaitri = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     tinhtrang: tinhtrang,
     loainhaccu: loainhaccu,
@@ -527,6 +553,7 @@ const Dang_tin = () => {
   const build_data_thucung = {
     tieude: inputTieude,
     type: typeDanhmucChitiet,
+    new_pur_price: giaban_muamoi,
     price: giaban,
     mota: inputMota,
     img: img_arr,
@@ -578,6 +605,7 @@ const Dang_tin = () => {
     setcuagiat(undefined);
     setchogioitinh(0);
     setloainhaccu(undefined);
+    setGiaban_muamoi(undefined);
     setGiaban(0);
     setImg_arr([]);
     setReviewImg_arr([]);
@@ -585,6 +613,30 @@ const Dang_tin = () => {
     setDemkituTieude(0);
     setInputMota("");
     setDemkituMota(0);
+  };
+
+  const handleChange_giaban_muamoi = (e: any) => {
+    const rawValue = e.target.value.replace(/\D/g, "");
+    const numericValue = parseInt(rawValue, 10);
+    if (!isNaN(numericValue)) {
+      setGiaban_muamoi(numericValue);
+      setlabel_Giaban_muamoi(numericValue.toLocaleString("vi-VN"));
+    } else {
+      setGiaban_muamoi(undefined);
+      setlabel_Giaban_muamoi(undefined);
+    }
+  };
+
+  const handleChange_giaban = (e: any) => {
+    const rawValue = e.target.value.replace(/\D/g, "");
+    const numericValue = parseInt(rawValue, 10);
+    if (!isNaN(numericValue)) {
+      setGiaban(numericValue);
+      setlabel_Giaban(numericValue.toLocaleString("vi-VN"));
+    } else {
+      setGiaban(undefined);
+      setlabel_Giaban(undefined);
+    }
   };
 
   type DataInfor = {
@@ -632,8 +684,15 @@ const Dang_tin = () => {
   }, []);
   const Dangtin = async () => {
     const token_req: any = localStorage.getItem("token_req");
-    if (typeDanhmuc === "hoctap" && !typeDanhmucChitiet) {
-      if (KhoaTruong && Nganh && giaban && inputTieude && inputMota) {
+    if (typeDanhmuc === "hoctap" && typeDanhmucChitiet == "giaotrinh") {
+      if (
+        KhoaTruong &&
+        Nganh &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -649,8 +708,8 @@ const Dang_tin = () => {
         // setErr_miss_input(true);
       }
     }
-    if (typeDanhmuc === "hoctap" && typeDanhmucChitiet) {
-      if (giaban && inputTieude && inputMota) {
+    if (typeDanhmuc === "hoctap" && typeDanhmucChitiet == "sachthamkhao") {
+      if (giaban && inputTieude && inputMota && img_arr.length > 0) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -667,7 +726,14 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "dienthoai") {
-      if (typeHang && mausac && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        mausac &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -683,7 +749,14 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "maytinhbang") {
-      if (typeHang && mausac && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        mausac &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -699,7 +772,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "laptop") {
-      if (typeHang && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -715,7 +794,7 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "desktop") {
-      if (giaban && inputTieude && inputMota) {
+      if (giaban && inputTieude && inputMota && img_arr.length > 0) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -731,7 +810,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "mayanh") {
-      if (typeHang && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -747,7 +832,7 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "thietbideothongminh") {
-      if (giaban && inputTieude && inputMota) {
+      if (giaban && inputTieude && inputMota && img_arr.length > 0) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -763,7 +848,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "phukien") {
-      if (loaiphukien && giaban && inputTieude && inputMota) {
+      if (
+        loaiphukien &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -779,7 +870,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "linhkien") {
-      if (loailinhkien && giaban && inputTieude && inputMota) {
+      if (
+        loailinhkien &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -801,7 +898,8 @@ const Dang_tin = () => {
         sokm &&
         giaban &&
         inputTieude &&
-        inputMota
+        inputMota &&
+        img_arr.length > 0
       ) {
         const response = await API_Dangtin(
           datainforUser?._id,
@@ -825,7 +923,8 @@ const Dang_tin = () => {
         loaixemay &&
         giaban &&
         inputTieude &&
-        inputMota
+        inputMota &&
+        img_arr.length > 0
       ) {
         const response = await API_Dangtin(
           datainforUser?._id,
@@ -849,7 +948,8 @@ const Dang_tin = () => {
         sokm &&
         giaban &&
         inputTieude &&
-        inputMota
+        inputMota &&
+        img_arr.length > 0
       ) {
         const response = await API_Dangtin(
           datainforUser?._id,
@@ -866,7 +966,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "xedien") {
-      if (loaixedien && giaban && inputTieude && inputMota) {
+      if (
+        loaixedien &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -882,7 +988,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "xedap") {
-      if (loaixedap && giaban && inputTieude && inputMota) {
+      if (
+        loaixedap &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -898,7 +1010,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "phutung") {
-      if (loaiphutung && giaban && inputTieude && inputMota) {
+      if (
+        loaiphutung &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -914,7 +1032,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmuc === "donoithat") {
-      if (loaichitiet && giaban && inputTieude && inputMota) {
+      if (
+        loaichitiet &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -930,7 +1054,14 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "tulanh") {
-      if (typeHang && thetich && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        thetich &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -946,7 +1077,14 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "maylanh") {
-      if (typeHang && congsuat && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        congsuat &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -962,7 +1100,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmucChitiet === "maygiat") {
-      if (typeHang && giaban && inputTieude && inputMota) {
+      if (
+        typeHang &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -978,7 +1122,13 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmuc === "dodungcanhan") {
-      if (chogioitinh && giaban && inputTieude && inputMota) {
+      if (
+        chogioitinh &&
+        giaban &&
+        inputTieude &&
+        inputMota &&
+        img_arr.length > 0
+      ) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -994,7 +1144,7 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmuc === "dogiaitri") {
-      if (giaban && inputTieude && inputMota) {
+      if (giaban && inputTieude && inputMota && img_arr.length > 0) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -1010,7 +1160,7 @@ const Dang_tin = () => {
       }
     }
     if (typeDanhmuc === "thucung") {
-      if (giaban && inputTieude && inputMota) {
+      if (giaban && inputTieude && inputMota && img_arr.length > 0) {
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -1069,7 +1219,10 @@ const Dang_tin = () => {
               </div>
               <div className="h-auto w-full flex sm:flex-col md:items-center lg:flex-row lg:items-start">
                 <div className="h-full sm:w-full md:w-[320px] px-2 space-y-2">
-                  <p className="text-lg font-bold">Hình ảnh sản phẩm</p>
+                  <div className="flex">
+                    <p className="text-lg font-bold">Hình ảnh sản phẩm</p>
+                    <p className="text-red-500 text-xl ml-1">*</p>
+                  </div>
                   <div className="lg:h-[230px] sm:h-[130px] w-full border border-dotted border-blue-500">
                     <div className="h-full w-full relative overflow-hidden">
                       <input
@@ -1950,17 +2103,6 @@ const Dang_tin = () => {
                   {/* tieude tin dang & mota chitiet */}
                   {typeDanhmucChitiet && (
                     <>
-                      <div>
-                        <div className="mb-1 px-1 flex">
-                          <p>Giá bán</p>
-                          <p className="text-red-500 ml-1">*</p>
-                        </div>
-                        <input
-                          type="number"
-                          className="h-[45px] w-full rounded-md border border-gray-400 outline-none px-2"
-                          onChange={(e) => setGiaban(e.target.value)}
-                        />
-                      </div>
                       <p className="text-lg font-bold">
                         Tiêu đề tin đăng & Mô tả chi tiết
                       </p>
@@ -1998,6 +2140,33 @@ const Dang_tin = () => {
                               ? "Phụ kiện, thức ăn: Mô tả công dụng, chức năng, hướng dẫn sử dụng, dành cho thú cưng nào,..."
                               : "Mô tả chi tiết sản phẩm")
                           }
+                        />
+                      </div>
+                      <div>
+                        <div className="mb-1 px-1 flex">
+                          <p>Giá mua mới</p>
+                        </div>
+                        <input
+                          type="text"
+                          min={0}
+                          value={label_giaban_muamoi}
+                          placeholder="Giá mua mới (vnđ)"
+                          className="h-[45px] w-full rounded-md border border-gray-400 outline-none px-2"
+                          onChange={(e) => handleChange_giaban_muamoi(e)}
+                        />
+                      </div>
+                      <div>
+                        <div className="mb-1 px-1 flex">
+                          <p>Giá bán lại</p>
+                          <p className="text-red-500 ml-1">*</p>
+                        </div>
+                        <input
+                          type="text"
+                          min={0}
+                          value={label_giaban}
+                          placeholder="Giá bán lại sản phẩm (vnđ)"
+                          className="h-[45px] w-full rounded-md border border-gray-400 outline-none px-2"
+                          onChange={(e) => handleChange_giaban(e)}
                         />
                       </div>
                       <div className="flex items-center justify-center cursor-pointer">
