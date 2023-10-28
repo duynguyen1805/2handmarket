@@ -43,7 +43,7 @@ const Do_dien_tu = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 4,
+        soluong: 36,
         pagehientai: 1,
       };
       const response = await API_get_Dodientu(build_data);
@@ -58,10 +58,7 @@ const Do_dien_tu = () => {
           );
         setitemALLDodientu(sort_response);
       } else {
-        const random_response = response.all_dodientu
-          .slice()
-          .sort(() => Math.random() - 0.5);
-        setitemALLDodientu(random_response);
+        setitemALLDodientu(response.all_dodientu);
       }
       // console.log("check response: ", response);
     } catch (error) {
@@ -208,7 +205,7 @@ const Do_dien_tu = () => {
                 >
                   Gợi ý
                 </p>
-                <p
+                {/* <p
                   className={
                     active_tab_filter === 1
                       ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
@@ -217,7 +214,7 @@ const Do_dien_tu = () => {
                   onClick={() => setActiveTab(1)}
                 >
                   Mới đăng
-                </p>
+                </p> */}
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
                 {itemALLDodientu == null && (
@@ -243,7 +240,10 @@ const Do_dien_tu = () => {
                   itemALLDodientu.map((item: any, index: any) => {
                     return (
                       <div key={index}>
-                        <Display_product_vertical item={item} />
+                        <Display_product_vertical
+                          item={item}
+                          active_tab_filter={active_tab_filter}
+                        />
                       </div>
                     );
                   })}

@@ -43,7 +43,7 @@ const Phuong_tien = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 6,
+        soluong: 36,
         pagehientai: 1,
       };
       const response = await API_get_Phuongtien(build_data);
@@ -58,10 +58,7 @@ const Phuong_tien = () => {
           );
         setitemALLPhuongtien(sort_response);
       } else {
-        const random_response = response.all_phuongtien
-          .slice()
-          .sort(() => Math.random() - 0.5);
-        setitemALLPhuongtien(random_response);
+        setitemALLPhuongtien(response.all_phuongtien);
       }
       // console.log("check response: ", response);
     } catch (error) {
@@ -203,7 +200,7 @@ const Phuong_tien = () => {
                 >
                   Gợi ý
                 </p>
-                <p
+                {/* <p
                   className={
                     active_tab_filter === 1
                       ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
@@ -212,7 +209,7 @@ const Phuong_tien = () => {
                   onClick={() => setActiveTab(1)}
                 >
                   Mới đăng
-                </p>
+                </p> */}
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
                 {itemALLPhuongtien == null && (
@@ -238,7 +235,10 @@ const Phuong_tien = () => {
                   itemALLPhuongtien.map((item: any, index: any) => {
                     return (
                       <div key={index}>
-                        <Display_product_vertical item={item} />
+                        <Display_product_vertical
+                          item={item}
+                          active_tab_filter={active_tab_filter}
+                        />
                       </div>
                     );
                   })}

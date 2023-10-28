@@ -3,12 +3,17 @@ import Image from "next/image";
 import router from "next/router";
 // frame motion
 import { motion } from "framer-motion";
+import icon_star from "../assets/icon/icon_star.png";
 
 interface Props {
   item: any;
+  active_tab_filter?: number;
 }
 
-const Display_product_vertical: React.FC<Props> = ({ item }) => {
+const Display_product_vertical: React.FC<Props> = ({
+  item,
+  active_tab_filter,
+}) => {
   const clickProduct = (type: string, id: string) => {
     router.push({
       pathname: `/products/${id}`,
@@ -53,7 +58,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className="sm:h-[330px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
+      className="relative sm:h-[330px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
       <div className="h-[210px] w-full flex justify-center">
@@ -61,6 +66,20 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
           className="h-full w-full bg-center bg-contain bg-no-repeat"
           style={{ backgroundImage: `url(${item.img[0]})` }}
         ></div>
+        <div
+          className={
+            item.trangthaithanhtoan == 1 && active_tab_filter == 0
+              ? `h-[50px] w-full bg-mauxanhtroi text-white text-xl flex items-center justify-center absolute top-0`
+              : ""
+          }
+        >
+          {item.trangthaithanhtoan == 1 && active_tab_filter == 0 && (
+            <div className="flex items-center space-x-2">
+              <Image src={icon_star} alt="" className="h-[20px] w-[20px]" />
+              <p className="text-animation font-thin">Tin nổi bật</p>
+            </div>
+          )}
+        </div>
       </div>
       <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
         {item.tieude}

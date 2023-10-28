@@ -37,7 +37,7 @@ const Dien_lanh = () => {
     try {
       const build_data = {
         type: "ALL",
-        soluong: 10,
+        soluong: 36,
         pagehientai: 1,
       };
       const response = await API_get_Dienlanh(build_data);
@@ -52,10 +52,7 @@ const Dien_lanh = () => {
           );
         setitemALLDienlanh(sort_response);
       } else {
-        const random_response = response.all_dienlanh
-          .slice()
-          .sort(() => Math.random() - 0.5);
-        setitemALLDienlanh(random_response);
+        setitemALLDienlanh(response.all_dienlanh);
       }
       // console.log("check response: ", response);
     } catch (error) {
@@ -193,7 +190,7 @@ const Dien_lanh = () => {
                 >
                   Gợi ý
                 </p>
-                <p
+                {/* <p
                   className={
                     active_tab_filter === 1
                       ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
@@ -202,7 +199,7 @@ const Dien_lanh = () => {
                   onClick={() => setActiveTab(1)}
                 >
                   Mới đăng
-                </p>
+                </p> */}
               </div>
               <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
                 {itemALLDienlanh == null && (
@@ -228,7 +225,10 @@ const Dien_lanh = () => {
                   itemALLDienlanh.map((item: any, index: any) => {
                     return (
                       <div key={index}>
-                        <Display_product_vertical item={item} />
+                        <Display_product_vertical
+                          item={item}
+                          active_tab_filter={active_tab_filter}
+                        />
                       </div>
                     );
                   })}

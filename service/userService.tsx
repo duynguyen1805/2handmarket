@@ -394,9 +394,29 @@ export async function API_Order(
   }
 }
 
-export async function API_getAllcollection() {
+export async function API_getAllcollection_quangcao(pagehientai: number) {
   try {
-    const response = await axios.get(`${BACKEND_URL}/get-all-collection`);
+    const response = await axios.post(
+      `${BACKEND_URL}/get-all-collection-quang-cao`,
+      {
+        pagehientai: pagehientai,
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(
+      "Lỗi khi call API_getAllcollection_quangcao userService: ",
+      error
+    );
+  }
+}
+
+export async function API_getAllcollection(pagehientai: number) {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/get-all-collection`, {
+      pagehientai: pagehientai,
+    });
     const data = await response.data;
     return data;
   } catch (error) {

@@ -3,8 +3,10 @@ import { useRef, useEffect, useState } from "react";
 require("dotenv").config();
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import styles from "../styles/Home.module.css";
-import { API_getAllcollection, API_get_Dodientu } from "@/service/userService";
+import {
+  API_getAllcollection,
+  API_getAllcollection_quangcao,
+} from "@/service/userService";
 import router from "next/router";
 import Danhmuc from "@/components/Danhmuc";
 import Display_product_vertical from "@/components/Display_product_vertical";
@@ -54,23 +56,67 @@ import Nav_mobile from "@/components/Nav_mobile";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const Home = () => {
-  useEffect(() => {
-    fetchDataProduct();
-  }, []);
+  const [pagehientai, setpagehientai] = useState<number>(1);
+  const pagehientaiRef = useRef<number>(1);
+  const isFirstLoad = useRef(false);
+  const [count_item_return, setcount_item_return] = useState<number>(0);
 
   const [tindang_ganday, setTindang_ganday] = useState<any[]>([]);
+  useEffect(() => {
+    if (pagehientai !== pagehientaiRef.current) {
+      fetchDataProduct();
+      pagehientaiRef.current = pagehientai;
+    } else {
+      if (!isFirstLoad.current) {
+        fetchDataProduct();
+        isFirstLoad.current = true;
+      }
+    }
+  }, [pagehientai]);
+
   const fetchDataProduct = async () => {
     try {
-      const response = await API_getAllcollection();
-      //sort tất cả theo thời gian mới nhất
-      const sort_response = response.all_collection
-        .slice()
-        .sort(
-          (a: any, b: any) =>
-            new Date(b.ngayduyettin).getTime() -
-            new Date(a.ngayduyettin).getTime()
-        );
-      setTindang_ganday(sort_response);
+      const response = await API_getAllcollection(pagehientai);
+      setcount_item_return(response.all_collection.length);
+      setTindang_ganday((prevTindang) => [
+        ...prevTindang,
+        ...response.all_collection,
+      ]);
+    } catch (error) {
+      console.error("Error fetch data: ", error);
+    }
+  };
+
+  // Cho tin đăng quảng cáo
+  const [pagehientai_qc, setpagehientai_qc] = useState<number>(1);
+  const pagehientai_qc_Ref = useRef<number>(1);
+  const isFirstLoad_qc = useRef(false);
+  const [count_item_qc_return, setcount_item_qc_return] = useState<number>(0);
+  const [errcode, seterrcode] = useState<number | null>(null);
+
+  const [tindang_qc, setTindang_qc] = useState<any[] | null>([]);
+  useEffect(() => {
+    if (pagehientai_qc !== pagehientai_qc_Ref.current) {
+      fetchData_tindang_qc();
+      pagehientai_qc_Ref.current = pagehientai_qc;
+    } else {
+      if (!isFirstLoad_qc.current) {
+        fetchData_tindang_qc();
+        isFirstLoad_qc.current = true;
+      }
+    }
+  }, [pagehientai_qc]);
+
+  const fetchData_tindang_qc = async () => {
+    try {
+      const response = await API_getAllcollection_quangcao(pagehientai_qc);
+      seterrcode(response.errCode);
+      setcount_item_qc_return(response.all_collection.length);
+      setTindang_qc((prevTindang: any) => [
+        ...prevTindang,
+        ...response.all_collection,
+      ]);
+      console.log("Check res: ", response.all_collection);
     } catch (error) {
       console.error("Error fetch data: ", error);
     }
@@ -258,9 +304,68 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {/* Quảng cáo tin đăng */}
+      <div className="h-auto w-auto flex items-center justify-center mt-3">
+        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
+          <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
+            Gợi ý
+          </p>
+          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
+            {errcode == null && (
+              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                <Image
+                  src={icon_loading}
+                  alt=""
+                  className="h-[45px] w-[45px] loading"
+                />
+                <p className="">
+                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                </p>
+              </div>
+            )}
+            {errcode == 0 && tindang_qc && tindang_qc.length == 0 && (
+              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+                <p className="">
+                  Hiện tại không có tin đăng nào gợi ý cho bạn !
+                </p>
+              </div>
+            )}
+            {tindang_qc &&
+              tindang_qc.map((item: any, index: number) => {
+                return (
+                  <div key={index} className="flex items-center justify-center">
+                    <Display_product_vertical
+                      item={item}
+                      active_tab_filter={0}
+                    />
+                  </div>
+                );
+              })}
+            {count_item_qc_return < 12 || pagehientai_qc == 4 ? (
+              <></>
+            ) : (
+              <button
+                disabled={
+                  count_item_qc_return < 12
+                    ? count_item_qc_return < 12
+                    : pagehientai_qc == 4
+                }
+                className="h-[40px] w-full flex items-center justify-center bg-gray-200 cursor-pointer"
+                onClick={() => setpagehientai_qc(pagehientai_qc + 1)}
+              >
+                <span className="text-mauxanhtroi font-bold text-xl">
+                  {count_item_qc_return < 12 || pagehientai_qc == 4
+                    ? "Hết"
+                    : "Xem thêm"}
+                </span>
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
       {/* Tin đăng gần đây - 2060px cho 6x6 item dọc, small 4220px cho 3x12 item*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] lg:max-h-[2440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
+        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
           <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
             Tin đăng gần đây
           </p>
@@ -285,6 +390,21 @@ const Home = () => {
                   </div>
                 );
               })}
+            <button
+              disabled={
+                count_item_return < 36
+                  ? count_item_return < 36
+                  : pagehientai == 4
+              }
+              className="h-[40px] w-full flex items-center justify-center bg-gray-200 cursor-pointer"
+              onClick={() => setpagehientai(pagehientai + 1)}
+            >
+              <span className="text-mauxanhtroi font-bold text-xl">
+                {count_item_return < 36 || pagehientai == 4
+                  ? "Hết"
+                  : "Xem thêm"}
+              </span>
+            </button>
           </div>
         </div>
       </div>
