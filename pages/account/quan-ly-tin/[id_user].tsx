@@ -93,10 +93,12 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         },
         token_req
       );
-      console.log("check response: ", response);
+      // console.log("check response: ", response);
       if (response.trangthaithanhtoan == 1) {
         settrangthaithanhtoan(response.trangthaithanhtoan);
         localStorage.removeItem("itemNangcap");
+        // sửa lại link url để tránh lỗi thanhtoan liên tục nhiều tin. vì redirectUrl cho momo location.href
+        router.push(`/account/quan-ly-tin/${id_user}`);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -117,8 +119,6 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
             new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
         );
       setTindang(sort_response);
-      // sửa lại link url để tránh lỗi thanhtoan liên tục nhiều tin. vì redirectUrl cho momo location.href
-      router.replace(`/account/quan-ly-tin/${id_user}`);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

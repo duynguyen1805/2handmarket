@@ -169,8 +169,11 @@ const Header = () => {
   const Logout = () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
-    window.location.reload();
-    router.push("/");
+    if (window.location.pathname !== "/") {
+      router.push("/");
+    } else {
+      window.location.reload();
+    }
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {

@@ -59,7 +59,9 @@ const Display_product_vertical: React.FC<Props> = ({
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
       className={`relative sm:h-[330px] w-[228px] px-2 pt-1 border cursor-pointer hover:border-mauxanhtroi hover:shadow-lg ${
-        item.trangthaithanhtoan == 1 ? "border-mauxanhtroi" : "border-gray-300"
+        item.trangthaithanhtoan == 1 && active_tab_filter == 0
+          ? "border-mauxanhtroi"
+          : "border-gray-300"
       }`}
       onClick={() => clickProduct(item.type, item._id)}
     >
