@@ -72,7 +72,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
           {item.trangthaithanhtoan == 1 && (
             <div className="flex items-center space-x-2">
               <Image src={icon_star} alt="" className="h-[20px] w-[20px]" />
-              <p className="text-animation font-thin">Tin nổi bật</p>
+              <p className="text-gradient font-both">Tin nổi bật</p>
             </div>
           )}
         </div>

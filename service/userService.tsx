@@ -521,3 +521,49 @@ export async function API_Capnhat_trangthai_thanhtoan(
     throw new Error("Lỗi khi call API_Capnhat_trangthai_thanhtoan");
   }
 }
+
+export async function API_searchLichsu_qc_tindang(
+  value: string,
+  token_req: any
+) {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/admin/search-lich-su-quang-cao`,
+      {
+        value: value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Lỗi khi call API_getLichsu_qc_tindang");
+  }
+}
+
+export async function API_getLichsu_qc_byDate(
+  thoigian_ngaybatdau: string | any,
+  token_req: any
+) {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/admin/get-lich-su-qc-by-month`,
+      { thoigian: thoigian_ngaybatdau },
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Lỗi khi call API_getHistoryOrderbyDate");
+  }
+}

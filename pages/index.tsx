@@ -308,7 +308,7 @@ const Home = () => {
       <div className="h-auto w-auto flex items-center justify-center mt-3">
         <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
           <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
-            Gợi ý
+            Tin đăng nổi bật
           </p>
           <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
             {errcode == null && (

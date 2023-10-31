@@ -23,6 +23,7 @@ import item_danhmuc, {
 import DS_daduyet from "@/components/admin/DS_daduyet";
 import { API_get_soluongtin_Allcollection } from "@/service/userService";
 import io from "socket.io-client";
+import Quangcao from "@/components/admin/Quangcao";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const AdminDashboard = () => {
@@ -30,6 +31,7 @@ const AdminDashboard = () => {
   const [isOpenDoiduyet, setOpenDoiduyet] = useState(false);
   const [isOpenDaduyet, setOpenDaduyet] = useState(false);
   const [isOpenQuanlyTK, setOpenQuanlyTK] = useState(false);
+  const [isOpenQuangcao, setOpenQuangcao] = useState(false);
   const [selectChitietDoiduyet, setselectChitietDoiduyen] = useState<number>();
   const [selectChitietDaduyet, setselectChitietDaduyen] = useState<number>();
   const [noti_newPostMessage, setNoti_NewPostMessage] = useState<any>();
@@ -133,16 +135,25 @@ const AdminDashboard = () => {
       setOpenDoiduyet(!isOpenDoiduyet);
       // setOpenDaduyet(false);
       setOpenQuanlyTK(false);
+      setOpenQuangcao(false);
     }
     if (value === 1) {
       // setOpenDoiduyet(false);
       setOpenDaduyet(!isOpenDaduyet);
       setOpenQuanlyTK(false);
+      setOpenQuangcao(false);
     }
     if (value === 2) {
       setOpenDoiduyet(false);
       setOpenDaduyet(false);
       setOpenQuanlyTK(!isOpenQuanlyTK);
+      setOpenQuangcao(false);
+    }
+    if (value === 3) {
+      setOpenDoiduyet(false);
+      setOpenDaduyet(false);
+      setOpenQuanlyTK(false);
+      setOpenQuangcao(!isOpenQuangcao);
     }
   }
   const [selectMain, setselectMain] = useState<string>();
@@ -170,6 +181,15 @@ const AdminDashboard = () => {
     handleSelect(2);
     setOpenDoiduyet(false);
     setOpenDaduyet(false);
+    setOpenQuangcao(false);
+    setselectMain(undefined);
+    setselectoption(undefined);
+  };
+  const selectQuangcao = () => {
+    handleSelect(3);
+    setOpenDoiduyet(false);
+    setOpenDaduyet(false);
+    setOpenQuanlyTK(false);
     setselectMain(undefined);
     setselectoption(undefined);
   };
@@ -323,6 +343,15 @@ const AdminDashboard = () => {
                 >
                   Tài khoản
                 </div>
+                {/* thống kê quảng cáo */}
+                <div
+                  className={`flex items-center place-content-between py-2 px-2 text-2xl rounded-md cursor-pointer hover:bg-blue-300 ${
+                    isOpenQuangcao ? "bg-white text-mauxanhtroi" : ""
+                  }`}
+                  onClick={() => selectQuangcao()}
+                >
+                  Quảng cáo
+                </div>
 
                 {/* button logout */}
                 <button
@@ -348,6 +377,7 @@ const AdminDashboard = () => {
                   />
                 )}
                 {isOpenQuanlyTK && <ManageUser />}
+                {isOpenQuangcao && <Quangcao />}
               </div>
             </div>
           </div>

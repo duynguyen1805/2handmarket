@@ -376,41 +376,78 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                 {filteredList &&
                   filteredList.length !== 0 &&
                   filteredList.map((item: any, index: number) => {
-                    //handle thời gian đã đăng
+                    // handle thời gian đã đăng (bao lâu)
+                    // function tinhthoigiandadang(time: Date): string {
+                    //   const timehientai: Date = new Date();
+                    //   const ngaytao: Date = new Date(time);
+                    //   const thoigiandadang: number =
+                    //     timehientai.getTime() - ngaytao.getTime();
+
+                    //   if (thoigiandadang < 60000) {
+                    //     // Dưới 1 phút
+                    //     return `${Math.floor(
+                    //       thoigiandadang / 1000
+                    //     )} giây trước`;
+                    //   } else if (thoigiandadang < 3600000) {
+                    //     // 1 giờ = 3600000 milli giây
+                    //     const minutes: number = Math.floor(
+                    //       thoigiandadang / 60000
+                    //     ); // 1 phút = 60000 milli giây
+                    //     return `${minutes} phút trước`;
+                    //   } else if (thoigiandadang < 86400000) {
+                    //     // 1 ngày = 86400000 milli giây
+                    //     const hours: number = Math.floor(
+                    //       thoigiandadang / 3600000
+                    //     ); // 1 giờ = 3600000 milli giây
+                    //     return `${hours} giờ trước`;
+                    //   } else if (thoigiandadang < 604800000) {
+                    //     // 1 tuần = 604800000 milli giây
+                    //     const days: number = Math.floor(
+                    //       thoigiandadang / 86400000
+                    //     ); // 1 ngày = 86400000 milli giây
+                    //     return `${days} ngày trước`;
+                    //   } else {
+                    //     const weeks: number = Math.floor(
+                    //       thoigiandadang / 604800000
+                    //     ); // 1 tuần = 604800000 milli giây
+                    //     return `${weeks} tuần trước`;
+                    //   }
+                    // }
+                    // handle thời gian đã đăng (còn lại)
                     function tinhthoigiandadang(time: Date): string {
                       const timehientai: Date = new Date();
                       const ngaytao: Date = new Date(time);
                       const thoigiandadang: number =
                         timehientai.getTime() - ngaytao.getTime();
 
-                      if (thoigiandadang < 60000) {
-                        // Dưới 1 phút
-                        return `${Math.floor(
-                          thoigiandadang / 1000
-                        )} giây trước`;
-                      } else if (thoigiandadang < 3600000) {
-                        // 1 giờ = 3600000 milli giây
+                      // Tính thời gian còn lại (30 ngày - thoigiandadang)
+                      const thoigianconlai: number =
+                        30 * 24 * 60 * 60 * 1000 - thoigiandadang;
+
+                      if (thoigianconlai <= 0) {
+                        // Tin đã tồn tại trên 30 ngày
+                        return "Hết hạn";
+                      } else if (thoigianconlai < 60000) {
+                        // Dưới 1 phút còn lại
+                        return `${Math.floor(thoigianconlai / 1000)} giây`;
+                      } else if (thoigianconlai < 3600000) {
+                        // Dưới 1 giờ còn lại
                         const minutes: number = Math.floor(
-                          thoigiandadang / 60000
-                        ); // 1 phút = 60000 milli giây
-                        return `${minutes} phút trước`;
-                      } else if (thoigiandadang < 86400000) {
-                        // 1 ngày = 86400000 milli giây
+                          thoigianconlai / 60000
+                        );
+                        return `${minutes} phút`;
+                      } else if (thoigianconlai < 86400000) {
+                        // Dưới 1 ngày còn lại
                         const hours: number = Math.floor(
-                          thoigiandadang / 3600000
-                        ); // 1 giờ = 3600000 milli giây
-                        return `${hours} giờ trước`;
-                      } else if (thoigiandadang < 604800000) {
-                        // 1 tuần = 604800000 milli giây
-                        const days: number = Math.floor(
-                          thoigiandadang / 86400000
-                        ); // 1 ngày = 86400000 milli giây
-                        return `${days} ngày trước`;
+                          thoigianconlai / 3600000
+                        );
+                        return `${hours} giờ`;
                       } else {
-                        const weeks: number = Math.floor(
-                          thoigiandadang / 604800000
-                        ); // 1 tuần = 604800000 milli giây
-                        return `${weeks} tuần trước`;
+                        // Trên 1 ngày còn lại
+                        const days: number = Math.floor(
+                          thoigianconlai / 86400000
+                        );
+                        return `${days} ngày`;
                       }
                     }
                     let time: any =
@@ -459,7 +496,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                             <div className="h-[50%] w-full flex items-end pb-3">
                               <div>
                                 <p className="h-[30px] w-full text-lg">
-                                  Đăng tin: {thoigiandadang}
+                                  Thời gian còn lại: {thoigiandadang}
                                 </p>
                               </div>
                             </div>

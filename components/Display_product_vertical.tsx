@@ -58,7 +58,9 @@ const Display_product_vertical: React.FC<Props> = ({
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className="relative sm:h-[330px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
+      className={`relative sm:h-[330px] w-[228px] px-2 pt-1 border cursor-pointer hover:border-mauxanhtroi hover:shadow-lg ${
+        item.trangthaithanhtoan == 1 ? "border-mauxanhtroi" : "border-gray-300"
+      }`}
       onClick={() => clickProduct(item.type, item._id)}
     >
       <div className="h-[210px] w-full flex justify-center">
@@ -76,7 +78,7 @@ const Display_product_vertical: React.FC<Props> = ({
           {item.trangthaithanhtoan == 1 && active_tab_filter == 0 && (
             <div className="flex items-center space-x-2">
               <Image src={icon_star} alt="" className="h-[20px] w-[20px]" />
-              <p className="text-animation font-thin">Tin nổi bật</p>
+              <p className="text-gradient font-bold">Tin nổi bật</p>
             </div>
           )}
         </div>

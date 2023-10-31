@@ -56,19 +56,32 @@
 .running-text {
   animation: marquee 10s linear infinite; /* 10s animation chạy qua lại một lần*/
 }
-@keyframes colorChange {
+
+@keyframes gradientAnimationForward {
   0% {
-    color: #2374e1; /* Màu ban đầu (màu xanh) */
-  }
-  50% {
-    color: white; /* Màu thay đổi (màu xanh lá cây) */
+    background-position: 100% 50%;
   }
   100% {
-    color: #2374e1; /* Quay lại màu ban đầu (màu xanh) */
+    background-position: 0% 50%;
   }
 }
-.text-animation {
-  animation: colorChange 2s infinite; /* 2s mỗi vòng lặp, infinite chạy vô hạn */
+
+.text-gradient {
+  background: linear-gradient(to right, #2374e1, white, #2374e1);
+  background-size: 200% 100%;
+  animation: gradientAnimationForward 1s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  animation: gradientAnimationForward 1s linear infinite;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  -webkit-animation: gradientAnimationForward 1s linear infinite;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
 }
 
 /* Ẩn thanh cuộn mặc định 

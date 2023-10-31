@@ -58,6 +58,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
   const [img_arr, setImg_arr] = useState<any>([]);
   const [infoClient, setInfoClient] = useState<any>();
   const [openNumber, setopenNumber] = useState(false);
+  const [errCode, seterrCode] = useState<number | undefined>();
 
   const settings_slider = {
     dots: true,
@@ -106,6 +107,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     try {
       const response = await API_getTindangbyId(type, id_product);
       console.log("check response: ", response);
+      seterrCode(response.errCode);
       setItem(response.dataItem[0]);
       setInfoClient(response.userInfo[0]);
       //để map img
@@ -186,7 +188,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-auto md:w-full lg:w-[1440px] max-w-full flex">
-              {infoClient ? (
+              {infoClient && errCode == 0 && (
                 <div className="h-full w-[55%] p-2 sticky top-0">
                   <div className="h-[540px] w-full">
                     <Slider {...settings_slider}>
@@ -261,7 +263,8 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                     </div>
                   </div>
                 </div>
-              ) : (
+              )}
+              {errCode == undefined && (
                 <div className="h-[100px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
                     src={icon_loading}
@@ -271,6 +274,11 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   <p className="">
                     Loading... Vui lòng chờ Server phản hồi sau giây lát.
                   </p>
+                </div>
+              )}
+              {errCode == 1 && (
+                <div className="h-[100px] w-full text-2xl flex items-center justify-center space-x-2">
+                  <p className="">Tin đăng KHÔNG còn tồn tại</p>
                 </div>
               )}
               {item && (
