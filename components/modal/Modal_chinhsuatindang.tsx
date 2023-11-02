@@ -76,7 +76,6 @@ const ModalComponent: React.FC<ModalProps> = ({
       reader.onerror = (error) => reject(error);
     });
   }
-  const [reviewImg_arr_modal, setReviewImg_arr] = useState<any>([]);
   const handleFile = async (e: any) => {
     //login handle multiple file (lưu 3 ảnh chung 1 trường img)
     //chọn 1 lượt, ko chọn thêm từng ảnh.
@@ -94,18 +93,9 @@ const ModalComponent: React.FC<ModalProps> = ({
       objectURLArray.push(objectURL);
     }
     setImg_arr((prevImg_arr: any) => [...prevImg_arr, ...base64Array]);
-    setReviewImg_arr((prevReviewImg_arr: any) => [
-      ...prevReviewImg_arr,
-      ...objectURLArray,
-    ]);
   };
   // Xóa ảnh
   const handleCloseButtonClick = (indexToRemove: number) => {
-    setReviewImg_arr((prevReviewImg_arr: any) => {
-      const updatedReviewImg_arr = [...prevReviewImg_arr];
-      updatedReviewImg_arr.splice(indexToRemove, 1); // Xóa phần tử tại indexToRemove
-      return updatedReviewImg_arr;
-    });
     setImg_arr((prevImg_arr: any) => {
       const updatedImg_arr = [...prevImg_arr];
       updatedImg_arr.splice(indexToRemove, 1); // Xóa phần tử tại indexToRemove
@@ -113,8 +103,8 @@ const ModalComponent: React.FC<ModalProps> = ({
     });
   };
 
-  const [demkitutieude, setDemkituTieude] = useState(0);
-  const [demkitumota, setDemkituMota] = useState(0);
+  const [demkitutieude, setDemkituTieude] = useState(inputTieude.length);
+  const [demkitumota, setDemkituMota] = useState(inputMota.length);
   const handleChangeTieude = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     if (newValue.length <= 50) {
