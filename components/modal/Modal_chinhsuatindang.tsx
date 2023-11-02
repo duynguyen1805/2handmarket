@@ -43,6 +43,9 @@ const ModalComponent: React.FC<ModalProps> = ({
   setGiaban,
   handle_update_tindang,
 }) => {
+  const [demkitutieude, setDemkituTieude] = useState(inputTieude.length);
+  const [demkitumota, setDemkituMota] = useState(inputMota.length);
+
   if (!isopenModalChinhsua) return null;
   //   const handleClick_Capnhat = async () => {
   //     let token_req: any = localStorage.getItem("token_req");
@@ -102,9 +105,6 @@ const ModalComponent: React.FC<ModalProps> = ({
       return updatedImg_arr;
     });
   };
-
-  const [demkitutieude, setDemkituTieude] = useState(inputTieude.length);
-  const [demkitumota, setDemkituMota] = useState(inputMota.length);
   const handleChangeTieude = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     if (newValue.length <= 50) {
