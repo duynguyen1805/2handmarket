@@ -451,6 +451,30 @@ export async function API_getTindangbyIduser(id: string) {
   }
 }
 
+export async function API_update_tindang(
+  idTindang: any,
+  type: string,
+  build_data_capnhat_tindang: object,
+  token_req: any
+) {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/update-chi-tiet-tin-dang/${idTindang}-${type}`,
+      build_data_capnhat_tindang,
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Cập nhật tin đăng không thành công.");
+  }
+}
+
 export async function API_updateStatusTindang(
   // id: string,
   // typecollection: string

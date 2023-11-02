@@ -4,6 +4,7 @@ import router from "next/router";
 // frame motion
 import { motion } from "framer-motion";
 import icon_star from "../assets/icon/icon_star.png";
+import Link from "next/link";
 
 interface Props {
   item: any;
@@ -63,37 +64,39 @@ const Display_product_vertical: React.FC<Props> = ({
           ? "border-mauxanhtroi"
           : "border-gray-300"
       }`}
-      onClick={() => clickProduct(item.type, item._id)}
+      // onClick={() => clickProduct(item.type, item._id)}
     >
-      <div className="h-[210px] w-full flex justify-center">
-        <div
-          className="h-full w-full bg-center bg-contain bg-no-repeat"
-          style={{ backgroundImage: `url(${item.img[0]})` }}
-        ></div>
-        <div
-          className={
-            item.trangthaithanhtoan == 1 && active_tab_filter == 0
-              ? `h-[50px] w-full bg-mauxanhtroi text-white text-xl flex items-center justify-center absolute top-0`
-              : ""
-          }
-        >
-          {item.trangthaithanhtoan == 1 && active_tab_filter == 0 && (
-            <div className="flex items-center space-x-2">
-              <Image src={icon_star} alt="" className="h-[20px] w-[20px]" />
-              <p className="text-gradient font-bold">Tin nổi bật</p>
-            </div>
-          )}
+      <Link href={`/products/${item._id}?type=${item.type}`}>
+        <div className="h-[210px] w-full flex justify-center">
+          <div
+            className="h-full w-full bg-center bg-contain bg-no-repeat"
+            style={{ backgroundImage: `url(${item.img[0]})` }}
+          ></div>
+          <div
+            className={
+              item.trangthaithanhtoan == 1 && active_tab_filter == 0
+                ? `h-[50px] w-full bg-mauxanhtroi text-white text-xl flex items-center justify-center absolute top-0`
+                : ""
+            }
+          >
+            {item.trangthaithanhtoan == 1 && active_tab_filter == 0 && (
+              <div className="flex items-center space-x-2">
+                <Image src={icon_star} alt="" className="h-[20px] w-[20px]" />
+                <p className="text-gradient font-bold">Tin nổi bật</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
-        {item.tieude}
-      </p>
-      <p className="h-[25px] w-full sm:text-base md:text-lg font-bold text-red-500">
-        {item.price.toLocaleString("vi-VN")} đ
-      </p>
-      <p className="h-[25px] w-full sm:text-base md:text-lg font-thin">
-        {thoigiandadang}
-      </p>
+        <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
+          {item.tieude}
+        </p>
+        <p className="h-[25px] w-full sm:text-base md:text-lg font-bold text-red-500">
+          {item.price.toLocaleString("vi-VN")} đ
+        </p>
+        <p className="h-[25px] w-full sm:text-base md:text-lg font-thin">
+          {thoigiandadang}
+        </p>
+      </Link>
     </motion.div>
   );
 };

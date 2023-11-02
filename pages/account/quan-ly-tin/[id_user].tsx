@@ -18,6 +18,7 @@ import {
   API_deleteTindang,
   API_getTindangbyIduser,
   API_Capnhat_trangthai_thanhtoan,
+  API_update_tindang,
 } from "@/service/userService";
 import Danhmuc from "@/components/Danhmuc";
 import { motion } from "framer-motion";
@@ -31,6 +32,7 @@ const { PhoneNumberUtil, PhoneNumberFormat } = require("google-libphonenumber");
 const phoneUtil = PhoneNumberUtil.getInstance();
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
+import Modal_chinhsuatindang from "@/components/modal/Modal_chinhsuatindang";
 
 interface infodetailProps {
   id_user: string;
@@ -172,15 +174,32 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   };
   const [isopenModalAntin, setOpenModalLydoAntin] = useState(false);
   const [isopenModalHuytin, setOpenModalHuytin] = useState(false);
+  const [isopenModalChinhsua, setOpenModalChinhsua] = useState(false);
   const [isopenModalnangcapTinuutien, setOpenModalnangcapTinuutien] =
     useState(false);
   const [type, setType] = useState<any>();
   const [idTindang, setIdTindang] = useState<any>();
+  const [img_arr, setImg_arr] = useState<any>([]);
+  const [reviewImg_arr, setReviewImg_arr] = useState<any>([]);
+  const [inputTieude, setInputTieude] = useState("");
+  const [inputMota, setInputMota] = useState("");
+  const [giaban_muamoi, setGiaban_muamoi] = useState<number | any>();
+  const [giaban, setGiaban] = useState<number | any>();
 
   const handlebutton_huytin = (type: string, id: string) => {
     setOpenModalHuytin(!isopenModalHuytin);
     setType(type);
     setIdTindang(id);
+  };
+  const handlebutton_chinhsua = (item: any) => {
+    setOpenModalChinhsua(!isopenModalChinhsua);
+    setType(item.type);
+    setIdTindang(item._id);
+    setImg_arr(item.img);
+    setInputTieude(item.tieude);
+    setInputMota(item.mota);
+    setGiaban_muamoi(item?.new_pur_price);
+    setGiaban(item.price);
   };
   const handlebutton_antin = (type: string, id: string) => {
     setOpenlidotuchoi(!openlidotuchoi);
@@ -259,6 +278,32 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  var build_data_capnhat_tindang = {
+    img: img_arr,
+    tieude: inputTieude,
+    mota: inputMota,
+    giaban_muamoi: giaban_muamoi,
+    giaban: giaban,
+  };
+  const handle_update_tindang = async () => {
+    let token_req: any = localStorage.getItem("token_req");
+    try {
+      const response = await API_update_tindang(
+        idTindang,
+        type,
+        build_data_capnhat_tindang,
+        token_req
+      );
+      if (response && response.errCode == 0) {
+        toast.success(response.message);
+        setOpenModalChinhsua(false);
+        fetchdata_tindang_user();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -507,13 +552,21 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                             } h-full w-[300px] flex items-end justify-end`}
                           >
                             {isOpen === 1 && (
-                              <div
-                                className={`h-auto w-auto px-5 py-1 border border-red-500 hover:bg-red-500 hover:text-white rounded-md flex items-center justify-center text-lg`}
-                                onClick={() =>
-                                  handlebutton_huytin(item.type, item._id)
-                                }
-                              >
-                                Hủy tin
+                              <div className="h-auto w-auto flex flex-col space-y-2">
+                                <div
+                                  className={`h-auto w-auto px-5 py-1 border border-gray-500 hover:bg-gray-300 rounded-md flex items-center justify-center text-lg`}
+                                  onClick={() => handlebutton_chinhsua(item)}
+                                >
+                                  Chỉnh sửa
+                                </div>
+                                <div
+                                  className={`h-auto w-auto px-5 py-1 border border-red-500 hover:bg-red-500 hover:text-white rounded-md flex items-center justify-center text-lg`}
+                                  onClick={() =>
+                                    handlebutton_huytin(item.type, item._id)
+                                  }
+                                >
+                                  Hủy tin
+                                </div>
                               </div>
                             )}
                             {isOpen === 2 && (
@@ -899,6 +952,23 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         isopenModalHuytin={isopenModalHuytin}
         setOpenModalHuytin={setOpenModalHuytin}
         handlebutton_huytin={() => handleXoatindang(type, idTindang)}
+      />
+      <Modal_chinhsuatindang
+        isopenModalChinhsua={isopenModalChinhsua}
+        setOpenModalChinhsua={setOpenModalChinhsua}
+        type={type}
+        idTindang={idTindang}
+        img_arr={img_arr}
+        setImg_arr={setImg_arr}
+        inputTieude={inputTieude}
+        setInputTieude={setInputTieude}
+        inputMota={inputMota}
+        setInputMota={setInputMota}
+        giaban_muamoi={giaban_muamoi}
+        setGiaban_muamoi={setGiaban_muamoi}
+        giaban={giaban}
+        setGiaban={setGiaban}
+        handle_update_tindang={() => handle_update_tindang()}
       />
       <Modal_TuchoiTindang
         inputLydoantin={inputLydoantin}
