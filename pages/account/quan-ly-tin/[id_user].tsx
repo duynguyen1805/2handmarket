@@ -77,7 +77,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   useEffect(() => {
     // lấy resultCode từ momo trả về
     const resultCode = router.query.resultCode;
-    console.log("check resultCode: ", resultCode);
+    // console.log("check resultCode: ", resultCode);
     if (resultCode === "0") {
       // gọi hàm cập nhật trangthaithanhtoan
       fetch_update_trangthaithanhtoan();

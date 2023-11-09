@@ -48,7 +48,6 @@ const Thu_cung = () => {
         const response = await API_get_Thucung(build_data);
         setitemALLThucung(response.all_thucung);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -66,7 +65,6 @@ const Thu_cung = () => {
       const response = await API_get_Thucung(build_data);
       setitemALLThucung(response.all_thucung);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

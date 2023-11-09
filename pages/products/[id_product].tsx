@@ -106,7 +106,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
   const fetchDataProduct = async () => {
     try {
       const response = await API_getTindangbyId(type, id_product);
-      console.log("check response: ", response);
+      // console.log("check response: ", response);
       seterrCode(response.errCode);
       setItem(response.dataItem[0]);
       setInfoClient(response.userInfo[0]);

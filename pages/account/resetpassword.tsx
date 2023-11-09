@@ -6,13 +6,125 @@ import React, { useState } from "react";
 import Image from "next/image";
 import left_back from "../../assets/icon/left-arrow.png";
 import Link from "next/link";
+// toast thông báo
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Dùng cho otp firebase
+import { firebase, auth } from "../../firebase.config";
+import { API_check_account, API_update_new_pass } from "@/service/userService";
+const { PhoneNumberUtil, PhoneNumberFormat } = require("google-libphonenumber");
+const phoneUtil = PhoneNumberUtil.getInstance();
+
 const Resetpassword = () => {
-  const [sendCodeConf, setsendCode] = useState(false);
-  const sendCode = () => {
-    setsendCode(!sendCodeConf);
-  };
   const goBack = () => {
     router.back();
+  };
+
+  const [account, setAccount] = useState("");
+  const [isvalid_phonenumber, setisvalid_phonenumber] = useState<
+    boolean | null
+  >(null);
+  const handleChangeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAccount(e.target.value);
+    const regex_phonenumber = /^0\d{9}$/;
+    const isPhoneNumberValid = regex_phonenumber.test(e.target.value);
+    setisvalid_phonenumber(isPhoneNumberValid);
+  };
+
+  const [sendCodeConf, setsendCode] = useState<number>(0); // 0:chuagui, 1:dagui, 2:daxacnhan
+  const [result_sendOTP, setresult_sendOTP] = useState<any>();
+  const [otp, setOTP] = useState("");
+  const sendCode = async () => {
+    try {
+      const response = await API_check_account(account);
+      if (response && response.errCode == 0) {
+        try {
+          //format 090XXX >>>> +8490XXX
+          const phoneNumber = phoneUtil.parseAndKeepRawInput(account, "VN");
+          const formattedAccount = phoneUtil.format(
+            phoneNumber,
+            PhoneNumberFormat.E164
+          );
+          let verify = new firebase.auth.RecaptchaVerifier(
+            "recaptcha-container",
+            {
+              size: "invisible",
+            }
+          );
+          auth
+            .signInWithPhoneNumber(formattedAccount, verify)
+            .then((result) => {
+              setresult_sendOTP(result);
+              setsendCode(1);
+              toast.success("Đã gửi OTP. Vui lòng kiểm tra SMS");
+            });
+        } catch (error) {
+          console.error(error);
+          toast.error("Có lỗi từ hệ thống. Vui lòng Đăng ký sau !");
+        }
+      } else {
+        toast.error(
+          "Tài khoản này không tồn tại trên hệ thống. Vui lòng ĐĂNG KÝ"
+        );
+      }
+    } catch (error) {
+      console.log("Lỗi call api check_account: ", error);
+    }
+  };
+
+  const [newpassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [isvalid_pwd, setisvalid_pwd] = useState<boolean | null>(null);
+  const [newpasswordMatch, setNewPasswordMatch] = useState(true);
+  const [check_otp, set_check_OTP] = useState(false);
+  const handleNewPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setNewPassword(event.target.value);
+    // setPasswordMatch(event.target.value === confirmPassword);
+    const length_pwd = event.target.value;
+    if (length_pwd.length < 8) {
+      setisvalid_pwd(false);
+    } else {
+      setisvalid_pwd(true);
+    }
+  };
+  const handleConfirmNewPasswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setConfirmNewPassword(event.target.value);
+    setNewPasswordMatch(event.target.value === newpassword);
+  };
+  const check_OTP = async () => {
+    try {
+      const confirmationResult = await result_sendOTP.confirm(otp);
+      if (confirmationResult) {
+        // mở 2 ô input newpassword
+        set_check_OTP(true);
+        setsendCode(2);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("OTP không khớp. Vui lòng kiểm tra lại.");
+    }
+  };
+
+  const hanlde_Khoiphuc_pass = async () => {
+    try {
+      const response = await API_update_new_pass({
+        account: account,
+        newpassword: newpassword,
+      });
+      if (response && response.errCode == 0) {
+        toast.success(response.message);
+        router.push("/account/login");
+      } else {
+        toast.error("Lỗi hệ thống. Vui lòng thử lại sau");
+      }
+    } catch (error) {
+      toast.error("OTP không khớp. Vui lòng kiểm tra lại.");
+    }
   };
 
   return (
@@ -50,20 +162,25 @@ const Resetpassword = () => {
               <div className="sm:w-full md:w-[400px] flex flex-col space-y-6 items-center">
                 <input
                   type="text"
+                  inputMode="numeric"
                   id="username"
                   name="username"
                   placeholder="Nhập số điện thoại"
+                  value={account}
+                  onChange={handleChangeAccount}
                   className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                 />
-                {!sendCodeConf ? (
-                  <></>
-                ) : (
+                {sendCodeConf == 1 && (
                   <div className="flex">
                     <input
                       type="text"
                       id="code"
                       name="code"
                       placeholder="Nhập mã Xác nhận"
+                      value={otp}
+                      onChange={(e) => {
+                        setOTP(e.target.value);
+                      }}
                       className="border border-gray-300 rounded-l-md px-3 pr-20 py-3 w-full focus:outline-none focus:border-mauxanhtroi"
                     />
                     <Link
@@ -74,21 +191,75 @@ const Resetpassword = () => {
                     </Link>
                   </div>
                 )}
-                {!sendCodeConf ? (
+                {check_otp == true && (
+                  <>
+                    <input
+                      type="password"
+                      id="newpassword"
+                      name="newpassword"
+                      placeholder="Nhập mật khẩu Mới"
+                      value={newpassword}
+                      onChange={handleNewPasswordChange}
+                      className="border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                    />
+                    {isvalid_pwd == false && (
+                      <p className="text-red-500 text-sm">
+                        Mật khẩu phải có từ 8 ký tự.
+                      </p>
+                    )}
+                    <input
+                      type="password"
+                      id="ConfirmNewpassword"
+                      name="ConfirmNewpassword"
+                      placeholder="Nhập lại mật khẩu Mới"
+                      value={confirmNewPassword}
+                      onChange={handleConfirmNewPasswordChange}
+                      className={
+                        newpasswordMatch
+                          ? "border border-gray-300 rounded-md px-3 py-3 w-full focus:outline-none focus:border-blue-600"
+                          : "border border-red-600 rounded-md px-3 py-3 w-full focus:outline-none focus:border-red-600"
+                      }
+                    />
+                    {!newpasswordMatch ? (
+                      <p className="text-sm text-red-500">
+                        Mật khẩu không trùng khớp
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                )}
+                {isvalid_phonenumber == false && (
+                  <p className="text-red-500 text-sm">
+                    Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.
+                  </p>
+                )}
+                {sendCodeConf == 0 && (
                   <button
+                    disabled={isvalid_phonenumber == false || account == ""}
                     type="submit"
                     className="h-[50px] w-full bg-mauxanhtroi border border-mauxanhtroi rounded-md text-white hover:opacity-90"
                     onClick={sendCode}
                   >
                     Gửi mã xác nhận
                   </button>
-                ) : (
+                )}
+                {sendCodeConf == 1 && (
                   <button
                     type="submit"
                     className="h-[50px] w-full bg-mauxanhtroi border border-mauxanhtroi rounded-md text-white hover:opacity-90"
-                    onClick={sendCode}
+                    onClick={check_OTP}
                   >
-                    Khôi phục
+                    Xác nhận
+                  </button>
+                )}
+                {sendCodeConf == 2 && (
+                  <button
+                    type="submit"
+                    className="h-[50px] w-full bg-mauxanhtroi border border-mauxanhtroi rounded-md text-white hover:opacity-90"
+                    onClick={hanlde_Khoiphuc_pass}
+                  >
+                    Khôi phục mật khẩu
                   </button>
                 )}
 
@@ -100,6 +271,7 @@ const Resetpassword = () => {
                   >
                     Đăng nhập tại đây
                   </Link>
+                  <span id="recaptcha-container"></span>
                 </p>
               </div>
             </div>
@@ -107,6 +279,17 @@ const Resetpassword = () => {
         </div>
         <Footer />
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

@@ -80,6 +80,34 @@ export async function API_login(account: string, password: string) {
   }
 }
 
+export async function API_check_account(account: string) {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/check-account`, {
+      account,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("API check account không thành công");
+  }
+}
+
+// api khôi phục pass (quên pass)
+export async function API_update_new_pass(object: any) {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/update-new-password`,
+      object
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Lỗi khi call API_updateUser");
+  }
+}
+
 export async function API_Dangtin(
   id_user: any,
   type: string,

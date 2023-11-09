@@ -67,7 +67,8 @@
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #2374e1, white, #2374e1);
+  /* background: linear-gradient(to right, #2374e1, white, #2374e1); */
+  background: linear-gradient(to right, #91b9f0, white, #91b9f0);
   background-size: 200% 100%;
   animation: gradientAnimationForward 1s linear infinite;
   -webkit-background-clip: text;

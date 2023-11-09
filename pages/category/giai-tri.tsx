@@ -46,7 +46,6 @@ const Do_giai_tri = () => {
         const response = await API_get_Dogiaitri(build_data);
         setitemALLDogiaitri(response.all_dogiaitri);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -64,7 +63,6 @@ const Do_giai_tri = () => {
       const response = await API_get_Dogiaitri(build_data);
       setitemALLDogiaitri(response.all_dogiaitri);
       setTotalPages(response.totalpages);
-      console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

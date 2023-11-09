@@ -91,7 +91,6 @@ const Do_noi_that = () => {
         const response = await API_get_Donoithat(build_data);
         setitemALLDonoithat(response.all_donoithat);
         setTotalPages(response.totalpages);
-        console.log("check response: ", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

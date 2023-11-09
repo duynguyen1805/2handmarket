@@ -116,7 +116,7 @@ const Home = () => {
         ...prevTindang,
         ...response.all_collection,
       ]);
-      console.log("Check res: ", response.all_collection);
+      // console.log("Check res: ", response.all_collection);
     } catch (error) {
       console.error("Error fetch data: ", error);
     }
