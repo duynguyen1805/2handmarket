@@ -28,7 +28,7 @@ import ReactPaginate from "react-paginate";
 import item_listoto, { oto } from "../../../components/obj_data_raw/List_Oto";
 import { API_get_Phuongtien } from "@/service/userService";
 import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien";
-import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
 
@@ -165,26 +165,24 @@ const Oto = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <MyContextProvider>
-        <Modal_Filter_Phuongtien
-          type="oto"
-          hang={hang}
-          setHang={setHang}
-          dongxe={dongxe}
-          setdongxe={setdongxe}
-          hopso={hopso}
-          setHopso={setHopso}
-          nhienlieu={nhienlieu}
-          setNhienlieu={setNhienlieu}
-          sochongoi={sochongoi}
-          setChongoi={setChongoi}
-          setFilteredHang={setFilteredHang}
-          fetchDataProduct_filter={() => fetchDataProduct_filter()}
-          setpagehientai={setpagehientai}
-          openModalFilter={openModalFilter}
-          setopenModalFilter={setopenModalFilter}
-        />
-      </MyContextProvider>
+      <Modal_Filter_Phuongtien
+        type="oto"
+        hang={hang}
+        setHang={setHang}
+        dongxe={dongxe}
+        setdongxe={setdongxe}
+        hopso={hopso}
+        setHopso={setHopso}
+        nhienlieu={nhienlieu}
+        setNhienlieu={setNhienlieu}
+        sochongoi={sochongoi}
+        setChongoi={setChongoi}
+        setFilteredHang={setFilteredHang}
+        fetchDataProduct_filter={() => fetchDataProduct_filter()}
+        setpagehientai={setpagehientai}
+        openModalFilter={openModalFilter}
+        setopenModalFilter={setopenModalFilter}
+      />
 
       <Head>
         <title>2Hand Market - Ô tô</title>

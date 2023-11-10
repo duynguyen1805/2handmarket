@@ -29,7 +29,7 @@ import item_listmaygiat, {
 } from "../../../components/obj_data_raw/List_Maygiat";
 import { API_get_Dienlanh } from "@/service/userService";
 import Modal_Filter_Dienlanh from "@/components/modal/Modal_Filter_Dienlanh";
-import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
 
@@ -158,22 +158,20 @@ const May_giat = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <MyContextProvider>
-        <Modal_Filter_Dienlanh
-          type="maygiat"
-          hang={hang}
-          setHang={setHang}
-          khoiluonggiat={khoiluonggiat}
-          setkhoiluonggiat={setkhoiluonggiat}
-          cuagiat={cuagiat}
-          setcuagiat={setcuagiat}
-          setFilteredHang={setFilteredHang}
-          fetchDataProduct_filter={() => fetchDataProduct_filter()}
-          setpagehientai={setpagehientai}
-          openModalFilter={openModalFilter}
-          setopenModalFilter={setopenModalFilter}
-        />
-      </MyContextProvider>
+      <Modal_Filter_Dienlanh
+        type="maygiat"
+        hang={hang}
+        setHang={setHang}
+        khoiluonggiat={khoiluonggiat}
+        setkhoiluonggiat={setkhoiluonggiat}
+        cuagiat={cuagiat}
+        setcuagiat={setcuagiat}
+        setFilteredHang={setFilteredHang}
+        fetchDataProduct_filter={() => fetchDataProduct_filter()}
+        setpagehientai={setpagehientai}
+        openModalFilter={openModalFilter}
+        setopenModalFilter={setopenModalFilter}
+      />
 
       <Head>
         <title>2Hand Market - Tủ lạnh</title>

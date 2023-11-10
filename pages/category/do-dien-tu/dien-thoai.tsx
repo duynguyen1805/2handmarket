@@ -33,7 +33,7 @@ import item_listphone, {
 import Display_product_horizontal from "@/components/Display_product_horizontal";
 import { API_getAllcollection, API_get_Dodientu } from "@/service/userService";
 import Modal_Filter_Dodientu from "@/components/modal/Modal_Filter_Dodientu";
-import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
 
@@ -170,26 +170,24 @@ const Dien_thoai = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <MyContextProvider>
-        <Modal_Filter_Dodientu
-          type="dienthoai"
-          hang={hang}
-          setHang={setHang}
-          dongmay={dongmay}
-          setdongmay={setdongmay}
-          mausac={mausac}
-          setMausac={setMausac}
-          dungluong={dungluong}
-          setDungluong={setDungluong}
-          ram={ram}
-          setRam={setRam}
-          setFilteredHang={setFilteredHang}
-          fetchDataProduct_filter={() => fetchDataProduct_filter()}
-          setpagehientai={setpagehientai}
-          openModalFilter={openModalFilter}
-          setopenModalFilter={setopenModalFilter}
-        />
-      </MyContextProvider>
+      <Modal_Filter_Dodientu
+        type="dienthoai"
+        hang={hang}
+        setHang={setHang}
+        dongmay={dongmay}
+        setdongmay={setdongmay}
+        mausac={mausac}
+        setMausac={setMausac}
+        dungluong={dungluong}
+        setDungluong={setDungluong}
+        ram={ram}
+        setRam={setRam}
+        setFilteredHang={setFilteredHang}
+        fetchDataProduct_filter={() => fetchDataProduct_filter()}
+        setpagehientai={setpagehientai}
+        openModalFilter={openModalFilter}
+        setopenModalFilter={setopenModalFilter}
+      />
 
       <Head>
         <title>2Hand Market - Điện thoại</title>

@@ -29,7 +29,7 @@ import item_listxetai, {
 } from "../../../components/obj_data_raw/List_Xetai";
 import { API_get_Phuongtien } from "@/service/userService";
 import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien";
-import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
 
@@ -161,22 +161,20 @@ const Xe_tai = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <MyContextProvider>
-        <Modal_Filter_Phuongtien
-          type="xetai"
-          hang={hang}
-          setHang={setHang}
-          nhienlieu={nhienlieu}
-          setNhienlieu={setNhienlieu}
-          taitrong={taitrong}
-          setTaitrong={setTaitrong}
-          setFilteredHang={setFilteredHang}
-          fetchDataProduct_filter={() => fetchDataProduct_filter()}
-          setpagehientai={setpagehientai}
-          openModalFilter={openModalFilter}
-          setopenModalFilter={setopenModalFilter}
-        />
-      </MyContextProvider>
+      <Modal_Filter_Phuongtien
+        type="xetai"
+        hang={hang}
+        setHang={setHang}
+        nhienlieu={nhienlieu}
+        setNhienlieu={setNhienlieu}
+        taitrong={taitrong}
+        setTaitrong={setTaitrong}
+        setFilteredHang={setFilteredHang}
+        fetchDataProduct_filter={() => fetchDataProduct_filter()}
+        setpagehientai={setpagehientai}
+        openModalFilter={openModalFilter}
+        setopenModalFilter={setopenModalFilter}
+      />
 
       <Head>
         <title>2Hand Market - Xe tải, xe ben</title>

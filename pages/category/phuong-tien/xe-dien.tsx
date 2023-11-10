@@ -15,7 +15,7 @@ import Slider from "react-slick";
 import { API_get_Phuongtien } from "@/service/userService";
 import ReactPaginate from "react-paginate";
 import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien";
-import { MyContextProvider, useMyContext } from "@/contexts/MyContext";
+import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
 
@@ -103,20 +103,18 @@ const Xe_dien = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      <MyContextProvider>
-        <Modal_Filter_Phuongtien
-          type="xedien"
-          hang={loaixedien}
-          setHang={setloaixedien}
-          dongcoxedien={dongcoxedien}
-          setDongcoxedien={setDongcoxedien}
-          setFilteredHang={setFilteredHang}
-          fetchDataProduct_filter={() => fetchDataProduct_filter()}
-          setpagehientai={setpagehientai}
-          openModalFilter={openModalFilter}
-          setopenModalFilter={setopenModalFilter}
-        />
-      </MyContextProvider>
+      <Modal_Filter_Phuongtien
+        type="xedien"
+        hang={loaixedien}
+        setHang={setloaixedien}
+        dongcoxedien={dongcoxedien}
+        setDongcoxedien={setDongcoxedien}
+        setFilteredHang={setFilteredHang}
+        fetchDataProduct_filter={() => fetchDataProduct_filter()}
+        setpagehientai={setpagehientai}
+        openModalFilter={openModalFilter}
+        setopenModalFilter={setopenModalFilter}
+      />
 
       <Head>
         <title>2Hand Market - Xe điện</title>
