@@ -201,8 +201,27 @@ const Home = () => {
     ],
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+  const handle_loading_router_push = async (link: string) => {
+    try {
+      // Bắt đầu loading
+      setIsLoading(true);
+      // Thực hiện router.push
+      await router.push(`${link}`);
+      // Dừng loading khi trang đã được push và hiển thị
+      setIsLoading(false);
+    } catch (error) {
+      // Xử lý lỗi nếu cần thiết
+      console.error("Error navigating:", error);
+      // Dừng loading nếu có lỗi
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gray-100">
+      {/* Thanh loading */}
+      {isLoading && <div className="loading-router z-30 mt-[80px]"></div>}
       <Head>
         <title>2Hand Market</title>
         <meta name="description" content="Website mua bán đồ qua sử dụng" />
@@ -266,7 +285,10 @@ const Home = () => {
                       <div
                         key={item_main.key}
                         className="h-full w-1/4"
-                        onClick={() => router.push(`${item_main.link}`)}
+                        // onClick={() => router.push(`${item_main.link}`)}
+                        onClick={() =>
+                          handle_loading_router_push(item_main.link)
+                        }
                       >
                         <div className="h-[80px] w-full flex items-center justify-center">
                           <Image
