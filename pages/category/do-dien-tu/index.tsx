@@ -28,10 +28,12 @@ import Link from "next/link";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useMyContext } from "@/contexts/MyContext";
 
 const danhmuc_main: any[] = item_danhmuc[2].sub_danhmuc;
 
 const Do_dien_tu = () => {
+  const { isLoading, handle_setIsLoading } = useMyContext();
   const [itemALLDodientu, setitemALLDodientu] = useState<any[] | null>(null);
   const [active_tab_filter, setActiveTab] = useState<number>(0);
 
@@ -107,6 +109,17 @@ const Do_dien_tu = () => {
     ],
   };
 
+  const handle_loading_router_push = async (link: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`${link}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Head>
@@ -157,7 +170,10 @@ const Do_dien_tu = () => {
                           <div
                             key={item_danhmuc.key}
                             className="h-full w-1/4"
-                            onClick={() => router.push(`${item_danhmuc.link}`)}
+                            // onClick={() => router.push(`${item_danhmuc.link}`)}
+                            onClick={() =>
+                              handle_loading_router_push(item_danhmuc.link)
+                            }
                           >
                             <div className="h-[70px] w-full flex items-center justify-center">
                               <div className="h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300">

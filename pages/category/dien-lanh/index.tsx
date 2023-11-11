@@ -22,10 +22,12 @@ import item_danhmuc, {
 import Display_product_vertical from "@/components/Display_product_vertical";
 import { API_get_Dienlanh } from "@/service/userService";
 import Link from "next/link";
+import { useMyContext } from "@/contexts/MyContext";
 
 const danhmuc_main: any[] = item_danhmuc[4].sub_danhmuc;
 
 const Dien_lanh = () => {
+  const { isLoading, handle_setIsLoading } = useMyContext();
   const [itemALLDienlanh, setitemALLDienlanh] = useState<any[] | null>(null);
   const [active_tab_filter, setActiveTab] = useState<number>(0);
 
@@ -100,6 +102,17 @@ const Dien_lanh = () => {
     ],
   };
 
+  const handle_loading_router_push = async (link: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`${link}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Head>
@@ -150,7 +163,10 @@ const Dien_lanh = () => {
                           <div
                             key={item.key}
                             className="h-full w-[150px]"
-                            onClick={() => router.push(`${item.link}`)}
+                            // onClick={() => router.push(`${item.link}`)}
+                            onClick={() =>
+                              handle_loading_router_push(item.link)
+                            }
                           >
                             <div className="h-[70px] w-full flex items-center justify-center">
                               <div className="h-[70px] w-[70px] flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-300">

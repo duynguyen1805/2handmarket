@@ -120,7 +120,7 @@
 
 /* xoay tròn icon */
 .loading {
-  animation: border-spin 3s linear infinite; /* 10s animation chạy qua lại một lần*/
+  animation: border-spin 3s linear infinite; /* 3s animation chạy qua lại một lần*/
 }
 
 /* thanh loading đầu trang (router push) */
@@ -129,9 +129,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px; /* Chiều cao của thanh loading */
-  background-color: theme("colors.mauxanhtroi"); /* Màu của thanh loading */
-  animation: loading-animation 2s linear infinite; /* Động hoạ loading */
+  height: 3px;
+  background-color: theme("colors.mauxanhtroi");
+  animation: loading-animation 2s linear infinite;
 }
 
 @keyframes loading-animation {

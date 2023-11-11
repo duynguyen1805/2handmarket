@@ -6,6 +6,7 @@ import { MyContextProvider } from "../contexts/MyContext";
 import { Provider } from "react-redux";
 import store from "../store/store";
 import Nav_mobile from "@/components/Nav_mobile";
+import Loading_routerpush from "@/components/loading/Loading_routerpush";
 
 // export default function App({ Component, pageProps }: AppProps) {
 //   return (
@@ -20,6 +21,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     <Provider store={store}>
       <MyContextProvider>
         <Component {...pageProps} />
+        <Loading_routerpush />
         <Nav_mobile />
       </MyContextProvider>
     </Provider>

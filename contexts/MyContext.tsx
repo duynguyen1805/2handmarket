@@ -12,6 +12,9 @@ interface MyContextValue {
   // đếm số tin nhắn chưa đọc
   countmessageunread: number;
   count_message_unread: any;
+  // trạng thái loading router push
+  isLoading: boolean;
+  handle_setIsLoading: any;
   // chưa dùng tới
   information_User: any;
   setInfoUser: (information_User: any) => void;
@@ -53,6 +56,14 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
   const count_message_unread = (countmessageunread: number) => {
     setCount_Message_unread(countmessageunread);
   };
+
+  //lưu trạng thái loading router push
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handle_setIsLoading = (isLoading: boolean) => {
+    setIsLoading(isLoading);
+  };
+
+  //chưa dùng tới
   const [information_User, setinformation_User] = useState<any>();
   const setInfoUser = (information_User: any) => {
     setinformation_User(information_User);
@@ -67,6 +78,8 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
     setKeywordSearch,
     countmessageunread,
     count_message_unread,
+    isLoading,
+    handle_setIsLoading,
     information_User,
     setInfoUser,
   };

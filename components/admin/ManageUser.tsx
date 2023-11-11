@@ -5,17 +5,16 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal_addnew_user from "../modal/Modal_addnew_user";
 import router from "next/router";
+import { useMyContext } from "@/contexts/MyContext";
 
 const ManageUser = () => {
+  const { handle_setIsLoading } = useMyContext();
   const [users, setUser] = useState<any>();
   const [isOpenAddnew, setOpenAddnew] = useState(false);
 
   useEffect(() => {
     getAllUser();
   }, []);
-  useEffect(() => {
-    console.log("check users: ", users);
-  }, [users]);
 
   const getAllUser = async () => {
     const token_req: any = localStorage.getItem("token_req");
@@ -46,6 +45,17 @@ const ManageUser = () => {
     setOpenAddnew(!isOpenAddnew);
     getAllUser();
   }
+
+  const handle_push_trangcanhan = async (id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`/account/trang-ca-nhan/${id}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -108,9 +118,10 @@ const ManageUser = () => {
                       <div className="flex items-center justify-center space-x-6 mb-1">
                         <button
                           className=" bg-mauxanhtroi text-white font-bold rounded-md px-2 py-2 hover:opacity-80"
-                          onClick={() =>
-                            router.push(`/account/trang-ca-nhan/${item._id}`)
-                          }
+                          // onClick={() =>
+                          //   router.push(`/account/trang-ca-nhan/${item._id}`)
+                          // }
+                          onClick={() => handle_push_trangcanhan(item._id)}
                         >
                           Trang cá nhân
                         </button>

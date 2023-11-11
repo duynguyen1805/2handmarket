@@ -20,7 +20,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [view_password, setview_password] = useState(true);
   //lấy các biến, hàm trong context ra sử dụng.
-  const { isLogin, setLogin, information_User, setInfoUser } = useMyContext();
+  const {
+    isLogin,
+    setLogin,
+    handle_setIsLoading,
+    information_User,
+    setInfoUser,
+  } = useMyContext();
 
   async function handleClickLogin() {
     if (!account && !password) {
@@ -57,9 +63,23 @@ const Login = () => {
 
         // Chuyển hướng đến trang admin hoặc user tùy vào roleId
         if (data.user.role === "Admin") {
-          router.push("/admin/adminDashboard");
+          try {
+            handle_setIsLoading(true);
+            await router.push("/admin/adminDashboard");
+            handle_setIsLoading(false);
+          } catch (error) {
+            console.error("Error navigating:", error);
+            handle_setIsLoading(false);
+          }
         } else {
-          router.push("/");
+          try {
+            handle_setIsLoading(true);
+            await router.push("/");
+            handle_setIsLoading(false);
+          } catch (error) {
+            console.error("Error navigating:", error);
+            handle_setIsLoading(false);
+          }
         }
         toast.success(data.message);
       }
@@ -74,11 +94,25 @@ const Login = () => {
       }
     }
   }
-  const resetpassword = () => {
-    router.push("/account/resetpassword");
+  const resetpassword = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/account/resetpassword");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
-  const clickRegister = () => {
-    router.push("/account/register");
+  const clickRegister = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/account/register");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {

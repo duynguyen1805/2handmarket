@@ -47,6 +47,7 @@ import { API_getTindangbyId } from "@/service/userService";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { useMyContext } from "@/contexts/MyContext";
 
 interface CodeProductProps {
   id_product: string;
@@ -54,6 +55,8 @@ interface CodeProductProps {
 }
 
 const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
+  const { isLoading, handle_setIsLoading } = useMyContext();
+
   const [item, setItem] = useState<any>();
   const [img_arr, setImg_arr] = useState<any>([]);
   const [infoClient, setInfoClient] = useState<any>();
@@ -152,16 +155,35 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     }
   }, []);
 
-  const handleClickMessage = () => {
+  const handleClickMessage = async () => {
     const query: any = {
       current_user_name: datainforUser_current?.name,
       id_receiver: infoClient._id,
       name_receiver: infoClient.name,
     };
-    router.push({
-      pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
-      query,
-    });
+
+    try {
+      handle_setIsLoading(true);
+      await router.push({
+        pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
+        query,
+      });
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
+  const handle_push_trangcanhan = async (id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`/account/trang-ca-nhan/${id}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
 
   return (
@@ -222,11 +244,12 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                       </div>
                       <div
                         className="w-auto text-center text-mauxanhtroi text-lg py-2 px-3 border border-mauxanhtroi rounded-lg hover:bg-mauxanhtroi hover:text-white cursor-pointer"
-                        onClick={() =>
-                          router.push(
-                            `/account/trang-ca-nhan/${infoClient?._id}`
-                          )
-                        }
+                        // onClick={() =>
+                        //   router.push(
+                        //     `/account/trang-ca-nhan/${infoClient?._id}`
+                        //   )
+                        // }
+                        onClick={() => handle_push_trangcanhan(infoClient?._id)}
                       >
                         Xem trang
                       </div>

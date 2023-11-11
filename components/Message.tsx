@@ -22,6 +22,7 @@ import Gallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import router from "next/router";
 import left_back from "../assets/icon/left-arrow.png";
+import { useMyContext } from "@/contexts/MyContext";
 
 const Message = ({
   id_current_user,
@@ -32,6 +33,8 @@ const Message = ({
   avatar_receiver,
   setSelectedUser,
 }: any) => {
+  const { handle_setIsLoading } = useMyContext();
+
   // xử lý chọn ảnh
   async function getBase64(file: any) {
     return new Promise((resolve, reject) => {
@@ -259,6 +262,17 @@ const Message = ({
     },
   ];
 
+  const handle_push_trangcanhan = async (id_receiver: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`/account/trang-ca-nhan/${id_receiver}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
   return (
     <div className="h-full w-full">
       <div className="relative sm:h-[551px] md:h-full w-full flex flex-col">
@@ -278,14 +292,16 @@ const Message = ({
             style={{
               backgroundImage: `url(${avatar_receiver})`,
             }}
-            onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
+            // onClick={() => router.push(`/account/trang-ca-nhan/${id_receiver}`)}
+            onClick={() => handle_push_trangcanhan(id_receiver)}
           ></div>
           <div className="h-[60px] w-auto max-w-full overflow-x-hidden">
             <div
               className="h-[60px] w-full text-xl font-bold flex items-center"
-              onClick={() =>
-                router.push(`/account/trang-ca-nhan/${id_receiver}`)
-              }
+              // onClick={() =>
+              //   router.push(`/account/trang-ca-nhan/${id_receiver}`)
+              // }
+              onClick={() => handle_push_trangcanhan(id_receiver)}
             >
               {userName_receiver}
             </div>

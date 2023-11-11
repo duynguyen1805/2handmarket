@@ -29,6 +29,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any>([]);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
+  const { handle_setIsLoading } = useMyContext();
 
   const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [datainforUser, setdatainforUser] = useState<any>();
@@ -100,19 +101,38 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
     setIsOpen(key);
   };
 
-  const handleClickMessage = () => {
+  const handleClickMessage = async () => {
     if (datainforUser_current) {
       const query: any = {
         current_user_name: datainforUser_current?.name,
         id_receiver: datainforUser._id,
         name_receiver: datainforUser.name,
       };
-      router.push({
-        pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
-        query,
-      });
+
+      try {
+        handle_setIsLoading(true);
+        await router.push({
+          pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
+          query,
+        });
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     } else {
       router.push("/account/login");
+    }
+  };
+
+  const handle_push_edit_info = async (id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`/account/${id}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
     }
   };
 
@@ -181,9 +201,10 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                   {datainforUser?._id === datainforUser_current?._id && (
                     <div
                       className="w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80"
-                      onClick={() =>
-                        router.push(`/account/${datainforUser?._id}`)
-                      }
+                      // onClick={() =>
+                      //   router.push(`/account/${datainforUser?._id}`)
+                      // }
+                      onClick={() => handle_push_edit_info(datainforUser?._id)}
                     >
                       Chỉnh sửa thông tin cá nhân
                     </div>

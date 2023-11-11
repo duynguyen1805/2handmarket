@@ -39,6 +39,7 @@ const Header = () => {
     count_message_unread,
     keyword_search,
     setKeywordSearch,
+    handle_setIsLoading,
     information_User,
     setInfoUser,
   } = useMyContext();
@@ -130,34 +131,75 @@ const Header = () => {
   //mở option của người dùng
   const [isOpenOption, setOpenOptionUser] = useState(false);
 
-  const clickLogin = () => {
-    router.push("/account/login");
+  const clickLogin = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/account/login");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
-  const clickRegister = () => {
-    router.push("/account/register");
+  const clickRegister = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/account/register");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
-  const handleClickManager = () => {
-    router.push("/admin/adminDashboard");
+  const handleClickManager = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/admin/adminDashboard");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
-  const handleClickMessage = (idUser: any) => {
+  const handleClickMessage = async (idUser: any) => {
     if (idUser) {
-      router.push(`/account/tin-nhan/${idUser}`);
-      // .then(() => window.location.reload());
+      try {
+        handle_setIsLoading(true);
+        await router.push(`/account/tin-nhan/${idUser}`);
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     } else {
       router.push("/account/login");
       toast.success("Bạn cần đăng nhập trước khi Nhắn tin.");
     }
   };
-  const clickInfoDetail = (idUser: string) => {
+  const clickInfoDetail = async (idUser: string) => {
     if (idUser) {
-      router.push(`/account/trang-ca-nhan/${idUser}`);
+      try {
+        handle_setIsLoading(true);
+        await router.push(`/account/trang-ca-nhan/${idUser}`);
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     } else {
       router.push("/account/login");
     }
   };
-  const clickQuanly_dangtin = (idUser: any) => {
+  const clickQuanly_dangtin = async (idUser: any) => {
     if (idUser) {
-      router.push(`/account/quan-ly-tin/${idUser}`);
+      try {
+        handle_setIsLoading(true);
+        await router.push(`/account/quan-ly-tin/${idUser}`);
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     } else {
       router.push("/account/login");
       toast.success("Bạn cần đăng nhập trước khi Quản lý tin đăng.");
@@ -166,11 +208,18 @@ const Header = () => {
   const handleClickUser = () => {
     setOpenOptionUser(!isOpenOption);
   };
-  const Logout = () => {
+  const Logout = async () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
     if (window.location.pathname !== "/") {
-      router.push("/");
+      try {
+        handle_setIsLoading(true);
+        await router.push("/");
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     } else {
       window.location.reload();
     }
@@ -192,9 +241,42 @@ const Header = () => {
     // handleSearch(value);
   };
 
-  const handle_ClickSearch_pushnewpage = () => {
-    router.push({ pathname: `/tim-kiem/${searchValue}` });
-    setKeywordSearch(searchValue);
+  const handle_ClickSearch_pushnewpage = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push({ pathname: `/tim-kiem/${searchValue}` });
+      setKeywordSearch(searchValue);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
+  const handle_push_homepage = async () => {
+    try {
+      handle_setIsLoading(true);
+      await router.push("/");
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
+  const handle_push_dangtin = async () => {
+    if (information_User) {
+      try {
+        handle_setIsLoading(true);
+        await router.push("/dang-tin");
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
+    } else {
+      router.push("/account/login");
+    }
   };
 
   return (
@@ -217,6 +299,7 @@ const Header = () => {
             <Link
               href="/"
               className="md:hidden lg:block lg:h-[100px] lg:w-6/12 lg:scale-90  cursor-pointer bg-[url('../public/logo_2hand_removebg.png')] bg-no-repeat bg-contain bg-fixed bg-center"
+              onClick={() => handle_push_homepage()}
             ></Link>
 
             <div className="relative w-6/12 sm:mx-auto sm:w-[80%] md:w-[100%] md:mx-[25px] lg:ml-[5px] lg:mr-[5px] lg:mb-[25px] lg:mt-[25px] rounded-[10px] bg-[#e2e2e2]">
@@ -392,6 +475,7 @@ const Header = () => {
               <Link
                 className="h-[50px] w-auto bg-blue-400 px-5 py-2 rounded-lg flex items-center hover:bg-blue-500 cursor-pointer"
                 href={information_User ? "/dang-tin" : "/account/login"}
+                onClick={() => handle_push_dangtin()}
               >
                 <Image
                   src={dangtin}

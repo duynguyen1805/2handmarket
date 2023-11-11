@@ -42,6 +42,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any[] | null>(null);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
+  const { handle_setIsLoading } = useMyContext();
 
   useEffect(() => {
     const token: any = localStorage.getItem("token");
@@ -151,11 +152,18 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     setIsOpen(key);
     setTitle_filter(name);
   };
-  const clickTindang = (type: string, id: string) => {
-    router.push({
-      pathname: `/products/${id}`,
-      query: { type: type },
-    });
+  const clickTindang = async (type: string, id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push({
+        pathname: `/products/${id}`,
+        query: { type: type },
+      });
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
   const handleXoatindang = async (type: string, id: string) => {
     const token_req: any = localStorage.getItem("token_req");

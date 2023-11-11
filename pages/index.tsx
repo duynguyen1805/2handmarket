@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 require("dotenv").config();
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -53,9 +53,12 @@ import item_danhmuc, {
   sub_danhmuc,
 } from "../components/obj_data_raw/Danhmuc_raw";
 import Nav_mobile from "@/components/Nav_mobile";
+import { useMyContext } from "@/contexts/MyContext";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const Home = () => {
+  const { isLoading, handle_setIsLoading } = useMyContext();
+
   const [pagehientai, setpagehientai] = useState<number>(1);
   const pagehientaiRef = useRef<number>(1);
   const isFirstLoad = useRef(false);
@@ -201,27 +204,21 @@ const Home = () => {
     ],
   };
 
-  const [isLoading, setIsLoading] = useState(false);
   const handle_loading_router_push = async (link: string) => {
     try {
-      // Bắt đầu loading
-      setIsLoading(true);
-      // Thực hiện router.push
+      handle_setIsLoading(true);
       await router.push(`${link}`);
-      // Dừng loading khi trang đã được push và hiển thị
-      setIsLoading(false);
+      handle_setIsLoading(false);
     } catch (error) {
-      // Xử lý lỗi nếu cần thiết
       console.error("Error navigating:", error);
-      // Dừng loading nếu có lỗi
-      setIsLoading(false);
+      handle_setIsLoading(false);
     }
   };
 
   return (
     <div className="bg-gray-100">
       {/* Thanh loading */}
-      {isLoading && <div className="loading-router z-30 mt-[80px]"></div>}
+      {/* {isLoading && <div className="loading-router z-30 mt-[80px]"></div>} */}
       <Head>
         <title>2Hand Market</title>
         <meta name="description" content="Website mua bán đồ qua sử dụng" />

@@ -4,17 +4,27 @@ import router from "next/router";
 // frame motion
 import { motion } from "framer-motion";
 import icon_star from "../assets/icon/icon_star.png";
+import { useMyContext } from "@/contexts/MyContext";
 
 interface Props {
   item: any;
 }
 
 const Display_product_horizontal: React.FC<Props> = ({ item }) => {
-  const clickProduct = (type: string, id: string) => {
-    router.push({
-      pathname: `/products/${id}`,
-      query: { type: type },
-    });
+  const { isLoading, handle_setIsLoading } = useMyContext();
+
+  const clickProduct = async (type: string, id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push({
+        pathname: `/products/${id}`,
+        query: { type: type },
+      });
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
   //handle thời gian đã đăng
   function tinhthoigiandadang(time: Date): string {

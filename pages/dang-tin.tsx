@@ -107,6 +107,7 @@ import router from "next/router";
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { useMyContext } from "@/contexts/MyContext";
 
 const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
@@ -682,6 +683,7 @@ const Dang_tin = () => {
       router.push("/account/login");
     }
   }, []);
+
   const Dangtin = async () => {
     const token_req: any = localStorage.getItem("token_req");
     if (typeDanhmuc === "hoctap" && typeDanhmucChitiet == "giaotrinh") {

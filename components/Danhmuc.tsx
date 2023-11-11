@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import router from "next/router";
 import icon_hoctap from "../assets/icon/ic_giaitri_thethao/icon_sach.svg";
 import icon_dodientu from "../assets/icon/icon_dodientu.png";
 import icon_dodungcanhan from "../assets/icon/icon_dodungcanhan.png";
@@ -14,14 +15,27 @@ import item_danhmuc, {
   danhmuc,
   sub_danhmuc,
 } from "../components/obj_data_raw/Danhmuc_raw";
+import { useMyContext } from "@/contexts/MyContext";
+import Link from "next/link";
 
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const NavbarDropdown: React.FC = () => {
+  const { isLoading, handle_setIsLoading } = useMyContext();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+  };
+  const handle_push_menu = async (link: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push(`${link}`);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
 
   return (
@@ -64,8 +78,9 @@ const NavbarDropdown: React.FC = () => {
                   key={item_main.key}
                   className="md:min-h-[300px] lg:h-[400px] w-[220px] flex flex-col"
                 >
-                  <a
+                  <Link
                     href={item_main.link}
+                    onClick={() => handle_push_menu(item_main.link)}
                     className="text-2xl text-mauxanhtroi mb-1 cursor-pointer hover:text-blue-500"
                   >
                     <Image
@@ -92,17 +107,18 @@ const NavbarDropdown: React.FC = () => {
                       className="w-[32px] h-[32px]"
                     />
                     {item_main.label}
-                  </a>
+                  </Link>
                   {item_main.sub_danhmuc &&
                     item_main.sub_danhmuc.map((item_sub: sub_danhmuc) => {
                       return (
-                        <a
+                        <Link
                           key={item_sub.key}
                           href={item_sub.link}
+                          onClick={() => handle_push_menu(item_sub.link)}
                           className="text-xl py-[5px] cursor-pointer hover:border-b-2 hover:border-mauxanhtroi"
                         >
                           {item_sub.label}
-                        </a>
+                        </Link>
                       );
                     })}
                 </div>

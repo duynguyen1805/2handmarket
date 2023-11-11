@@ -5,6 +5,7 @@ import router from "next/router";
 import { motion } from "framer-motion";
 import icon_star from "../assets/icon/icon_star.png";
 import Link from "next/link";
+import { useMyContext } from "@/contexts/MyContext";
 
 interface Props {
   item: any;
@@ -15,11 +16,19 @@ const Display_product_vertical: React.FC<Props> = ({
   item,
   active_tab_filter,
 }) => {
-  const clickProduct = (type: string, id: string) => {
-    router.push({
-      pathname: `/products/${id}`,
-      query: { type: type },
-    });
+  const { isLoading, handle_setIsLoading } = useMyContext();
+  const clickProduct = async (type: string, id: string) => {
+    try {
+      handle_setIsLoading(true);
+      await router.push({
+        pathname: `/products/${id}`,
+        query: { type: type },
+      });
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
   };
   //handle thời gian đã đăng
   function tinhthoigiandadang(time: Date): string {
@@ -64,7 +73,7 @@ const Display_product_vertical: React.FC<Props> = ({
           ? "border-mauxanhtroi"
           : "border-gray-300"
       }`}
-      // onClick={() => clickProduct(item.type, item._id)}
+      onClick={() => clickProduct(item.type, item._id)}
     >
       <Link href={`/products/${item._id}?type=${item.type}`}>
         <div className="h-[210px] w-full flex justify-center">
