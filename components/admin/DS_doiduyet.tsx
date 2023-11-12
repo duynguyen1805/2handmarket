@@ -18,9 +18,12 @@ import {
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Display_product_horizontal from "../Display_product_horizontal";
 import { motion } from "framer-motion";
 import Modal_TuchoiTindang from "../modal/Modal_TuchoiTindang";
+// xem img
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 const DS_doiduyet: React.FC<any> = ({
   selectoption,
@@ -78,6 +81,7 @@ const DS_doiduyet: React.FC<any> = ({
       const build_data = {
         type: "ALL",
         trangthai: 1,
+        role: "Admin",
       };
       if (selectoption === "hoctap") {
         const response = await API_get_Dohoctap(build_data);
@@ -229,8 +233,23 @@ const DS_doiduyet: React.FC<any> = ({
     }
   };
 
+  const [isOpen_img, setIsOpen_img] = useState(false);
+  const [index_img_select, setindex_img_select] = useState<number>();
+  let img_tindang: any = [];
+  const handle_click_img_tindang = (index: number) => {
+    setIsOpen_img(true);
+    setindex_img_select(index);
+  };
+
   return (
     <div className="flex sm:h-auto md:h-full sm:w-full sm:pt-5 sm:bg-gray-100 md:bg-white md:pt-0">
+      <Lightbox
+        open={isOpen_img}
+        close={() => setIsOpen_img(false)}
+        plugins={[Zoom]}
+        slides={img_tindang}
+        index={index_img_select}
+      />
       {/* display medium */}
       <div className="w-[40%] h-auto p-2 overflow-auto">
         {itemALL.length === 0 && (
@@ -325,6 +344,7 @@ const DS_doiduyet: React.FC<any> = ({
             <Slider {...settings_slider}>
               {img_arr &&
                 img_arr.map((item: any, index: number) => {
+                  img_tindang.push({ src: item });
                   return (
                     <div
                       key={index}
@@ -333,6 +353,7 @@ const DS_doiduyet: React.FC<any> = ({
                       <div
                         className="h-full w-full bg-center bg-contain bg-no-repeat"
                         style={{ backgroundImage: `url(${item})` }}
+                        onClick={() => handle_click_img_tindang(index)}
                       ></div>
                     </div>
                   );

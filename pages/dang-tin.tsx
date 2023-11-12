@@ -246,6 +246,11 @@ const Dang_tin = () => {
 
     for (let i = 0; i < fileArray.length; i++) {
       let file: any = fileArray[i];
+      //check loại file
+      if (!file.type.startsWith("image/")) {
+        toast.error(`File ${file.name} không phải là ảnh.`);
+        continue; // bỏ qua file không phải là ảnh
+      }
       let base64 = await getBase64(file);
       let objectURL = URL.createObjectURL(file);
       base64Array.push(base64);
@@ -1230,6 +1235,7 @@ const Dang_tin = () => {
                       <input
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         type="file"
+                        accept="image/*"
                         multiple
                         onChange={(e) => {
                           handleFile(e);

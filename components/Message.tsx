@@ -18,11 +18,16 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
-import Gallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
 import router from "next/router";
 import left_back from "../assets/icon/left-arrow.png";
 import { useMyContext } from "@/contexts/MyContext";
+// xem img
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+// toast thông báo
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Message = ({
   id_current_user,
@@ -57,6 +62,11 @@ const Message = ({
 
     for (let i = 0; i < fileArray.length; i++) {
       let file: any = fileArray[i];
+      //check loại file
+      if (!file.type.startsWith("image/")) {
+        toast.error(`File ${file.name} không phải là ảnh.`);
+        continue; // bỏ qua file không phải là ảnh
+      }
       let base64 = await getBase64(file);
       let objectURL = URL.createObjectURL(file);
       base64Array.push(base64);
@@ -258,7 +268,7 @@ const Message = ({
       original: selectImg,
       thumbnail: selectImg,
       onCloseRequest: () => setIsOpen(false),
-      isFullscreen: true,
+      isFullscreen: false,
     },
   ];
 
@@ -438,8 +448,9 @@ const Message = ({
           <div className="relative h-full w-[60px] flex items-center justify-center mr-1 rounded-r-full border-y border-r border-gray-400">
             <Image src={addimg} alt="add img" className="h-[32px] w-[32px]" />
             <input
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              className="absolute inset-0 w-full h-full opacity-0 "
               type="file"
+              accept="image/*"
               multiple
               onChange={(e) => {
                 handleFile(e);
@@ -459,23 +470,12 @@ const Message = ({
           </button>
         </div>
       </div>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center h-full w-full bg-black">
-          <button
-            className="absolute top-2 right-6 text-white text-2xl"
-            onClick={() => setIsOpen(false)}
-          >
-            &times;
-          </button>
-          <Gallery
-            items={images}
-            // showNav={true}
-            // lazyLoad={true}
-            // autoPlay={false}
-            // startIndex={0}
-          />
-        </div>
-      )}
+      <Lightbox
+        open={isOpen}
+        close={() => setIsOpen(false)}
+        plugins={[Zoom]}
+        slides={[{ src: selectImg }]}
+      />
     </div>
   );
 };

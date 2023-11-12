@@ -31,15 +31,20 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           36,
           pagehientai
         );
-        const sort_response = response.resultSearch
-          .slice()
-          .sort(
-            (a: any, b: any) =>
-              new Date(b.ngayduyettin).getTime() -
-              new Date(a.ngayduyettin).getTime()
-          );
-        set_kqSearch(sort_response);
-        setTotalPages(response.totalPages);
+        if (response.errCode == 0) {
+          const sort_response = response.resultSearch
+            .slice()
+            .sort(
+              (a: any, b: any) =>
+                new Date(b.ngayduyettin).getTime() -
+                new Date(a.ngayduyettin).getTime()
+            );
+          set_kqSearch(sort_response);
+          setTotalPages(response.totalPages);
+        } else {
+          set_kqSearch([]);
+          setTotalPages(1);
+        }
       } catch (error) {
         console.log("Error fetch_search_header: ", error);
       }
