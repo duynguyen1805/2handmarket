@@ -271,11 +271,9 @@ const Infodetail = ({ edit_info }: infodetailProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
-      <div className="absolute h-auto w-full top-0 left-0">
-        <Header />
-      </div>
+      <Header />
       {info_user && (
-        <div className="h-auto min-h-screen w-[100%] bg-gray-100 lg:pt-[90px] md:pt-[115px] flex flex-col place-content-between">
+        <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] bg-gray-100 lg:pt-[0px] md:pt-[0px] flex flex-col place-content-between">
           <div>
             {/* Điều hướng */}
             <div className="h-[50px] w-full flex items-center justify-center mt-2">

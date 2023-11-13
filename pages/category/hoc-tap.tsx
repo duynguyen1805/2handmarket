@@ -137,10 +137,8 @@ const Hoc_tap = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
-      <div className="absolute h-auto w-full top-0 left-0">
-        <Header />
-      </div>
-      <div className="h-auto min-h-screen w-[100%] lg:pt-[80px] md:pt-[115px] bg-gray-100 flex flex-col place-content-between">
+      <Header />
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
@@ -211,7 +209,7 @@ const Hoc_tap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+            <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px] sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
               {itemALLDohoctap == null && (
                 <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
