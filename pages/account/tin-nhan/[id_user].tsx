@@ -140,7 +140,6 @@ const Tin_nhan = ({
           listchat[i].id_sender = latestMessages[i].id_sender || "";
         }
         setConversationMembers(listchat);
-        // console.log("check listchat: ", listchat);
       });
       return () => {
         unsubscribe();

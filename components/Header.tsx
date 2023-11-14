@@ -211,6 +211,7 @@ const Header = () => {
   const Logout = async () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
+    count_message_unread(0);
     if (window.location.pathname !== "/") {
       try {
         handle_setIsLoading(true);

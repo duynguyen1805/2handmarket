@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import store from "../store/store";
 import Nav_mobile from "@/components/Nav_mobile";
 import Loading_routerpush from "@/components/loading/Loading_routerpush";
+import Button_topback from "@/components/Button_topback";
 
 // export default function App({ Component, pageProps }: AppProps) {
 //   return (
@@ -22,6 +23,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       <MyContextProvider>
         <Component {...pageProps} />
         <Loading_routerpush />
+        <Button_topback />
         <Nav_mobile />
       </MyContextProvider>
     </Provider>

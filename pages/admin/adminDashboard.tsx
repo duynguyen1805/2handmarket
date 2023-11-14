@@ -24,9 +24,12 @@ import DS_daduyet from "@/components/admin/DS_daduyet";
 import { API_get_soluongtin_Allcollection } from "@/service/userService";
 import io from "socket.io-client";
 import Quangcao from "@/components/admin/Quangcao";
+import { useMyContext } from "@/contexts/MyContext";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const AdminDashboard = () => {
+  //lấy số lượng order qua usecontext
+  const { countmessageunread, count_message_unread } = useMyContext();
   const router = useRouter();
   const [isOpenDoiduyet, setOpenDoiduyet] = useState(false);
   const [isOpenDaduyet, setOpenDaduyet] = useState(false);
@@ -54,17 +57,6 @@ const AdminDashboard = () => {
       socket.disconnect(); // Ngắt kết nối khi unmount component (tuỳ vào tình huống)
     };
   }, []);
-
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
 
   useEffect(() => {
     //lấy thông tin người dùng
@@ -98,6 +90,7 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     localStorage.clear();
     Cookies.remove("jwt_token");
+    count_message_unread(0);
     window.location.reload();
     router.push("/");
   };

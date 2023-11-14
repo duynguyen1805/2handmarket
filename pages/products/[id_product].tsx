@@ -237,10 +237,10 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                           return (
                             <div
                               key={index}
-                              className="h-[500px] w-[500px] flex justify-center"
+                              className="h-[500px] w-[500px] flex justify-center outline-none"
                             >
                               <div
-                                className="h-full w-full bg-center bg-contain bg-no-repeat"
+                                className="h-full w-full bg-center bg-contain bg-no-repeat outline-none"
                                 style={{ backgroundImage: `url(${item})` }}
                                 onClick={() => handle_click_img_tindang(index)}
                               ></div>

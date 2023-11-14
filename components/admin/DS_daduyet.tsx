@@ -417,7 +417,7 @@ const DS_daduyet: React.FC<any> = ({
                   return (
                     <div
                       key={index}
-                      className="h-[500px] w-[500px] flex justify-center"
+                      className="h-[500px] w-[500px] flex justify-center outline-none"
                     >
                       <div
                         className="h-full w-full bg-center bg-contain bg-no-repeat"
