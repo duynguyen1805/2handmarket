@@ -33,6 +33,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 
+import LazyLoad from "react-lazyload";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -405,7 +407,9 @@ const Home = () => {
               tindang_ganday.map((item: any, index: number) => {
                 return (
                   <div key={index} className="flex items-center justify-center">
+                    {/* <LazyLoad offset={100}> */}
                     <Display_product_vertical item={item} />
+                    {/* </LazyLoad> */}
                   </div>
                 );
               })}

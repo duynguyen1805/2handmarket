@@ -335,7 +335,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-80px)] w-full bg-gray-100 lg:pt-[80px] md:pt-[0px] sm:pt-[50px] flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-80px)] w-full bg-gray-100 lg:pt-[0px] md:pt-[0px] sm:pt-[50px] flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-1">
