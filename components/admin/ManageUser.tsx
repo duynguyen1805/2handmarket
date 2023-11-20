@@ -106,7 +106,7 @@ const ManageUser = () => {
                       {item.account}
                     </td>
                     <td className="pt-1 pl-2 border border-black">
-                      {item.address}
+                      {item.address ? item.address : item.email}
                     </td>
                     <td className="pt-1 pl-2 border border-black">
                       {formattedDate}

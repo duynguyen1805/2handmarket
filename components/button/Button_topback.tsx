@@ -6,7 +6,8 @@ import { sign, verify, Secret } from "jsonwebtoken";
 import { useMyContext } from "@/contexts/MyContext";
 
 const Button_topback = () => {
-  const { isLoading, handle_setIsLoading, isLogin } = useMyContext();
+  const { isLoading, handle_setIsLoading, isLogin, information_User } =
+    useMyContext();
   const [isHovered_scrolltotop, setIsHovered_scrolltotop] = useState(false);
   const [isHovered_chatwithAD, setIsHovered_chatwithAD] = useState(false);
   const handle_scroll_top = () => {
@@ -17,53 +18,31 @@ const Button_topback = () => {
     });
   };
 
-  const [datainforUser_current, setdatainforUser_current] = useState<any>();
-  useEffect(() => {
-    //lấy thông tin người dùng Đăng nhập
-    const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
-      }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded = jwt.verify(parse_token, jwt_secret);
-        setdatainforUser_current(decoded);
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        setdatainforUser_current(null);
-      }
-    }
-  }, []);
-
   const handleClickMessage_toAdmin = async () => {
-    const query: any = {
-      current_user_name: datainforUser_current?.name,
-      id_receiver: "64d733a8df7d5a5bec4959bf",
-      name_receiver: "Admin",
-    };
-    try {
-      handle_setIsLoading(true);
-      await router.push({
-        pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
-        query,
-      });
-      handle_setIsLoading(false);
-    } catch (error) {
-      console.error("Error navigating:", error);
-      handle_setIsLoading(false);
+    if (information_User !== undefined || information_User !== null) {
+      const query: any = {
+        current_user_name: information_User?.name,
+        id_receiver: "64d733a8df7d5a5bec4959bf",
+        name_receiver: "Admin",
+      };
+      try {
+        handle_setIsLoading(true);
+        await router.push({
+          pathname: `/account/tin-nhan/${information_User?._id}`,
+          query,
+        });
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     }
   };
 
   return (
     <>
       <div
-        className="fixed bottom-5 right-3 h-[40px] w-[40px] bg-white border border-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn"
+        className="fixed bottom-5 right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn"
         onClick={() => handle_scroll_top()}
         onMouseEnter={() => setIsHovered_scrolltotop(true)}
         onMouseLeave={() => setIsHovered_scrolltotop(false)}
@@ -74,7 +53,7 @@ const Button_topback = () => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-6 h-6 icon-white"
         >
           <path
             strokeLinecap="round"
@@ -88,9 +67,9 @@ const Button_topback = () => {
           </span>
         )}
       </div>
-      {(datainforUser_current || isLogin == true) && (
+      {(information_User || isLogin == true) && (
         <div
-          className="fixed bottom-[65px] right-3 h-[40px] w-[40px] bg-white border border-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn"
+          className="fixed bottom-[65px] right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn"
           onClick={handleClickMessage_toAdmin}
           onMouseEnter={() => setIsHovered_chatwithAD(true)}
           onMouseLeave={() => setIsHovered_chatwithAD(false)}
@@ -101,7 +80,7 @@ const Button_topback = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 icon-white"
           >
             <path
               strokeLinecap="round"

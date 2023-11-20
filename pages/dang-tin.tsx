@@ -108,9 +108,24 @@ import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
 import { useMyContext } from "@/contexts/MyContext";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 const Dang_tin = () => {
+  //lấy usecontext
+  const {
+    countmessageunread,
+    count_message_unread,
+    keyword_search,
+    setKeywordSearch,
+    handle_setIsLoading,
+    information_User,
+    setInfoUser,
+  } = useMyContext();
   // lấy para trả về từ momo khi thanh toán thành công
+  //lấy data session login bằng google (status: ['loading', 'authenticated', 'unauthenticated'])
+  const { data, status } = useSession<any>();
+
   useEffect(() => {
     const { resultCode } = router.query;
     // console.log("resultCode:", resultCode);
@@ -652,45 +667,57 @@ const Dang_tin = () => {
     address: string;
     role: string;
   };
-  const [datainforUser, setdatainforUser] = useState<any>();
-  // const [err_miss_input, setErr_miss_input] = useState<boolean>(false);
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
-
+  const [datainforUser, setdatainforUser] = useState<any>(information_User);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  // check login, lấy infor current user
   useEffect(() => {
-    const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
+    const checkPermission = async () => {
+      // check token login acc&pass
+      let token: any = localStorage.getItem("token");
+      let parse_token = JSON.parse(token);
+      if (parse_token) {
+        // decoded token
+        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded = jwt.verify(parse_token, jwt_secret);
+          setdatainforUser(decoded);
+          setInfoUser(decoded);
+          setHasPermission(true);
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          setdatainforUser(null);
+          setInfoUser(null);
+          setHasPermission(false);
+          router.push("/account/login");
+        }
+      } else {
+        // check session login google
+        try {
+          const response = await axios.post(`/api/check_permission`);
+          const data = await response.data;
+          if (data.hasPermission) {
+            setHasPermission(true);
+            setdatainforUser(data.session.user);
+          } else {
+            router.push("/account/login");
+          }
+        } catch (error) {
+          console.error("Error checking permission:", error);
+          router.push("/account/login");
+        }
       }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded = jwt.verify(parse_token, jwt_secret);
-        setdatainforUser(decoded);
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        setdatainforUser(null);
-      }
-    } else {
-      router.push("/account/login");
-    }
-  }, []);
+    };
+    checkPermission();
+  }, [router]);
 
   const Dangtin = async () => {
-    const token_req: any = localStorage.getItem("token_req");
+    // const token_req: any = localStorage.getItem("token_req");
+    let token_req: any = `"${
+      datainforUser?.token_gg_encoded
+        ? datainforUser?.token_gg_encoded
+        : localStorage.getItem("token_req")
+    }"`;
     if (typeDanhmuc === "hoctap" && typeDanhmucChitiet == "giaotrinh") {
       if (
         KhoaTruong &&

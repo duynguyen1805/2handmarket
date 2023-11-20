@@ -2,7 +2,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Head from "next/head";
 import router from "next/router";
-import React, { useState, KeyboardEvent } from "react";
+import React, { useState, KeyboardEvent, useEffect } from "react";
 import { API_login } from "../../service/userService";
 import Image from "next/image";
 import left_back from "../../assets/icon/left-arrow.png";
@@ -14,19 +14,23 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMyContext } from "@/contexts/MyContext";
 import Link from "next/link";
+import { GoogleSignInButton } from "@/components/button/authButton";
+import { useSession } from "next-auth/react";
 
 const Login = () => {
-  const [account, setAccount] = useState("");
-  const [password, setPassword] = useState("");
-  const [view_password, setview_password] = useState(true);
   //lấy các biến, hàm trong context ra sử dụng.
   const {
     isLogin,
     setLogin,
+    isLoading,
     handle_setIsLoading,
     information_User,
     setInfoUser,
   } = useMyContext();
+
+  const [account, setAccount] = useState("");
+  const [password, setPassword] = useState("");
+  const [view_password, setview_password] = useState(true);
 
   async function handleClickLogin() {
     if (!account && !password) {
@@ -45,19 +49,6 @@ const Login = () => {
           avatar: data.user.img,
           createdAt: data.user.createdAt,
         });
-
-        const inforUser = {
-          _id: data.user._id,
-          name: data.user.name,
-          account: data.user.account,
-          address: data.user.address,
-          role: data.user.role,
-          avatar: data.user.img,
-          createdAt: data.user.createdAt,
-        };
-
-        // Lưu thông tin người dùng và token vào localStorage hoặc cookie
-        // localStorage.setItem("inforUser", JSON.stringify(inforUser));
         localStorage.setItem("token", JSON.stringify(data.access_token));
         localStorage.setItem("token_req", JSON.stringify(data.token_req));
 
@@ -132,7 +123,7 @@ const Login = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-90px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-90px)] w-[100%] lg:pt-[10px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
         <div>
           <div className="h-[50px] sm:w-[100%] lg:w-[75%] lg:mx-[13%] sm:p-1 md:p-5 border lg:rounded-lg bg-white flex items-center text-lg">
             <div className="h-full w-[40px] flex items-center" onClick={goBack}>
@@ -197,26 +188,32 @@ const Login = () => {
                 >
                   Đăng nhập
                 </button>
-
-                <p
-                  className="font-medium text-base cursor-pointer hover:text-blue-600 hover:underline"
-                  onClick={resetpassword}
-                >
-                  Quên mật khẩu
-                </p>
-                <div className="text-lg font-thin">
-                  Bạn chưa có tài khoản, hãy{" "}
-                  <Link
-                    href="/account/register"
-                    className="text-blue-600 underline"
+                <div className="h-auto w-full flex flex-col items-center justify-center space-y-2">
+                  <p
+                    className="font-medium text-base cursor-pointer hover:text-blue-600 hover:underline"
+                    onClick={resetpassword}
                   >
-                    <p
+                    Quên mật khẩu
+                  </p>
+                  <div className="text-lg font-thin flex space-x-2">
+                    <span>Bạn chưa có tài khoản, hãy </span>
+
+                    <Link
+                      href="/account/register"
                       className="text-blue-600 underline"
-                      onClick={clickRegister}
                     >
-                      Đăng kí tại đây
-                    </p>
-                  </Link>
+                      <p
+                        className="text-blue-600 underline"
+                        onClick={clickRegister}
+                      >
+                        Đăng kí tại đây
+                      </p>
+                    </Link>
+                  </div>
+                  <div className="h-auto w-full flex items-center justify-center space-x-3">
+                    <span className="font-thin">hoặc Đăng nhập bằng</span>
+                    <GoogleSignInButton />
+                  </div>
                 </div>
               </div>
             </div>

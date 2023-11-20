@@ -32,8 +32,26 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 
+import { useSession, signOut } from "next-auth/react";
+import { API_register } from "@/service/userService";
+interface UserData {
+  name: string;
+  email: string;
+  image: string;
+  _id?: string | any;
+  token_gg?: any;
+  id_token?: any;
+  accessToken?: any;
+}
+interface SessionData {
+  user: UserData;
+  expires: any;
+}
+
 const Header = () => {
-  //lấy số lượng order qua usecontext
+  //lấy data session login bằng google (status: ['loading', 'authenticated', 'unauthenticated'])
+  const { data, status } = useSession<SessionData | any>();
+  //lấy usecontext
   const {
     countmessageunread,
     count_message_unread,
@@ -43,6 +61,7 @@ const Header = () => {
     information_User,
     setInfoUser,
   } = useMyContext();
+
   const [datainforUser, setdatainforUser] = useState<any>(null); //thay thế bằng information_User
 
   useEffect(() => {
@@ -82,21 +101,6 @@ const Header = () => {
     }
   }, [information_User]);
 
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //       alert(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
-  //       console.log(`Đây là giá trị lấy từ Cookie: ${token_cookie}`);
-  //     } else {
-  //       alert(`false cookie: ${token_cookie}`);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
-
   useEffect(() => {
     //lấy thông tin người dùng
     const token: any = localStorage.getItem("token");
@@ -123,10 +127,21 @@ const Header = () => {
         setInfoUser(null);
       }
     } else {
-      setdatainforUser(null);
-      setInfoUser(null);
+      // nếu không có token login acc&pass => check có login gg hay không
+      if (data) {
+        // login gg thì đăng ký vào database, mỗi lần login mỗi lần check
+        // if (data !== information_User) {
+        //   hanldeRegister(data);
+        // }
+        // setdatainforUser(data.user);
+        setInfoUser(data.user);
+        console.log("check data: ", data);
+      } else {
+        setdatainforUser(null);
+        setInfoUser(null);
+      }
     }
-  }, []);
+  }, [data]);
 
   //mở option của người dùng
   const [isOpenOption, setOpenOptionUser] = useState(false);
@@ -209,6 +224,7 @@ const Header = () => {
     setOpenOptionUser(!isOpenOption);
   };
   const Logout = async () => {
+    signOut();
     localStorage.clear();
     Cookies.remove("jwt_token");
     count_message_unread(0);
@@ -400,7 +416,11 @@ const Header = () => {
                     <div
                       className="lg:h-[50px] lg:w-[50px] md:h-[40px] md:w-[40px] mr-1 bg-cover bg-no-repeat bg-center rounded-full"
                       style={{
-                        backgroundImage: `url(${information_User?.avatar})`,
+                        backgroundImage: `url(${
+                          information_User.avatar
+                            ? information_User.avatar
+                            : information_User.image
+                        })`,
                       }}
                     ></div>
                     {information_User?.name.slice(
@@ -424,7 +444,7 @@ const Header = () => {
                   </button>
                   {isOpenOption && (
                     <motion.div
-                      className="absolute h-auto w-[200px] left-[-15px] mt-2 flex flex-wrap bg-white border rounded-md shadow-lg z-10"
+                      className="absolute h-auto w-auto min-w-[200px] left-[-15px] mt-2 flex flex-wrap bg-white border rounded-md shadow-lg z-10"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1, transition: { duration: 0.4 } }}
                       exit={{
@@ -432,8 +452,10 @@ const Header = () => {
                       }}
                     >
                       <div className="h-full w-full flex flex-col">
-                        <p className="h-[50px] text-xl flex items-center justify-center cursor-pointer hover:text-blue-500">
-                          SĐT: {information_User?.account}
+                        <p className="h-auto min-h-[50px] text-xl flex justify-center items-center text-center cursor-pointer hover:text-blue-500">
+                          {information_User.account
+                            ? `SĐT: ${information_User.account}`
+                            : `Email: ${information_User.email}`}
                         </p>
                         {information_User?.role === "Admin" && (
                           <div

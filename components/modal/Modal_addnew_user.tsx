@@ -62,14 +62,15 @@ const ModalComponent: React.FC<ModalProps> = ({ isopen, onClose }) => {
   };
   const hanldeRegister = async () => {
     try {
-      const data = await API_register(
-        account,
-        password,
-        name,
-        address,
-        role,
-        img
-      );
+      let build_data = {
+        account: account,
+        password: password,
+        name: name,
+        address: address,
+        role: "Client",
+        img: img,
+      };
+      const data = await API_register(build_data);
       setResponse(data.errCode);
       {
         data.errCode === 0

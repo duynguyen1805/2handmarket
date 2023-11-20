@@ -35,6 +35,7 @@ import Cookies from "js-cookie";
 import icon_more from "../../../assets/icon/more.png";
 import icon_loading from "../../../assets/icon/loading.png";
 import Image from "next/image";
+import axios from "axios";
 
 interface infodetailProps {
   id_user: string;
@@ -48,6 +49,7 @@ const Tin_nhan = ({
   id_receiver,
   name_receiver,
 }: infodetailProps) => {
+  const { information_User } = useMyContext();
   const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [conversationMembers, setConversationMembers] = useState<any[] | null>(
     null
@@ -56,46 +58,82 @@ const Tin_nhan = ({
   const [selectedUserName, setSelectedUserName] = useState(name_receiver);
   const [selectedAvatar, setSelectedAvatar] = useState<any>();
 
-  // const [token_cookie, setToken_cookie] = useState<any>();
   // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
+  //   //lấy thông tin người dùng Đăng nhập
+  //   const token: any = localStorage.getItem("token");
+  //   // const token_cookie: any = Cookies.get("jwt_token");
+  //   const parse_token = JSON.parse(token);
+  //   if (parse_token) {
+  //     let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+  //     if (!jwt_key) {
+  //       throw new Error(
+  //         "JWT_SECRET is not defined in the environment variables."
+  //       );
   //     }
-  //   };
-  //   fetchToken();
+  //     const jwt_secret: Secret = jwt_key;
+  //     try {
+  //       const decoded: any = jwt.verify(parse_token, jwt_secret);
+  //       id_user = decoded._id;
+  //       setdatainforUser_current(decoded);
+  //     } catch (error) {
+  //       console.log("Lỗi decoded token: ", error);
+  //       setdatainforUser_current(null);
+  //       router.push("/account/login");
+  //     }
+  //   } else {
+  //     router.push("/account/login");
+  //   }
   // }, []);
 
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  // check login, lấy infor current user
   useEffect(() => {
-    //lấy thông tin người dùng Đăng nhập
-    const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
+    const checkPermission = async () => {
+      // check token login acc&pass
+      let token: any = localStorage.getItem("token");
+      let parse_token = JSON.parse(token);
+      if (parse_token) {
+        // decoded token
+        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded: any = jwt.verify(parse_token, jwt_secret);
+          id_user = decoded._id;
+          setdatainforUser_current(decoded);
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          setdatainforUser_current(null);
+          router.push("/account/login");
+        }
+      } else {
+        // check session login google
+        try {
+          const response = await axios.post(`/api/check_permission`);
+          const data = await response.data;
+          if (data.hasPermission) {
+            id_user = data.session.user._id;
+            setHasPermission(true);
+            setdatainforUser_current(data.session.user);
+          } else {
+            router.push("/account/login");
+          }
+        } catch (error) {
+          console.error("Error checking permission:", error);
+          router.push("/account/login");
+        }
       }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded: any = jwt.verify(parse_token, jwt_secret);
-        id_user = decoded._id;
-        setdatainforUser_current(decoded);
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        setdatainforUser_current(null);
-        router.push("/account/login");
-      }
-    } else {
-      router.push("/account/login");
-    }
-  }, []);
+    };
+    checkPermission();
+  }, [router]);
+
+  // lấy thông tin người nhận tin
   useEffect(() => {
     const fetch_inforuserbyID = async () => {
-      const token_req: any = localStorage.getItem("token_req");
+      let token_req: any = `"${
+        datainforUser_current?.token_gg_encoded
+          ? datainforUser_current?.token_gg_encoded
+          : localStorage.getItem("token_req")
+      }"`;
       try {
         const response = await API_getUserbyID(id_receiver, token_req);
         setSelectedAvatar(response.User[0].img);
@@ -106,7 +144,7 @@ const Tin_nhan = ({
     if (id_receiver) {
       fetch_inforuserbyID();
     }
-  }, []);
+  }, [hasPermission == true]);
 
   useEffect(() => {
     if (id_user) {
@@ -252,7 +290,7 @@ const Tin_nhan = ({
                           <div
                             className={`${
                               receiver.seen == false ? "font-bold" : "font-thin"
-                            } h-[30px] flex items-center overflow-hidden`}
+                            } h-[30px] inline-block items-center overflow-hidden`}
                           >
                             {receiver.latestMessage != ""
                               ? receiver.latestMessage
@@ -315,7 +353,11 @@ const Tin_nhan = ({
                 <Message
                   id_current_user={id_user}
                   userName_current={datainforUser_current?.name}
-                  avatar_current_user={datainforUser_current?.avatar}
+                  avatar_current_user={
+                    datainforUser_current?.avatar
+                      ? datainforUser_current?.avatar
+                      : datainforUser_current?.image
+                  }
                   id_receiver={selectedUser}
                   userName_receiver={selectedUserName}
                   avatar_receiver={selectedAvatar}

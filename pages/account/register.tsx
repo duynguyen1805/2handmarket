@@ -110,15 +110,15 @@ const Register = () => {
     try {
       const confirmationResult = await result_sendOTP.confirm(otp);
       if (confirmationResult) {
-        let role: string = "Client";
-        const data = await API_register(
-          account,
-          password,
-          name,
-          address,
-          role,
-          img
-        );
+        let build_data = {
+          account: account,
+          password: password,
+          name: name,
+          address: address,
+          role: "Client",
+          img: img,
+        };
+        const data = await API_register(build_data);
         toast.success(data.message);
         router.push("/account/login");
       } else {

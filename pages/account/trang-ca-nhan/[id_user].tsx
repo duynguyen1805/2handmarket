@@ -21,6 +21,7 @@ import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import axios from "axios";
 
 interface infodetailProps {
   id_user: string;
@@ -31,41 +32,49 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   const checkRoleMiddleware = authMiddleware(allowedRoles);
   const { handle_setIsLoading } = useMyContext();
 
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [datainforUser_current, setdatainforUser_current] = useState<any>();
   const [datainforUser, setdatainforUser] = useState<any>();
 
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
+  // check login, lấy infor current user
   useEffect(() => {
-    //lấy thông tin người dùng Đăng nhập
-    const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
+    const checkPermission = async () => {
+      // check token login acc&pass
+      let token: any = localStorage.getItem("token");
+      let parse_token = JSON.parse(token);
+      if (parse_token) {
+        // decoded token
+        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded: any = jwt.verify(parse_token, jwt_secret);
+          setHasPermission(true);
+          setdatainforUser_current(decoded);
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          setHasPermission(false);
+          setdatainforUser_current(null);
+        }
+      } else {
+        // check session login google
+        try {
+          const response = await axios.post(`/api/check_permission`);
+          const data = await response.data;
+          if (data.hasPermission) {
+            setHasPermission(true);
+            setdatainforUser_current(data.session.user);
+          } else {
+            setHasPermission(false);
+          }
+        } catch (error) {
+          console.error("Error checking permission:", error);
+          setHasPermission(false);
+        }
       }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded = jwt.verify(parse_token, jwt_secret);
-        setdatainforUser_current(decoded);
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        setdatainforUser_current(null);
-      }
-    }
-  }, []);
+    };
+    checkPermission();
+  }, [router]);
+
   const inputDate = new Date(datainforUser?.createdAt);
   const day = inputDate.getUTCDate();
   const month = inputDate.getUTCMonth() + 1;
@@ -77,6 +86,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
   useEffect(() => {
     fetchdata_tindang_user();
   }, []);
+  // lấy tin đăng của 1 user theo id
   const fetchdata_tindang_user = async () => {
     try {
       const response = await API_getTindangbyIduser(id_user);
@@ -175,11 +185,14 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                   }}
                 ></div>
               </div>
-              <div className="h-full lg:w-[802px] sm:w-full">
-                <div className="h-2/3 w-full">
+              <div className="h-full lg:w-[802px] sm:w-full flex flex-col items-center justify-center space-y-3">
+                <div className="h-auto min-h-2/3 w-full">
                   {datainforUser?.name ? (
                     <div className="h-auto">
-                      {datainforUser?.name} - {datainforUser?.account}
+                      {datainforUser?.name} -{" "}
+                      {datainforUser?.account
+                        ? datainforUser?.account
+                        : datainforUser?.email}
                     </div>
                   ) : (
                     <div className="h-auto">Loading...</div>
@@ -197,10 +210,12 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                     <div className="h-auto">Loading...</div>
                   )}
                 </div>
-                <div className="h-1/3 w-full flex items-center">
+                <div className="h-auto min-h-1/3 w-full flex items-center">
                   {datainforUser?._id === datainforUser_current?._id && (
                     <div
-                      className="w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80"
+                      className={`${
+                        datainforUser?.email && `hidden`
+                      } w-auto bg-mauxanhtroi text-white flex items-center justify-center px-2 py-2 rounded-md cursor-pointer hover:opacity-80`}
                       // onClick={() =>
                       //   router.push(`/account/${datainforUser?._id}`)
                       // }

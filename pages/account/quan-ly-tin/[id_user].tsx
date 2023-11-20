@@ -33,6 +33,7 @@ const phoneUtil = PhoneNumberUtil.getInstance();
 import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Modal_chinhsuatindang from "@/components/modal/Modal_chinhsuatindang";
+import axios from "axios";
 
 interface infodetailProps {
   id_user: string;
@@ -42,30 +43,50 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any[] | null>(null);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
-  const { handle_setIsLoading } = useMyContext();
+  const { handle_setIsLoading, setInfoUser } = useMyContext();
 
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  // check login, lấy infor current user
   useEffect(() => {
-    const token: any = localStorage.getItem("token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
+    const checkPermission = async () => {
+      // check token login acc&pass
+      let token: any = localStorage.getItem("token");
+      let parse_token = JSON.parse(token);
+      if (parse_token) {
+        // decoded token
+        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded: any = jwt.verify(parse_token, jwt_secret);
+          // gán id_user = id current user
+          id_user = decoded._id;
+          setInfoUser(decoded);
+          setHasPermission(true);
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          setInfoUser(null);
+          setHasPermission(false);
+          router.push("/account/login");
+        }
+      } else {
+        // check session login google
+        try {
+          const response = await axios.post(`/api/check_permission`);
+          const data = await response.data;
+          if (data.hasPermission) {
+            id_user = data.session.user._id;
+            setHasPermission(true);
+          } else {
+            router.push("/account/login");
+          }
+        } catch (error) {
+          console.error("Error checking permission:", error);
+          router.push("/account/login");
+        }
       }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded: any = jwt.verify(parse_token, jwt_secret);
-        id_user = decoded._id;
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        router.push("/account/login");
-      }
-    } else {
-      router.push("/account/login");
-    }
-  }, []);
+    };
+    checkPermission();
+  }, [router]);
 
   const [itemNangcap, setItemNangcap] = useState<any>();
   useEffect(() => {

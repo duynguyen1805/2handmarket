@@ -41,23 +41,12 @@ export async function Search_tindang_daduyet(
   }
 }
 
-export async function API_register(
-  account: string,
-  password: string,
-  name: string,
-  address: string,
-  role: string,
-  img?: any
-) {
+export async function API_register(build_data: object) {
   try {
-    const response = await axios.post(`${BACKEND_URL}/register-user`, {
-      account,
-      password,
-      name,
-      address,
-      role,
-      img,
-    });
+    const response = await axios.post(
+      `${BACKEND_URL}/register-user`,
+      build_data
+    );
     const message = await response.data;
     return message;
   } catch (error) {

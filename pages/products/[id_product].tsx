@@ -52,6 +52,8 @@ import { useMyContext } from "@/contexts/MyContext";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface CodeProductProps {
   id_product: string;
@@ -59,7 +61,7 @@ interface CodeProductProps {
 }
 
 const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
-  const { isLoading, handle_setIsLoading } = useMyContext();
+  const { isLoading, handle_setIsLoading, information_User } = useMyContext();
 
   const [item, setItem] = useState<any>();
   const [img_arr, setImg_arr] = useState<any>([]);
@@ -124,58 +126,70 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
     }
   };
 
-  const [datainforUser_current, setdatainforUser_current] = useState<any>();
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
-
+  const [datainforUser_current, setdatainforUser_current] =
+    useState<any>(information_User);
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  // check đăng nhập
   useEffect(() => {
-    //lấy thông tin người dùng Đăng nhập
-    const token: any = localStorage.getItem("token");
-    // const token_cookie: any = Cookies.get("jwt_token");
-    const parse_token = JSON.parse(token);
-    if (parse_token) {
-      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-      if (!jwt_key) {
-        throw new Error(
-          "JWT_SECRET is not defined in the environment variables."
-        );
+    const checkPermission = async () => {
+      // check token login acc&pass
+      let token: any = localStorage.getItem("token");
+      let parse_token = JSON.parse(token);
+      if (parse_token) {
+        // decoded token
+        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+        const jwt_secret: Secret = jwt_key;
+        try {
+          const decoded: any = jwt.verify(parse_token, jwt_secret);
+          setHasPermission(true);
+          setdatainforUser_current(decoded);
+        } catch (error) {
+          console.log("Lỗi decoded token: ", error);
+          setHasPermission(false);
+          setdatainforUser_current(null);
+        }
+      } else {
+        // check session login google
+        try {
+          const response = await axios.post(`/api/check_permission`);
+          const data = await response.data;
+          if (data.hasPermission) {
+            setHasPermission(true);
+            setdatainforUser_current(data.session.user);
+          } else {
+            setHasPermission(false);
+          }
+        } catch (error) {
+          console.error("Error checking permission:", error);
+          setHasPermission(false);
+        }
       }
-      const jwt_secret: Secret = jwt_key;
-      try {
-        const decoded = jwt.verify(parse_token, jwt_secret);
-        setdatainforUser_current(decoded);
-      } catch (error) {
-        console.log("Lỗi decoded token: ", error);
-        setdatainforUser_current(null);
-      }
-    }
-  }, []);
+    };
+    checkPermission();
+  }, [router]);
 
   const handleClickMessage = async () => {
+    console.log("check datainforUser_current: ", datainforUser_current);
     const query: any = {
       current_user_name: datainforUser_current?.name,
       id_receiver: infoClient._id,
       name_receiver: infoClient.name,
     };
-
-    try {
-      handle_setIsLoading(true);
-      await router.push({
-        pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
-        query,
-      });
-      handle_setIsLoading(false);
-    } catch (error) {
-      console.error("Error navigating:", error);
-      handle_setIsLoading(false);
+    if (hasPermission == false) {
+      // toast yêu cầu login
+      toast.error("Vui lòng đăng nhập để thực hiện chức năng này!");
+    } else {
+      try {
+        handle_setIsLoading(true);
+        await router.push({
+          pathname: `/account/tin-nhan/${datainforUser_current?._id}`,
+          query,
+        });
+        handle_setIsLoading(false);
+      } catch (error) {
+        console.error("Error navigating:", error);
+        handle_setIsLoading(false);
+      }
     }
   };
 
@@ -263,27 +277,24 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                       </div>
                       <div
                         className="w-auto text-center text-mauxanhtroi text-lg py-2 px-3 border border-mauxanhtroi rounded-lg hover:bg-mauxanhtroi hover:text-white cursor-pointer"
-                        // onClick={() =>
-                        //   router.push(
-                        //     `/account/trang-ca-nhan/${infoClient?._id}`
-                        //   )
-                        // }
                         onClick={() => handle_push_trangcanhan(infoClient?._id)}
                       >
                         Xem trang
                       </div>
                     </div>
                   </div>
-                  <div className="h-auto w-full p-2">
-                    <div className="text-xl font-thin flex items-center space-x-2">
-                      <Image
-                        src={icon_diachi}
-                        alt="diachi"
-                        className="h-[30px] w-[30px] object-contain"
-                      />
-                      <p>{infoClient?.address}</p>
+                  {infoClient?.address && (
+                    <div className="h-auto w-full p-2">
+                      <div className="text-xl font-thin flex items-center space-x-2">
+                        <Image
+                          src={icon_diachi}
+                          alt="diachi"
+                          className="h-[30px] w-[30px] object-contain"
+                        />
+                        <p>{infoClient?.address}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
                   <div className="h-auto w-full px-1 py-2 flex item-center">
                     <div
                       onClick={() => setopenNumber(!openNumber)}

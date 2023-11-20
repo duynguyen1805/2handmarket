@@ -15,7 +15,7 @@ interface MyContextValue {
   // trạng thái loading router push
   isLoading: boolean;
   handle_setIsLoading: any;
-  // chưa dùng tới
+  // lưu thông tin người dùng
   information_User: any;
   setInfoUser: (information_User: any) => void;
 }
@@ -63,8 +63,8 @@ export const MyContextProvider: React.FC<MyContextProviderProps> = ({
     setIsLoading(isLoading);
   };
 
-  //chưa dùng tới
-  const [information_User, setinformation_User] = useState<any>();
+  //lưu infor user
+  const [information_User, setinformation_User] = useState<any>(null);
   const setInfoUser = (information_User: any) => {
     setinformation_User(information_User);
   };
