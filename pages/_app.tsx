@@ -8,7 +8,7 @@ import store from "../store/store";
 import Nav_mobile from "@/components/Nav_mobile";
 import Loading_routerpush from "@/components/loading/Loading_routerpush";
 import Button_topback from "@/components/button/Button_topback";
-import { NextAuthProvider } from "./providers";
+import NextAuthProvider from "./providers";
 
 // export default function App({ Component, pageProps }: AppProps) {
 //   return (
