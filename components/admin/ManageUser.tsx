@@ -1,4 +1,8 @@
-import { API_deleteUser, API_getAllUser } from "@/service/userService";
+import {
+  API_deleteUser,
+  API_getAllUser,
+  API_search_user,
+} from "@/service/userService";
 import React, { useEffect, useState } from "react";
 // toast thông báo
 import { ToastContainer, toast } from "react-toastify";
@@ -57,15 +61,51 @@ const ManageUser = () => {
     }
   };
 
+  const [value_change, setvalue_change] = useState<string>("");
+  const handleSearch = async () => {
+    let token_req: any = localStorage.getItem("token_req");
+    try {
+      const response = await API_search_user(value_change, token_req);
+      setUser(response.resultSearch);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <>
       <div className="h-auto w-full">
-        <button
-          className="sm:hidden md:block h-[50px] w-[150px] my-3 bg-mauxanhtroi text-white rounded-lg hover:opacity-80 cursor-pointer"
-          onClick={toggleAddnew}
-        >
-          Tạo người dùng
-        </button>
+        <div className="md:h-[50px] h-auto w-full mb-2 md:flex place-content-between ">
+          <button
+            className="sm:hidden md:block h-[50px] w-[150px] bg-mauxanhtroi text-white rounded-lg hover:opacity-80 cursor-pointer"
+            onClick={toggleAddnew}
+          >
+            Tạo người dùng
+          </button>
+          <div className="h-auto w-[500px] flex items-center">
+            <input
+              type="text"
+              value={value_change}
+              className="md:h-full h-[50px] w-full sm:px-3 md:px-1 text-lg border-l border-y border-gray-500 rounded-l-lg outline-none"
+              placeholder="Tìm kiếm theo Tên, số điện thoại, email"
+              onChange={(e) => setvalue_change(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <button
+              disabled={value_change == ""}
+              className="h-full w-[60px] border-r border-y border-gray-500 rounded-r-lg bg-gray-300"
+              onClick={handleSearch}
+            >
+              Tìm
+            </button>
+          </div>
+        </div>
+
         <table className="sm:hidden md:block border-collapse h-[40px] w-full table-auto">
           <thead className="bg-gray-100 w-[100%]">
             <tr>

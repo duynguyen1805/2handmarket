@@ -368,49 +368,6 @@ export async function API_deleteTindang(type: string, id: any, token_req: any) {
   }
 }
 
-// lấy typeSP (name: Phân bón, type: phanbon, content: noidung đầu trang mỗi loại sản phẩm)
-export async function API_getTypeSP_content(type: string) {
-  try {
-    const response = await axios.post(
-      // "${BACKEND_URL}/get-type-product",
-      `${BACKEND_URL}/get-type-product`,
-      { type }
-    );
-    const data = await response.data.typeProduct;
-    return data; // [{}]
-  } catch (error) {
-    console.error(error);
-    throw new Error("Lỗi khi call API_getTypeSP_content");
-  }
-}
-
-export async function API_Order(
-  id_User: string,
-  name_User: string,
-  account_User: string,
-  address_User: string,
-  cartItems: any,
-  total: number,
-  formatedDate: string
-) {
-  try {
-    const response = await axios.post(`${BACKEND_URL}/create-order`, {
-      id_User: id_User,
-      name_User: name_User,
-      account_User: account_User,
-      address_User: address_User,
-      cartItems: cartItems,
-      price_total: total,
-      time_order: formatedDate,
-    });
-    const data = await response.data;
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Thêm sản phẩm không thành công.");
-  }
-}
-
 export async function API_getAllcollection_quangcao(pagehientai: number) {
   try {
     const response = await axios.post(
@@ -560,6 +517,27 @@ export async function API_Capnhat_trangthai_thanhtoan(
   } catch (error) {
     console.error(error);
     throw new Error("Lỗi khi call API_Capnhat_trangthai_thanhtoan");
+  }
+}
+
+export async function API_search_user(value: string, token_req: any) {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/admin/get-infor-user`,
+      {
+        value: value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token_req}`,
+        },
+      }
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Lỗi khi call API_search_user");
   }
 }
 
