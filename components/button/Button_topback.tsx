@@ -39,10 +39,17 @@ const Button_topback = () => {
     }
   };
 
+  const [pathname, set_pathname] = useState<string>("");
+  useEffect(() => {
+    set_pathname(window.location.pathname);
+  }, [router]);
+
   return (
-    <>
+    <div className={`${pathname.includes("tin-nhan") && "hidden"}`}>
       <div
-        className="fixed bottom-5 right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn"
+        className={`${
+          pathname.includes("/account/tin-nhan/") == true && "hidden"
+        } fixed bottom-5 right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer animate__animated animate__fadeIn`}
         onClick={() => handle_scroll_top()}
         onMouseEnter={() => setIsHovered_scrolltotop(true)}
         onMouseLeave={() => setIsHovered_scrolltotop(false)}
@@ -95,7 +102,7 @@ const Button_topback = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

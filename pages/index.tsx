@@ -330,26 +330,24 @@ const Home = () => {
           <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
             Tin đăng nổi bật
           </p>
-          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
-            {errcode == null && (
-              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                <Image
-                  src={icon_loading}
-                  alt=""
-                  className="h-[45px] w-[45px] loading"
-                />
-                <p className="">
-                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                </p>
-              </div>
-            )}
-            {errcode == 0 && tindang_qc && tindang_qc.length == 0 && (
-              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                <p className="">
-                  Hiện tại không có tin đăng nào gợi ý cho bạn !
-                </p>
-              </div>
-            )}
+          {errcode == null && (
+            <div className="h-[50px] w-full text-2xl flex flex-col items-center justify-center space-x-2">
+              <Image
+                src={icon_loading}
+                alt=""
+                className="h-[45px] w-[45px] loading"
+              />
+              <p className="">
+                Loading... Vui lòng chờ Server phản hồi sau giây lát.
+              </p>
+            </div>
+          )}
+          {errcode == 0 && tindang_qc && tindang_qc.length == 0 && (
+            <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+              <p className="">Hiện tại không có tin đăng nào gợi ý cho bạn !</p>
+            </div>
+          )}
+          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
             {tindang_qc &&
               tindang_qc.map((item: any, index: number) => {
                 return (
@@ -385,23 +383,23 @@ const Home = () => {
       </div>
       {/* Tin đăng gần đây - 2060px cho 6x6 item dọc, small 4220px cho 3x12 item*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
-        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
+        <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full max-w-[1440px] p-2">
           <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
             Tin đăng gần đây
           </p>
-          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:flex lg:flex-wrap items-center justify-center gap-[10px]">
-            {tindang_ganday && tindang_ganday.length == 0 && (
-              <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                <Image
-                  src={icon_loading}
-                  alt=""
-                  className="h-[45px] w-[45px] loading"
-                />
-                <p className="">
-                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                </p>
-              </div>
-            )}
+          {tindang_ganday && tindang_ganday.length == 0 && (
+            <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+              <Image
+                src={icon_loading}
+                alt=""
+                className="h-[45px] w-[45px] loading"
+              />
+              <p className="">
+                Loading... Vui lòng chờ Server phản hồi sau giây lát.
+              </p>
+            </div>
+          )}
+          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
             {tindang_ganday &&
               tindang_ganday.map((item: any, index: number) => {
                 return (

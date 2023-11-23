@@ -20,25 +20,207 @@ declare module "jspdf" {
   }
 }
 
+import item_danhmuc, {
+  danhmuc,
+  sub_danhmuc,
+} from "../obj_data_raw/Danhmuc_raw";
+
 const Quangcao = () => {
+  const option_ALL = {
+    key: 8,
+    label: "Tất cả",
+    type: "ALL",
+    link: "",
+    sub_danhmuc: [],
+  };
+  // item_danhmuc.unshift(option_ALL);
+  if (!item_danhmuc.some((item) => item.label === option_ALL.label)) {
+    // item_danhmuc.unshift(option_ALL);
+    item_danhmuc.push(option_ALL);
+  }
   const [lichsu_qc, setLichsu_qc] = useState<any[]>([]);
   const [datatime, setDatatime] = useState<any>();
   const [price_total, setPriceTotal] = useState<number>(0);
   const [datatime_format, setDatatime_format] = useState<any>();
 
-  // useEffect(() => {
-  //   const fetchdata = async () => {
-  //     let token_req: any = localStorage.getItem("token_req");
-  //     try {
-  //       const response = await API_getLichsu_qc_tindang(token_req);
-  //       console.log("Check response: ", response);
-  //       setLichsu_qc(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchdata();
-  // }, []);
+  const [keyDanhmuc, setkeyDanhmuc] = useState<number>(0);
+  const chitiet_danhmuc: sub_danhmuc[] =
+    keyDanhmuc >= 0 ? item_danhmuc[keyDanhmuc].sub_danhmuc : [];
+  //item_danhmuc[keyDanhmuc].sub_danhmuc;
+  const [openDanhmuc, setopenDanhmuc] = useState<boolean>(false);
+  const [openDanhmucChitiet, setopenDanhmucChitiet] = useState<boolean>(false);
+  const [typeDanhmuc, settypeDanhmuc] = useState("");
+  const [titleDanhmuc, settitleDanhmuc] = useState("");
+  const [typeDanhmucChitiet, settypeDanhmucChitiet] = useState("");
+  const [titleDanhmucChitiet, settitleDanhmucChitiet] = useState("");
+
+  const handle_open_select = (num: number) => {
+    if (num == 1) {
+      setopenDanhmuc(!openDanhmuc);
+      setopenDanhmucChitiet(false);
+    }
+    if (num == 2) {
+      setopenDanhmucChitiet(!openDanhmucChitiet);
+      setopenDanhmuc(false);
+    }
+  };
+
+  const setSelectDanhmuc = (item: danhmuc) => {
+    settitleDanhmuc(item.label);
+    settypeDanhmuc(item.type);
+    setkeyDanhmuc(item.key);
+    setopenDanhmuc(false);
+    //set lại chi tiết danh muc
+    settitleDanhmucChitiet("");
+    settypeDanhmucChitiet("");
+  };
+  const setSelectDanhmucChitiet = (item: sub_danhmuc) => {
+    settitleDanhmucChitiet(item.label);
+    settypeDanhmucChitiet(item.type);
+    setopenDanhmucChitiet(false);
+  };
+
+  const [filter_data, setFilterData] = useState<any[]>([]);
+
+  useEffect(() => {
+    const validTypes_dohoctap = ["giaotrinh", "sachthamkhao", "other_hoctap"];
+    const validTypes_dodientu = [
+      "dienthoai",
+      "laptop",
+      "maytinhbang",
+      "desktop",
+      "thietbideothongminh",
+      "mayanh",
+      "phukien",
+      "linhkien",
+    ];
+    const validTypes_phuongtien = [
+      "oto",
+      "xemay",
+      "xetai",
+      "xedien",
+      "xedap",
+      "phutung",
+    ];
+    const validTypes_donoithat = [
+      "banghe",
+      "tuke",
+      "giuong",
+      "bep",
+      "dungcubep",
+      "quat",
+      "den",
+      "other_donoithat",
+    ];
+    const validTypes_docanhan = [
+      "quanao",
+      "dongho",
+      "giaydep",
+      "nuochoa",
+      "balo",
+      "other_docanhan",
+    ];
+    const validTypes_dogiaitri = [
+      "nhaccu",
+      "sach",
+      "dothethao",
+      "thietbichoigame",
+      "other_dogiaitri",
+    ];
+    const validTypes_thucung = ["cho", "meo", "ca", "other_thucung"];
+    const validTypes_dienlanh = ["tulanh", "maylanh", "maygiat"];
+
+    let new_filter_data = [];
+    if (typeDanhmuc == "ALL" || typeDanhmuc == "") {
+      new_filter_data = lichsu_qc;
+    } else if (typeDanhmuc == "hoctap") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_dohoctap.includes(item.type)
+        );
+      } else if (validTypes_dohoctap.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "phuongtien") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_phuongtien.includes(item.type)
+        );
+      } else if (validTypes_phuongtien.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "dodientu") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_dodientu.includes(item.type)
+        );
+      } else if (validTypes_dodientu.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "donoithat") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_donoithat.includes(item.type)
+        );
+      } else if (validTypes_donoithat.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "dienlanh") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_dienlanh.includes(item.type)
+        );
+      } else if (validTypes_dienlanh.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "dodungcanhan") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_docanhan.includes(item.type)
+        );
+      } else if (validTypes_docanhan.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "dogiaitri") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_dogiaitri.includes(item.type)
+        );
+      } else if (validTypes_dogiaitri.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    } else if (typeDanhmuc == "thucung") {
+      if (typeDanhmucChitiet == "") {
+        new_filter_data = lichsu_qc.filter((item: any) =>
+          validTypes_thucung.includes(item.type)
+        );
+      } else if (validTypes_thucung.includes(typeDanhmucChitiet)) {
+        new_filter_data = lichsu_qc.filter(
+          (item: any) => item.type === typeDanhmucChitiet
+        );
+      }
+    }
+
+    // tổng tiền
+    const newTotal = new_filter_data.length * 10000;
+    setPriceTotal(newTotal);
+
+    setFilterData(new_filter_data);
+  }, [typeDanhmuc, typeDanhmucChitiet, lichsu_qc]);
 
   const handleGetTime = async (date: any) => {
     setvalue_change("");
@@ -107,7 +289,7 @@ const Quangcao = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && value_change !== "") {
       handleSearch();
     }
   };
@@ -147,35 +329,91 @@ const Quangcao = () => {
   return (
     <>
       <div className="h-auto w-full">
-        <div className="md:h-[50px] h-auto w-full mb-2 md:flex">
-          <DatePicker
-            locale="vi"
-            selected={datatime}
-            showMonthYearPicker
-            dateFormat="MM/yyyy"
-            className="h-[50px] w-full md:w-[250px] py-2 bg-gray-100 outline-none border-gray-300 border-2 rounded-md text-center text-xl"
-            placeholderText="Tháng Năm"
-            onChange={(date: Date) => handleGetTime(date)}
-          ></DatePicker>
-          <div className="h-auto w-full flex items-center">
-            <input
-              type="text"
-              value={value_change}
-              className="md:h-full h-[50px] w-full sm:px-3 md:px-1 text-lg border-l border-y border-gray-500 rounded-l-lg outline-none"
-              placeholder="Tìm kiếm theo Tiêu đề, người đăng"
-              onChange={(e) => setvalue_change(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <button
-              disabled={value_change == ""}
-              className="h-full w-[60px] border-r border-y border-gray-500 rounded-r-lg bg-gray-300"
-              onClick={handleSearch}
-            >
-              Tìm
-            </button>
+        <div className="md:h-[70px] h-auto w-full mb-2 md:flex">
+          <div className="h-full w-1/3 flex items-center">
+            <DatePicker
+              locale="vi"
+              selected={datatime}
+              showMonthYearPicker
+              dateFormat="MM/yyyy"
+              className="h-[50px] w-auto md:w-[200px] py-2 mr-4 mt-[27px] bg-gray-100 outline-none border-gray-300 border-2 rounded-md text-center text-xl"
+              placeholderText="Tháng Năm"
+              onChange={(date: Date) => handleGetTime(date)}
+            ></DatePicker>
+            <div className="relative h-full w-full">
+              <span className="pl-1">Danh mục</span>
+              <button
+                className="h-[50px] w-[150px] border-2 border-gray-300 rounded-md bg-gray-100 flex items-center justify-center text-center"
+                onClick={() => handle_open_select(1)}
+              >
+                {titleDanhmuc}
+              </button>
+              {openDanhmuc && (
+                <div className="absolute z-20 h-auto w-[150px] mt-1 bg-white border border-gray-400 rounded-sm shadow-lg">
+                  {item_danhmuc &&
+                    item_danhmuc.map((item: danhmuc) => {
+                      return (
+                        <div
+                          key={item.key}
+                          className="h-[40px] w-full hover:bg-gray-200 flex items-center px-2 cursor-pointer"
+                          onClick={() => setSelectDanhmuc(item)}
+                        >
+                          {item.label}
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+            <div className="relative h-full w-full">
+              <span className="pl-1">Danh mục chi tiết</span>
+              <button
+                disabled={typeDanhmuc == "" || typeDanhmuc == "ALL"}
+                className="h-[50px] w-[150px] border-2 border-gray-300 rounded-md bg-gray-100 flex items-center justify-center text-center"
+                onClick={() => handle_open_select(2)}
+              >
+                {titleDanhmucChitiet}
+              </button>
+              {openDanhmucChitiet && (
+                <div className="absolute z-20 h-auto w-[150px] mt-1 bg-white border border-gray-400 rounded-sm shadow-lg">
+                  {chitiet_danhmuc &&
+                    chitiet_danhmuc.map((item: sub_danhmuc) => {
+                      return (
+                        <div
+                          key={item.key}
+                          className="h-auto min-h-[40px] w-full hover:bg-gray-200 flex items-center px-2 cursor-pointer"
+                          onClick={() => setSelectDanhmucChitiet(item)}
+                        >
+                          {item.label}
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="h-auto w-1/3">
+            <span className="pl-1">Tìm kiếm</span>
+            <div className="flex items-center">
+              <input
+                type="text"
+                value={value_change}
+                className="md:h-[50px] w-full sm:px-3 md:px-1  text-lg border-l border-y border-gray-500 rounded-l-lg outline-none"
+                placeholder="Tìm kiếm theo Tiêu đề, người đăng"
+                onChange={(e) => setvalue_change(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                disabled={value_change == ""}
+                className="h-[50px] w-[60px] border-r border-y border-gray-500 rounded-r-lg bg-gray-300"
+                onClick={handleSearch}
+              >
+                Tìm
+              </button>
+            </div>
           </div>
 
-          <div className="h-[50px] w-full py-2 text-2xl flex items-center justify-end space-x-2">
+          <div className="h-[50px] w-1/3 py-2 mt-[22px] text-2xl flex items-center justify-end space-x-2">
             <button
               className="bg-gray-200 px-2 py-1 text-lg hover:bg-gray-300 rounded-md"
               onClick={handleDownloadPDF}
@@ -209,13 +447,13 @@ const Quangcao = () => {
                 Ngày kết thúc
               </th>
               <th className="py-2 w-[6%] text-xl border border-black">
-                Đơn giá
+                Phí QC
               </th>
             </tr>
           </thead>
           <tbody>
-            {lichsu_qc &&
-              lichsu_qc.map((item: any, index: number) => {
+            {filter_data &&
+              filter_data.map((item: any, index: number) => {
                 return (
                   <tr key={index}>
                     <td className="py-2 pl-2 border border-black">
@@ -321,7 +559,7 @@ const Quangcao = () => {
                 Ngày kết thúc
               </th>
               <th className="py-2 w-[6%] text-xl border border-black">
-                Đơn giá
+                Phí QC
               </th>
             </tr>
           </thead>
