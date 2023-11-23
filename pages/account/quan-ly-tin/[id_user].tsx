@@ -34,6 +34,7 @@ import jwt from "jsonwebtoken";
 import { sign, verify, Secret } from "jsonwebtoken";
 import Modal_chinhsuatindang from "@/components/modal/Modal_chinhsuatindang";
 import axios from "axios";
+import Link from "next/link";
 
 interface infodetailProps {
   id_user: string;
@@ -356,15 +357,21 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-80px)] w-full bg-gray-100 lg:pt-[0px] md:pt-[0px] sm:pt-[50px] flex flex-col place-content-between">
+      <div className="h-auto sm:min-h-[calc(100vh-50px)] md:min-h-[calc(100vh-125px)] lg:min-h-[calc(100vh-80px)] w-full bg-gray-100 sm:pb-[60px] md:pb-0 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-1">
             <div className="h-full lg:w-[960px] sm:w-full bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Quản lý tin
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Quản lý tin</p>
+              </div>
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-2">
@@ -748,41 +755,48 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                 {filteredList &&
                   filteredList.length !== 0 &&
                   filteredList.map((item: any, index: number) => {
-                    //handle thời gian đã đăng
+                    const originalDate = new Date(item.updatedAt);
+                    const day = originalDate.getDate();
+                    const month = originalDate.getMonth() + 1;
+                    const year = originalDate.getFullYear();
+                    const formattedDate_tindang_doiduyet = `${
+                      day < 10 ? "0" : ""
+                    }${day}-${month < 10 ? "0" : ""}${month}-${year}`;
+
                     function tinhthoigiandadang(time: Date): string {
                       const timehientai: Date = new Date();
                       const ngaytao: Date = new Date(time);
                       const thoigiandadang: number =
                         timehientai.getTime() - ngaytao.getTime();
 
-                      if (thoigiandadang < 60000) {
-                        // Dưới 1 phút
-                        return `${Math.floor(
-                          thoigiandadang / 1000
-                        )} giây trước`;
-                      } else if (thoigiandadang < 3600000) {
-                        // 1 giờ = 3600000 milli giây
+                      // Tính thời gian còn lại (30 ngày - thoigiandadang)
+                      const thoigianconlai: number =
+                        30 * 24 * 60 * 60 * 1000 - thoigiandadang;
+
+                      if (thoigianconlai <= 0) {
+                        // Tin đã tồn tại trên 30 ngày
+                        return "Hết hạn";
+                      } else if (thoigianconlai < 60000) {
+                        // Dưới 1 phút còn lại
+                        return `${Math.floor(thoigianconlai / 1000)} giây`;
+                      } else if (thoigianconlai < 3600000) {
+                        // Dưới 1 giờ còn lại
                         const minutes: number = Math.floor(
-                          thoigiandadang / 60000
-                        ); // 1 phút = 60000 milli giây
-                        return `${minutes} phút trước`;
-                      } else if (thoigiandadang < 86400000) {
-                        // 1 ngày = 86400000 milli giây
+                          thoigianconlai / 60000
+                        );
+                        return `${minutes} phút`;
+                      } else if (thoigianconlai < 86400000) {
+                        // Dưới 1 ngày còn lại
                         const hours: number = Math.floor(
-                          thoigiandadang / 3600000
-                        ); // 1 giờ = 3600000 milli giây
-                        return `${hours} giờ trước`;
-                      } else if (thoigiandadang < 604800000) {
-                        // 1 tuần = 604800000 milli giây
-                        const days: number = Math.floor(
-                          thoigiandadang / 86400000
-                        ); // 1 ngày = 86400000 milli giây
-                        return `${days} ngày trước`;
+                          thoigianconlai / 3600000
+                        );
+                        return `${hours} giờ`;
                       } else {
-                        const weeks: number = Math.floor(
-                          thoigiandadang / 604800000
-                        ); // 1 tuần = 604800000 milli giây
-                        return `${weeks} tuần trước`;
+                        // Trên 1 ngày còn lại
+                        const days: number = Math.floor(
+                          thoigianconlai / 86400000
+                        );
+                        return `${days} ngày`;
                       }
                     }
                     let time: any =
@@ -804,7 +818,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                           y: -50,
                           transition: { duration: 0.3 },
                         }}
-                        className="h-[140px] w-full p-1 mt-3 flex space-x-2 border border-gray-400 shadow-md rounded-md cursor-pointer overflow-auto"
+                        className="h-[142px] w-full p-1 mt-3 flex space-x-2 border border-gray-400 shadow-md rounded-md cursor-pointer overflow-auto"
                       >
                         <div
                           className="h-full w-[100px] max-w-[100px] flex justify-center"
@@ -930,7 +944,17 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                                   {item.price.toLocaleString("vi-VN")} đ
                                 </p>
                                 <p className="h-[35px] w-full">
-                                  {thoigiandadang}
+                                  {isOpen !== 1 && (
+                                    <p className="h-[30px] w-full">
+                                      Thời gian còn lại: {thoigiandadang}
+                                    </p>
+                                  )}
+                                  {isOpen == 1 && (
+                                    <p className="h-[30px] w-full">
+                                      Ngày đăng:{" "}
+                                      {formattedDate_tindang_doiduyet}
+                                    </p>
+                                  )}
                                 </p>
                               </>
                             )}

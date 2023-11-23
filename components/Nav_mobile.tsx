@@ -15,27 +15,76 @@ import { sign, verify, Secret } from "jsonwebtoken";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { useMyContext } from "@/contexts/MyContext";
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  Timestamp,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+  limit,
+} from "firebase/firestore";
+import { db } from "../firebase.config";
 
 const Nav_mobile = () => {
   const [datainforUser, setdatainforUser] = useState<any>(null);
   const [isOpenOption, setOpenOptionUser] = useState(false);
   const [href_hientai, sethref_hientai] = useState<any>(null);
-  const { isLogin, setLogin, information_User, setInfoUser } = useMyContext();
+  const {
+    isLogin,
+    setLogin,
+    information_User,
+    setInfoUser,
+    countmessageunread,
+    count_message_unread,
+  } = useMyContext();
 
   useEffect(() => {
     sethref_hientai(router.pathname);
   });
 
-  // const [token_cookie, setToken_cookie] = useState<any>();
-  // useEffect(() => {
-  //   const fetchToken = async () => {
-  //     const token_cookie = Cookies.get("jwt_token");
-  //     if (token_cookie) {
-  //       setToken_cookie(token_cookie);
-  //     }
-  //   };
-  //   fetchToken();
-  // }, []);
+  // lấy số lượng tin nhắn chưa đọc
+  useEffect(() => {
+    if (information_User?._id) {
+      const listUserChatCollectionRef = collection(
+        db,
+        "list_user_chat",
+        information_User?._id,
+        "list_chatting"
+      );
+      const Listchat_Query = query(
+        listUserChatCollectionRef,
+        orderBy("timestamp", "desc")
+      );
+      const unsubscribe = onSnapshot(Listchat_Query, async (snapshot) => {
+        const listchat: any = [];
+        // Mảng chứa tất cả các promises của get_latestMessage. do snapshot.forEach có thể hoàn thành trước khi lấy latestMsg
+        snapshot.forEach((doc) => {
+          const list_chat = doc.data();
+          listchat.push(list_chat);
+        });
+        // console.log("check listchat từ header: ", listchat);
+        // map listchat đếm số seen:false gán vào context
+        if (listchat.length > 0) {
+          let count = 0;
+          for (let i = 0; i < listchat.length; i++) {
+            if (listchat[i].seen == false) {
+              count += 1;
+            }
+          }
+          count_message_unread(count);
+        }
+      });
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [information_User]);
 
   useEffect(() => {
     //lấy thông tin người dùng
@@ -167,9 +216,11 @@ const Nav_mobile = () => {
             }`}
           />
           <div
-            className={`absolute h-[20px] w-[20px] top-[-8px] right-[-12px] rounded-full bg-red-500 text-white flex items-center justify-center`}
+            className={`${
+              countmessageunread == 0 && "hidden"
+            } absolute h-[20px] w-[20px] top-[-8px] right-[-12px] rounded-full bg-red-500 text-white flex items-center justify-center`}
           >
-            {/* {countmessageunread} */}1
+            {countmessageunread}
           </div>
         </div>
 

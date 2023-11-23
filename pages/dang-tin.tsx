@@ -110,6 +110,7 @@ import Cookies from "js-cookie";
 import { useMyContext } from "@/contexts/MyContext";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import Link from "next/link";
 
 const Dang_tin = () => {
   //lấy usecontext
@@ -1231,15 +1232,21 @@ const Dang_tin = () => {
         pauseOnHover
       />
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] sm:pt-[60px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto sm:min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-12 md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[960px] bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <p className="h-full w-auto flex items-center ml-3">
-                Trang chủ / Đăng tin
-              </p>
+              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <Link
+                  href="/"
+                  className="cursor-pointer hover:text-mauxanhtroi"
+                >
+                  Trang chủ
+                </Link>{" "}
+                <p>/ Đăng tin</p>
+              </div>
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center my-3">
@@ -1777,7 +1784,7 @@ const Dang_tin = () => {
                       <p className="text-lg font-bold pt-3">
                         Thông tin chi tiết
                       </p>
-                      <div className="h-[65px] w-full">
+                      <div className="sm:h-[75px] md:h-[65px] w-full">
                         <div className="h-[30px] px-1 flex">
                           <p>Tình trạng</p>
                           <p className="text-red-500 ml-1">*</p>
@@ -1785,7 +1792,7 @@ const Dang_tin = () => {
                         <div className="flex item-center space-x-3">
                           <button
                             onClick={() => setTinhtrang(0)}
-                            className={`h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
+                            className={`sm:h-[50px] md::h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
                               tinhtrang === 0 ? "bg-mauxanhtroi text-white" : ""
                             }`}
                           >
@@ -1793,7 +1800,7 @@ const Dang_tin = () => {
                           </button>
                           <button
                             onClick={() => setTinhtrang(1)}
-                            className={`h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
+                            className={`sm:h-[50px] md::h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
                               tinhtrang === 1 ? "bg-mauxanhtroi text-white" : ""
                             }`}
                           >
@@ -1801,7 +1808,7 @@ const Dang_tin = () => {
                           </button>
                           <button
                             onClick={() => setTinhtrang(2)}
-                            className={`h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
+                            className={`sm:h-[50px] md:h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
                               tinhtrang === 2 ? "bg-mauxanhtroi text-white" : ""
                             }`}
                           >

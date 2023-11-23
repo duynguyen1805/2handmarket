@@ -58,33 +58,6 @@ const Tin_nhan = ({
   const [selectedUserName, setSelectedUserName] = useState(name_receiver);
   const [selectedAvatar, setSelectedAvatar] = useState<any>();
 
-  // useEffect(() => {
-  //   //lấy thông tin người dùng Đăng nhập
-  //   const token: any = localStorage.getItem("token");
-  //   // const token_cookie: any = Cookies.get("jwt_token");
-  //   const parse_token = JSON.parse(token);
-  //   if (parse_token) {
-  //     let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-  //     if (!jwt_key) {
-  //       throw new Error(
-  //         "JWT_SECRET is not defined in the environment variables."
-  //       );
-  //     }
-  //     const jwt_secret: Secret = jwt_key;
-  //     try {
-  //       const decoded: any = jwt.verify(parse_token, jwt_secret);
-  //       id_user = decoded._id;
-  //       setdatainforUser_current(decoded);
-  //     } catch (error) {
-  //       console.log("Lỗi decoded token: ", error);
-  //       setdatainforUser_current(null);
-  //       router.push("/account/login");
-  //     }
-  //   } else {
-  //     router.push("/account/login");
-  //   }
-  // }, []);
-
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   // check login, lấy infor current user
   useEffect(() => {

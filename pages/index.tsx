@@ -399,7 +399,7 @@ const Home = () => {
               </p>
             </div>
           )}
-          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
+          <div className="h-auto w-full sm:pb-14 md:pb-0 md:pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
             {tindang_ganday &&
               tindang_ganday.map((item: any, index: number) => {
                 return (

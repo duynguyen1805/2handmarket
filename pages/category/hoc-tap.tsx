@@ -46,7 +46,7 @@ const Hoc_tap = () => {
       {
         breakpoint: 767, // < 767
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -55,7 +55,7 @@ const Hoc_tap = () => {
       {
         breakpoint: 375, // < 375
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -138,7 +138,7 @@ const Hoc_tap = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-[60px] md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
@@ -164,9 +164,9 @@ const Hoc_tap = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full md:w-full lg:w-[1440px] max-w-full px-2 pt-2">
+            <div className="bg-white shadow-sm h-full md:w-full lg:w-[1440px] max-w-full px-2 md:pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="h-[50px] flex items-center text-2xl font-bold">
+                <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
                   Khám phá Đồ dùng học tập
                 </p>
                 <p
@@ -176,7 +176,7 @@ const Hoc_tap = () => {
                   Xem tất cả
                 </p>
               </div>
-              <div className="h-[140px] w-full pt-3">
+              <div className="h-[140px] w-full md:pt-3">
                 <div className="h-full w-full">
                   <Slider {...settings_slider}>
                     {danhmuc_main &&
@@ -197,7 +197,7 @@ const Hoc_tap = () => {
                                   (item.type === "other_hoctap" && "Khác")}
                               </div>
                             </div>
-                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full md:text-xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -209,35 +209,44 @@ const Hoc_tap = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] md:w-full lg:w-[1440px] sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemALLDohoctap == null && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <Image
-                    src={icon_loading}
-                    alt=""
-                    className="h-[45px] w-[45px] loading"
-                  />
-                  <p className="">
-                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                  </p>
-                </div>
-              )}
-              {itemALLDohoctap && itemALLDohoctap.length == 0 && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <p className="">
-                    Danh mục hiện tại không có tin đăng nào hiển thị !
-                  </p>
-                </div>
-              )}
-              {itemALLDohoctap &&
-                itemALLDohoctap.map((item: any, index: any) => {
-                  return (
-                    <div key={index}>
-                      <Display_product_vertical_v2 item={item} />
-                    </div>
-                  );
-                })}
-            </div>
+            {itemALLDohoctap == null && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <Image
+                  src={icon_loading}
+                  alt=""
+                  className="h-[45px] w-[45px] loading"
+                />
+                <p className="">
+                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                </p>
+              </div>
+            )}
+            {itemALLDohoctap && itemALLDohoctap.length == 0 && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <p className="">
+                  Danh mục hiện tại không có tin đăng nào hiển thị !
+                </p>
+              </div>
+            )}
+            {itemALLDohoctap && itemALLDohoctap.length !== 0 && (
+              <div
+                className={`bg-white shadow-sm h-auto min-h-[360px] sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden`}
+              >
+                {itemALLDohoctap &&
+                  itemALLDohoctap.length !== 0 &&
+                  itemALLDohoctap.map((item: any, index: any) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center"
+                      >
+                        <Display_product_vertical_v2 item={item} />
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
             <div className="bg-gray-100 mt-5 mb-3">
               <ReactPaginate
                 forcePage={pagehientai - 1}

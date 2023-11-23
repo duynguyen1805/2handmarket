@@ -95,13 +95,13 @@ const Linh_kien = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-20 md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
-              <div className="h-full w-auto flex items-center ml-3 space-x-1">
+              <div className="h-full w-auto sm:hidden md:flex items-center ml-3 space-x-1">
                 <Link
                   href="/"
                   className="cursor-pointer hover:text-mauxanhtroi"
@@ -121,10 +121,10 @@ const Linh_kien = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-full px-2 pt-2">
+            <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-full px-2 md:pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="h-[50px] flex items-center text-2xl font-bold">
-                  Khám phá Xe điện
+                <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
+                  Khám phá Linh kiện phong phú
                 </p>
                 <p
                   className="text-lg font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
@@ -157,7 +157,7 @@ const Linh_kien = () => {
                               {substring_1} {substring_2}
                             </div>
                           </div>
-                          <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
+                          <p className="h-[30px] w-full sm:text-center sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
                             {item.label}
                           </p>
                         </div>
@@ -168,35 +168,41 @@ const Linh_kien = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemLinhkien == null && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <Image
-                    src={icon_loading}
-                    alt=""
-                    className="h-[45px] w-[45px] loading"
-                  />
-                  <p className="">
-                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                  </p>
-                </div>
-              )}
-              {itemLinhkien && itemLinhkien.length == 0 && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <p className="">
-                    Danh mục hiện tại không có tin đăng nào hiển thị !
-                  </p>
-                </div>
-              )}
-              {itemLinhkien &&
-                itemLinhkien.map((item: any, index: any) => {
-                  return (
-                    <div key={index}>
-                      <Display_product_vertical_v2 item={item} />
-                    </div>
-                  );
-                })}
-            </div>
+            {itemLinhkien == null && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <Image
+                  src={icon_loading}
+                  alt=""
+                  className="h-[45px] w-[45px] loading"
+                />
+                <p className="">
+                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                </p>
+              </div>
+            )}
+            {itemLinhkien && itemLinhkien.length == 0 && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <p className="">
+                  Danh mục hiện tại không có tin đăng nào hiển thị !
+                </p>
+              </div>
+            )}
+            {itemLinhkien && itemLinhkien.length !== 0 && (
+              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+                {itemLinhkien &&
+                  itemLinhkien.map((item: any, index: any) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center"
+                      >
+                        <Display_product_vertical_v2 item={item} />
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
             <div className="bg-gray-100 mt-5 mb-3">
               <ReactPaginate
                 forcePage={pagehientai - 1}

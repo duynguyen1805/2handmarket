@@ -8,7 +8,6 @@ import router from "next/router";
 import icon_other from "../../../assets/icon/ic_dodientu/ic_hangdienthoai/other.svg";
 import icon_filter from "../../../assets/icon/icon_filter.svg";
 import icon_loading from "../../../assets/icon/loading.png";
-import Display_product_horizontal from "@/components/Display_product_horizontal";
 //import css file Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -49,7 +48,7 @@ const Desktop = () => {
       {
         breakpoint: 767, // < 767
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 2,
           infinite: true,
           dots: true,
@@ -58,7 +57,7 @@ const Desktop = () => {
       {
         breakpoint: 375, // < 375
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
           slidesToScroll: 2,
           infinite: true,
           dots: true,
@@ -187,14 +186,14 @@ const Desktop = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-20 md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
               <div className="flex items-center h-full w-auto">
                 <Danhmuc />
-                <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                <div className="h-full w-auto sm:hidden md:flex items-center ml-3 space-x-1">
                   <Link
                     href="/"
                     className="cursor-pointer hover:text-mauxanhtroi"
@@ -231,11 +230,11 @@ const Desktop = () => {
           <div className="h-auto w-full flex items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-full px-2 pt-2">
               <div className="w-full flex items-center place-content-between">
-                <p className="h-[50px] flex items-center text-2xl font-bold">
+                <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
                   Khám phá Desktop với đa dạng cấu hình
                 </p>
                 <p
-                  className="text-lg font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
+                  className="text-lg text-end font-bold text-mauxanhtroi underline cursor-pointer hover:opacity-75"
                   onClick={() => Handle_TatcaHang()}
                 >
                   Xem tất cả
@@ -267,7 +266,7 @@ const Desktop = () => {
                                 </p>
                               </div>
                             </div>
-                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -279,35 +278,41 @@ const Desktop = () => {
             </div>
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto md:w-full lg:w-[1440px]  sm:max-h-[4280] max-w-full flex justify-center flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
-              {itemDesktop == null && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <Image
-                    src={icon_loading}
-                    alt=""
-                    className="h-[45px] w-[45px] loading"
-                  />
-                  <p className="">
-                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                  </p>
-                </div>
-              )}
-              {itemDesktop && itemDesktop.length == 0 && (
-                <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                  <p className="">
-                    Danh mục hiện tại không có tin đăng nào hiển thị !
-                  </p>
-                </div>
-              )}
-              {itemDesktop &&
-                itemDesktop.map((item: any, index: any) => {
-                  return (
-                    <div key={index}>
-                      <Display_product_vertical_v2 item={item} />
-                    </div>
-                  );
-                })}
-            </div>
+            {itemDesktop == null && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <Image
+                  src={icon_loading}
+                  alt=""
+                  className="h-[45px] w-[45px] loading"
+                />
+                <p className="">
+                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                </p>
+              </div>
+            )}
+            {itemDesktop && itemDesktop.length == 0 && (
+              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                <p className="">
+                  Danh mục hiện tại không có tin đăng nào hiển thị !
+                </p>
+              </div>
+            )}
+            {itemDesktop && itemDesktop.length !== 0 && (
+              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+                {itemDesktop &&
+                  itemDesktop.map((item: any, index: any) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex items-center justify-center"
+                      >
+                        <Display_product_vertical_v2 item={item} />
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+
             <div className="bg-gray-100 mt-5 mb-3">
               <ReactPaginate
                 forcePage={pagehientai - 1}

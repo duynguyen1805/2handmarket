@@ -10,6 +10,7 @@ import Display_product_vertical_v2 from "@/components/Display_product_vertical_v
 import Display_product_vertical from "@/components/Display_product_vertical";
 import router from "next/router";
 import { useMyContext } from "@/contexts/MyContext";
+import Link from "next/link";
 
 interface Timkiem_Props {
   keyword: string;
@@ -66,16 +67,22 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] sm:pt-[50px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto sm:min-h-[calc(100vh-60px)] md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-[60px] md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
             <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between p-1 rounded-lg shadow-md">
               <div className="flex items-center h-full w-auto">
                 <Danhmuc />
-                <p className="h-full w-auto flex items-center ml-3">
-                  Trang chủ / Tìm kiếm
-                </p>
+                <div className="h-full w-auto flex items-center ml-3 space-x-1">
+                  <Link
+                    href="/"
+                    className="cursor-pointer hover:text-mauxanhtroi"
+                  >
+                    Trang chủ
+                  </Link>{" "}
+                  <p>/ Tìm kiếm</p>
+                </div>
               </div>
             </div>
           </div>
@@ -88,11 +95,14 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center">
             {/* max-h-2140px cho 6 hàng ngang */}
-            <div className="bg-white shadow-sm h-auto w-full min-h-[360px] max-h-[2140px] lg:max-w-[1440px] flex flex-wrap gap-[10px] px-2 py-3">
+            <div className="bg-white shadow-sm h-auto w-full min-h-[360px] max-h-[2140px] lg:max-w-[1440px] sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px] px-2 py-3">
               {kqSearch &&
                 kqSearch.map((item: any, index: any) => {
                   return (
-                    <div key={index}>
+                    <div
+                      key={index}
+                      className="flex items-center justify-center"
+                    >
                       <Display_product_vertical item={item} />
                     </div>
                   );

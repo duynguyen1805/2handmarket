@@ -8,9 +8,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import left_back from "../../../assets/icon/left-arrow.png";
 import "react-phone-input-2/lib/style.css";
-// toast thông báo
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { API_getTindangbyIduser } from "@/service/userService";
 import Danhmuc from "@/components/Danhmuc";
@@ -167,7 +164,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
               <p>/ Trang cá nhân</p>
             </div>
           </div>
-          <div className="h-[160px] w-auto sm:w-full lg:w-[1440px] max-w-full bg-white text-xl p-1 rounded-lg shadow-md">
+          <div className="h-[160px] w-auto sm:w-full lg:w-[1440px] max-w-full bg-white md:text-xl p-1 rounded-lg shadow-md">
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{
@@ -185,7 +182,7 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                   }}
                 ></div>
               </div>
-              <div className="h-full lg:w-[802px] sm:w-full flex flex-col items-center justify-center space-y-3">
+              <div className="h-full lg:w-[802px] sm:w-full flex flex-col items-center justify-center sm:space-y-1 md:space-y-3">
                 <div className="h-auto min-h-2/3 w-full">
                   {datainforUser?.name ? (
                     <div className="h-auto">
@@ -238,9 +235,9 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
           </div>
         </div>
         <div className="h-auto w-full flex items-center justify-center mt-1">
-          <div className="h-auto md:w-full lg:w-[1440px] max-w-full mt-3 px-1 border rounded-lg bg-white overflow-auto">
+          <div className="h-auto md:w-full lg:w-[1440px] max-w-full mt-3 md:px-1 border rounded-lg bg-white overflow-auto">
             {/* display medium */}
-            <div className="sm:hidden md:flex h-auto min-h-[570px] w-[100%] px-1 flex-col items-center overflow-auto">
+            <div className="md:flex h-auto min-h-[570px] w-[100%] px-1 flex-col items-center overflow-auto">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{
@@ -268,12 +265,15 @@ const Trang_ca_nhan = ({ id_user }: infodetailProps) => {
                   })}
               </motion.div>
 
-              <div className="h-auto w-full flex justify-center flex-wrap gap-[10px] overflow-auto py-2">
+              <div className="h-auto w-full sm:pb-20 md:pb-0 sm:grid sm:grid-cols-2 md:flex items-center justify-center md:flex-wrap gap-[9px] overflow-auto md:py-2">
                 {filteredList &&
                   filteredList.lenght !== 0 &&
                   filteredList.map((item: any, index: number) => {
                     return (
-                      <div key={index}>
+                      <div
+                        key={index}
+                        className="flex items-center justify-center"
+                      >
                         <Display_product_vertical item={item} />
                       </div>
                     );

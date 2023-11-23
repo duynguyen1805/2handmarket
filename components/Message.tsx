@@ -285,7 +285,8 @@ const Message = ({
 
   return (
     <div className="h-full w-full">
-      <div className="relative sm:h-[551px] md:h-full w-full flex flex-col">
+      <div className="relative sm:h-full w-full flex flex-col">
+        {/* nút quay lại, avatar, tên */}
         <div className="bg-white min-h-[90px] w-full flex items-center space-x-2 px-2 border-b border-gray-300 cursor-pointer">
           <div
             className="sm:flex md:hidden h-full w-[40px] items-center"
@@ -321,9 +322,10 @@ const Message = ({
             </div> */}
           </div>
         </div>
+        {/* khung chat */}
         <div
           ref={chatContainerRef}
-          className="sm:h-[551px] md:h-auto flex-grow w-full px-2 py-1 overflow-auto"
+          className="sm:h-auto flex-grow w-full px-2 py-1 overflow-auto"
         >
           {messages &&
             messages.map((message: any, index: number) => {

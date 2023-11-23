@@ -9,7 +9,6 @@ import icon_maygiat from "../../../assets/icon/ic_tulanhmaylanh/icon_maygiat.svg
 import icon_maylanh from "../../../assets/icon/ic_tulanhmaylanh/icon_maylanh.svg";
 import icon_tulanh from "../../../assets/icon/ic_tulanhmaylanh/icon_tulanh.svg";
 import icon_loading from "../../../assets/icon/loading.png";
-import Display_product_horizontal from "@/components/Display_product_horizontal";
 //import css file Slider
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -122,7 +121,7 @@ const Dien_lanh = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-20 md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
@@ -148,11 +147,11 @@ const Dien_lanh = () => {
           </div>
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-full sm:w-auto md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 pt-2">
-              <p className="h-[50px] flex items-center text-2xl font-bold">
+            <div className="bg-white shadow-sm h-full sm:w-auto md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 md:pt-2">
+              <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
                 Khám phá đa dạng tủ lạnh, máy giặt, máy lạnh
               </p>
-              <div className="h-[140px] w-full pt-3">
+              <div className="md:h-[140px] w-full pt-3">
                 <div className="h-full w-full">
                   <Slider {...settings_slider}>
                     {danhmuc_main &&
@@ -179,7 +178,7 @@ const Dien_lanh = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[40px] w-full text-2xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[40px] w-full md:text-2xl flex justify-center cursor-pointer p-1">
                               {item.label}
                             </p>
                           </div>
@@ -192,7 +191,7 @@ const Dien_lanh = () => {
           </div>
           {/* List tin */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto w-full lg:w-[1440px] lg:max-h-[2110px] sm:max-h-[4220px] max-w-[1440px] p-2">
+            <div className="bg-white shadow-sm h-auto w-full lg:w-[1440px] lg:max-h-[2110px] sm:max-h-[4220px] max-w-full p-2">
               <div className="h-[50px] w-[50%] flex mb-3">
                 <p
                   className={
@@ -204,49 +203,44 @@ const Dien_lanh = () => {
                 >
                   Gợi ý
                 </p>
-                {/* <p
-                  className={
-                    active_tab_filter === 1
-                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
-                  }
-                  onClick={() => setActiveTab(1)}
-                >
-                  Mới đăng
-                </p> */}
               </div>
-              <div className="lg:max-h-[2110px] sm:max-h-[4220px] flex justify-center flex-wrap gap-[10px]">
-                {itemALLDienlanh == null && (
-                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                    <Image
-                      src={icon_loading}
-                      alt=""
-                      className="h-[45px] w-[45px] loading"
-                    />
-                    <p className="">
-                      Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                    </p>
-                  </div>
-                )}
-                {itemALLDienlanh && itemALLDienlanh.length == 0 && (
-                  <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
-                    <p className="">
-                      Danh mục hiện tại không có tin đăng nào hiển thị !
-                    </p>
-                  </div>
-                )}
-                {itemALLDienlanh &&
-                  itemALLDienlanh.map((item: any, index: any) => {
-                    return (
-                      <div key={index}>
-                        <Display_product_vertical
-                          item={item}
-                          active_tab_filter={active_tab_filter}
-                        />
-                      </div>
-                    );
-                  })}
-              </div>
+              {itemALLDienlanh == null && (
+                <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                  <Image
+                    src={icon_loading}
+                    alt=""
+                    className="h-[45px] w-[45px] loading"
+                  />
+                  <p className="">
+                    Loading... Vui lòng chờ Server phản hồi sau giây lát.
+                  </p>
+                </div>
+              )}
+              {itemALLDienlanh && itemALLDienlanh.length == 0 && (
+                <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
+                  <p className="">
+                    Danh mục hiện tại không có tin đăng nào hiển thị !
+                  </p>
+                </div>
+              )}
+              {itemALLDienlanh && itemALLDienlanh.length !== 0 && (
+                <div className="lg:max-h-[2110px] sm:max-h-[4220px] sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px]">
+                  {itemALLDienlanh &&
+                    itemALLDienlanh.map((item: any, index: any) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-center justify-center"
+                        >
+                          <Display_product_vertical
+                            item={item}
+                            active_tab_filter={active_tab_filter}
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
             </div>
           </div>
         </div>
