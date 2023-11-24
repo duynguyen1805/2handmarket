@@ -158,7 +158,7 @@ const Do_dien_tu = () => {
               <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
                 Khám phá danh mục Đồ điện tử
               </p>
-              <div className="h-[170px] w-full md:pt-3">
+              <div className="sm:h-[160px] md:h-[170px] w-full md:pt-3">
                 <div className="h-full w-full">
                   <Slider {...settings_slider}>
                     {danhmuc_main &&
@@ -193,7 +193,7 @@ const Do_dien_tu = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[60px] w-full md:text-xl flex justify-center text-center cursor-pointer p-1">
+                            <p className="h-[60px] w-full sm:text-sm md:text-xl flex justify-center text-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item_danhmuc.label}
                             </p>
                           </div>
@@ -211,8 +211,8 @@ const Do_dien_tu = () => {
                 <p
                   className={
                     active_tab_filter === 0
-                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full md:w-[50%] lg:w-[25%] sm:text-xl md:text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full md:w-[50%] lg:w-[25%] sm:text-xl md:text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(0)}
                 >

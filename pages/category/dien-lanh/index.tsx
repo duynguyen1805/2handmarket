@@ -125,7 +125,7 @@ const Dien_lanh = () => {
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full w-[1440px] bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <div className="h-full w-auto flex items-center ml-3 space-x-1">
                 <Link
@@ -178,7 +178,7 @@ const Dien_lanh = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[40px] w-full md:text-2xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[40px] w-full sm:text-sm md:text-2xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>
@@ -196,8 +196,8 @@ const Dien_lanh = () => {
                 <p
                   className={
                     active_tab_filter === 0
-                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full md:w-[50%] lg:w-[25%] sm:text-lg md:text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full md:w-[50%] lg:w-[25%] sm:text-lg md:text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(0)}
                 >

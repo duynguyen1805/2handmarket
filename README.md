@@ -1,5 +1,5 @@
 CHƯA LÀM: (
--- responsive giao diện (còn resp mobile, quản lý tin, trang cá nhân, chi tiết tin đăng, từng danh mục)
+-- responsive giao diện mobile fix lại các bộ lọc, trang xem tin chi tiết, cỡ chữ giảm xuống 1
 -- giới hạn dung lượng ảnh khi đặt avatar
 )
 Backend: (

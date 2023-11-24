@@ -190,10 +190,10 @@ const Do_dung_ca_nhan = () => {
               </div>
               <div className="relative h-full">
                 <div
-                  className="h-full w-auto min-w-[120px] flex items-center place-content-between space-x-2 px-3 rounded-md bg-white text-mauxanhtroi border border-mauxanhtroi cursor-pointer hover:opacity-80"
+                  className="h-full w-auto min-w-[120px] sm:text-lg md:text-xl flex items-center place-content-between space-x-2 px-3 rounded-md bg-white text-mauxanhtroi border border-mauxanhtroi cursor-pointer hover:opacity-80"
                   onClick={() => handleClick_btnFilter()}
                 >
-                  <p className="text-xl text-black">Lọc:</p>
+                  <p className=" text-black">Lọc:</p>
                   <p>{labelFilter}</p>
                 </div>
                 {openModalFilter && (
@@ -266,7 +266,7 @@ const Do_dung_ca_nhan = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>

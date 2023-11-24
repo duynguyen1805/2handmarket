@@ -187,7 +187,7 @@ const Phuong_tien = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[40px] w-full lg:text-2xl md:text-xl flex justify-center text-center cursor-pointer p-1">
+                            <p className="h-[40px] w-full lg:text-2xl md:text-xl sm:text-sm flex justify-center text-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item_danhmuc.label}
                             </p>
                           </div>
@@ -206,8 +206,8 @@ const Phuong_tien = () => {
                 <p
                   className={
                     active_tab_filter === 0
-                      ? "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
-                      : "h-full md:w-[50%] lg:w-[25%] text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
+                      ? "h-full md:w-[50%] lg:w-[25%] sm:text-xl md:text-2xl font-bold flex items-center justify-center border-b-4 border-blue-500 cursor-pointer"
+                      : "h-full md:w-[50%] lg:w-[25%] sm:text-xl md:text-2xl font-bold flex items-center justify-center hover:border-b border-blue-500 cursor-pointer"
                   }
                   onClick={() => setActiveTab(0)}
                 >

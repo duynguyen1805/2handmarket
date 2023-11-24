@@ -128,7 +128,7 @@ const Xe_dien = () => {
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
+            <div className="h-full w-[1440px] bg-white sm:text-lg md:text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
               <div className="flex items-center h-full w-auto">
                 <Danhmuc />
                 <div className="h-full w-auto sm:hidden md:flex items-center ml-3 space-x-1">
@@ -191,7 +191,7 @@ const Xe_dien = () => {
                         Đạp điện
                       </div>
                     </div>
-                    <p className="h-[30px] w-full sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
+                    <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                       Xe đạp điện
                     </p>
                   </div>
@@ -206,7 +206,7 @@ const Xe_dien = () => {
                         Máy điện
                       </div>
                     </div>
-                    <p className="h-[30px] w-full sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
+                    <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                       Xe máy điện
                     </p>
                   </div>

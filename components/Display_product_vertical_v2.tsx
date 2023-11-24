@@ -64,10 +64,10 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className="relative h-[340px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
+      className="relative sm:h[320px] md:h-[340px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
-      <div className="h-[210px] w-full flex justify-center">
+      <div className="sm:h-[190px] md:h-[210px] w-full flex justify-center">
         <div
           className="h-full w-full bg-center bg-contain bg-no-repeat"
           style={{ backgroundImage: `url(${item.img[0]})` }}
@@ -75,7 +75,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
         <div
           className={
             item.trangthaithanhtoan == 1
-              ? `h-[50px] w-full bg-mauxanhtroi text-white text-xl flex items-center justify-center absolute top-0`
+              ? `sm:h-[40px] md:h-[50px] w-full bg-mauxanhtroi text-white md:text-xl flex items-center justify-center absolute top-0`
               : ""
           }
         >
@@ -87,11 +87,13 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
           )}
         </div>
       </div>
-      <p className="h-[60px] w-full text-xl overflow-hidden">{item.tieude}</p>
-      <p className="h-[25px] w-full text-lg font-bold text-red-500">
+      <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
+        {item.tieude}
+      </p>
+      <p className="h-[25px] w-full md:text-lg font-bold text-red-500">
         {item.price.toLocaleString("vi-VN")} đ
       </p>
-      <p className="h-[30px] w-full text-lg pt-1 font-thin overflow-hidden">
+      <p className="h-[30px] w-full md:text-lg pt-1 font-thin overflow-hidden">
         {item.infor_user.name} - {thoigiandadang}
       </p>
     </motion.div>

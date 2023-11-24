@@ -133,7 +133,7 @@ const Linh_kien = () => {
                   Xem tất cả
                 </p>
               </div>
-              <div className="h-[140px] w-full pt-3">
+              <div className="sm:h-[120px] md:h-[140px] w-full pt-3">
                 <div className="h-full w-full flex">
                   {list_loailinhkien &&
                     list_loailinhkien.map((item: any) => {
@@ -157,7 +157,7 @@ const Linh_kien = () => {
                               {substring_1} {substring_2}
                             </div>
                           </div>
-                          <p className="h-[30px] w-full sm:text-center sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
+                          <p className="h-[30px] w-full sm:text-center sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                             {item.label}
                           </p>
                         </div>

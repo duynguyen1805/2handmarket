@@ -271,7 +271,7 @@ const Home = () => {
       {/* Khám phá danh mục */}
       <div className="sm:h-[210px] md:h-[240px] lg:h-[210px] w-full flex items-center justify-center mt-3">
         <div className="bg-white shadow-sm h-full sm:w-auto sm:min-w-full md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 md:pt-2">
-          <p className="h-[50px] w-full sm:text-xl md:text-2xl font-bold flex items-center">
+          <p className="h-[50px] w-full sm:text-lg md:text-2xl font-bold flex items-center">
             Khám phá danh mục
           </p>
           <div className="h-[130px] w-full lg:pt-5">
@@ -313,7 +313,7 @@ const Home = () => {
                             className="lg:h-[80px] lg:w-[80px] sm:h-[70px] sm:w-[70px] rounded-3xl cursor-pointer"
                           />
                         </div>
-                        <p className="h-[50px] w-full lg:text-xl md::text-lg sm:text-base flex items-center justify-center text-center cursor-pointer">
+                        <p className="h-[50px] w-full lg:text-xl md:text-lg sm:text-sm flex items-center justify-center text-center cursor-pointer">
                           {item_main.label}
                         </p>
                       </div>
@@ -327,11 +327,11 @@ const Home = () => {
       {/* Quảng cáo tin đăng */}
       <div className="h-auto w-auto flex items-center justify-center mt-3">
         <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full sm:max-h-[4220px] max-w-[1440px] p-2">
-          <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
+          <p className="h-[50px] w-full flex items-center sm:text-lg md:text-2xl font-bold">
             Tin đăng nổi bật
           </p>
           {errcode == null && (
-            <div className="h-[50px] w-full text-2xl flex flex-col items-center justify-center space-x-2">
+            <div className="h-[50px] w-full md:text-2xl flex flex-col items-center justify-center space-x-2">
               <Image
                 src={icon_loading}
                 alt=""
@@ -343,11 +343,11 @@ const Home = () => {
             </div>
           )}
           {errcode == 0 && tindang_qc && tindang_qc.length == 0 && (
-            <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+            <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
               <p className="">Hiện tại không có tin đăng nào gợi ý cho bạn !</p>
             </div>
           )}
-          <div className="h-auto w-full pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
+          <div className="h-auto w-full md:pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
             {tindang_qc &&
               tindang_qc.map((item: any, index: number) => {
                 return (
@@ -371,7 +371,7 @@ const Home = () => {
                 className="h-[40px] w-full flex items-center justify-center bg-gray-200 cursor-pointer"
                 onClick={() => setpagehientai_qc(pagehientai_qc + 1)}
               >
-                <span className="text-mauxanhtroi font-bold text-xl">
+                <span className="text-mauxanhtroi font-bold md:text-xl">
                   {count_item_qc_return < 12 || pagehientai_qc == 4
                     ? "Hết"
                     : "Xem thêm"}
@@ -384,11 +384,11 @@ const Home = () => {
       {/* Tin đăng gần đây - 2060px cho 6x6 item dọc, small 4220px cho 3x12 item*/}
       <div className="h-auto w-full flex items-center justify-center mt-3">
         <div className="bg-white shadow-sm h-auto w-auto lg:w-[1440px] sm:w-full max-w-[1440px] p-2">
-          <p className="h-[50px] w-full flex items-center sm:text-xl md:text-2xl font-bold">
+          <p className="h-[50px] w-full flex items-center sm:text-lg md:text-2xl font-bold">
             Tin đăng gần đây
           </p>
           {tindang_ganday && tindang_ganday.length == 0 && (
-            <div className="h-[50px] w-full text-2xl flex items-center justify-center space-x-2">
+            <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
               <Image
                 src={icon_loading}
                 alt=""

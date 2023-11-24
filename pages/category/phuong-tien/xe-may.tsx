@@ -277,7 +277,7 @@ const Xe_may = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>

@@ -235,8 +235,8 @@ const Oto = () => {
           {/* Option */}
           <div className="h-auto w-full flex items-center justify-center mt-3">
             <div className="bg-white shadow-sm h-full w-auto md:w-full lg:w-[1440px] max-w-full px-2 pt-2">
-              <div className="w-full flex items-center place-content-between">
-                <p className="h-[50px] flex items-center sm:text-xl md:text-2xl font-bold">
+              <div className="w-full flex items-center place-content-between space-x-1">
+                <p className="h-[50px] flex items-center sm:text-lg md:text-2xl font-bold">
                   Khám phá ô tô nhiều hãng đa dạng
                 </p>
                 <p
@@ -279,7 +279,7 @@ const Oto = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full sm:text-lg md:text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>

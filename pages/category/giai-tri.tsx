@@ -208,7 +208,7 @@ const Do_giai_tri = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full text-xl flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>

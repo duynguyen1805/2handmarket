@@ -147,7 +147,7 @@ const Thu_cung = () => {
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full w-[1440px] bg-white sm:text-lg md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <div className="h-full w-auto flex items-center ml-3 space-x-1">
                 <Link
@@ -209,7 +209,7 @@ const Thu_cung = () => {
                                 />
                               </div>
                             </div>
-                            <p className="h-[30px] w-full flex justify-center cursor-pointer p-1">
+                            <p className="h-[30px] w-full sm:text-sm md:text-xl flex justify-center cursor-pointer p-1 sm:mt-1 md:mt-0">
                               {item.label}
                             </p>
                           </div>
