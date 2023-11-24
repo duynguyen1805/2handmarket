@@ -331,7 +331,7 @@ const Home = () => {
             Tin đăng nổi bật
           </p>
           {errcode == null && (
-            <div className="h-[50px] w-full md:text-2xl flex flex-col items-center justify-center space-x-2">
+            <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
               <Image
                 src={icon_loading}
                 alt=""
