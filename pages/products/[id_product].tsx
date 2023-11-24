@@ -228,11 +228,11 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] lg:pt-[0px] md:pt-[0px] bg-gray-100 flex flex-col place-content-between">
+      <div className="h-auto md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] bg-gray-100 flex flex-col place-content-between">
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full md:w-full lg:w-[1440px] max-w-full bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full sm:w-full lg:w-[1440px] max-w-full bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <p className="h-full w-auto flex items-center ml-3">
                 Trang chủ / Sản phẩm
@@ -240,10 +240,10 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
             </div>
           </div>
           <div className="h-auto w-full flex items-center justify-center mt-3">
-            <div className="bg-white shadow-sm h-auto md:w-full lg:w-[1440px] max-w-full flex">
+            <div className="bg-white shadow-sm h-auto md:w-full lg:w-[1440px] max-w-full md:flex">
               {infoClient && errCode == 0 && (
-                <div className="h-full w-[55%] p-2 sticky top-0">
-                  <div className="h-[540px] w-full">
+                <div className="h-full sm:w-[100%] md:w-[55%] p-2 md:sticky top-0">
+                  <div className="sm:h-[440px] md:h-[540px] w-full">
                     <Slider {...settings_slider}>
                       {img_arr &&
                         img_arr.map((item: any, index: number) => {
@@ -251,7 +251,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                           return (
                             <div
                               key={index}
-                              className="h-[500px] w-[500px] flex justify-center outline-none"
+                              className="sm:h-[400px] md:h-[500px] w-[500px] flex justify-center outline-none"
                             >
                               <div
                                 className="h-full w-full bg-center bg-contain bg-no-repeat outline-none"
@@ -298,7 +298,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   <div className="h-auto w-full px-1 py-2 flex item-center lg:text-xl">
                     <div
                       onClick={() => setopenNumber(!openNumber)}
-                      className="max-h-full w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
+                      className="max-h-full sm:w-1/2 md:w-[60%] border border-mauxanhtroi bg-mauxanhtroi text-white text-center p-3 rounded-l-lg hover:opacity-80 cursor-pointer"
                     >
                       {openNumber
                         ? `${
@@ -309,7 +309,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                         : "Liên hệ số điện thoại"}
                     </div>
                     <div
-                      className="max-h-full w-[40%] border border-mauxanhtroi text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
+                      className="max-h-full sm:w-1/2 md:w-[40%] border border-mauxanhtroi text-center p-3 rounded-r-lg hover:bg-gray-50 cursor-pointer"
                       onClick={handleClickMessage}
                     >
                       Chat với người bán
@@ -317,6 +317,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   </div>
                 </div>
               )}
+              {/* loading */}
               {errCode == undefined && (
                 <div className="h-[100px] w-full text-2xl flex items-center justify-center space-x-2">
                   <Image
@@ -329,19 +330,20 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   </p>
                 </div>
               )}
+              {/* tin khong ton tai */}
               {errCode == 1 && (
                 <div className="h-[100px] w-full text-2xl flex items-center justify-center space-x-2">
                   <p className="">Tin đăng KHÔNG còn tồn tại</p>
                 </div>
               )}
               {item && (
-                <div className="h-full w-[45%] px-2 py-2">
-                  <p className="h-auto max-h-[60px] w-full overflow-hidden text-2xl font-bold">
+                <div className="h-full sm:w-[100%] md:w-[45%] px-2 py-2">
+                  <p className="h-auto max-h-[60px] w-full overflow-hidden sm:text-xl md:text-2xl font-bold">
                     {item.tieude}
                   </p>
-                  <div className="h-[60px] w-full flex flex-col items-start justify-center my-2">
+                  <div className="h-[60px] w-full flex flex-col items-start justify-center md:my-2">
                     {item.new_pur_price && (
-                      <p className="h-full w-auto text-xl flex items-center space-x-1">
+                      <p className="h-full w-auto sm:text-lg md:text-xl flex items-center space-x-1">
                         <span>Giá mua mới:</span>
 
                         <span className="font-bold">
@@ -349,7 +351,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                         </span>
                       </p>
                     )}
-                    <p className="h-full w-auto text-xl flex items-center font-bold text-red-500">
+                    <p className="h-full w-auto sm:text-lg md:text-xl flex items-center font-bold text-red-500">
                       Giá bán lại: {item.price?.toLocaleString("vi-VN")} đ
                     </p>
                     {/* <div className="h-auto w-auto px-5 py-1 text-xl flex items-center justify-center border border-red-500 rounded-lg cursor-pointer hover:bg-red-500 hover:text-white">
@@ -362,7 +364,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                     Mô tả chi tiết
                   </p>
                   <div className="h-auto w-full overflow-hidden">
-                    <pre className="h-auto w-full text-lg break-words whitespace-pre-wrap font-mono">
+                    <pre className="h-auto w-full md:text-lg break-words whitespace-pre-wrap font-mono">
                       {item.mota}
                     </pre>
                   </div>
@@ -377,7 +379,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                   >
                     {/* Thông số kỹ thuật */}
                   </div>
-                  <div className="h-auto max-h-[250px] w-full lg:text-lg flex flex-wrap md:gap-1 lg:gap-0">
+                  <div className="h-auto max-h-[250px] w-full lg:text-lg flex flex-wrap sm:gap-5 md:gap-1 lg:gap-0">
                     <div
                       hidden={
                         item.type === "cho" ||
