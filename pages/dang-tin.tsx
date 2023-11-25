@@ -126,12 +126,6 @@ const Dang_tin = () => {
   // lấy para trả về từ momo khi thanh toán thành công
   //lấy data session login bằng google (status: ['loading', 'authenticated', 'unauthenticated'])
   const { data, status } = useSession<any>();
-
-  useEffect(() => {
-    const { resultCode } = router.query;
-    // console.log("resultCode:", resultCode);
-  }, []);
-
   const [keyDanhmuc, setkeyDanhmuc] = useState<number>(0);
   const chitiet_danhmuc: sub_danhmuc[] = item_danhmuc[keyDanhmuc].sub_danhmuc;
   const [keyTruong, setkeyTruong] = useState<number>(0);

@@ -35,6 +35,22 @@ import { sign, verify, Secret } from "jsonwebtoken";
 import Modal_chinhsuatindang from "@/components/modal/Modal_chinhsuatindang";
 import axios from "axios";
 import Link from "next/link";
+import {
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  Timestamp,
+  serverTimestamp,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../../firebase.config";
 
 interface infodetailProps {
   id_user: string;
@@ -44,8 +60,8 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const [tindang, setTindang] = useState<any[] | null>(null);
   const allowedRoles = ["Admin", "Client"];
   const checkRoleMiddleware = authMiddleware(allowedRoles);
-  const { handle_setIsLoading, setInfoUser } = useMyContext();
-
+  const { handle_setIsLoading, setInfoUser, information_User } = useMyContext();
+  const [datainforUser, setdatainforUser] = useState<any>(information_User);
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   // check login, lấy infor current user
   useEffect(() => {
@@ -62,10 +78,12 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
           // gán id_user = id current user
           id_user = decoded._id;
           setInfoUser(decoded);
+          setdatainforUser(decoded);
           setHasPermission(true);
         } catch (error) {
           console.log("Lỗi decoded token: ", error);
           setInfoUser(null);
+          setdatainforUser(null);
           setHasPermission(false);
           router.push("/account/login");
         }
@@ -77,6 +95,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
           if (data.hasPermission) {
             id_user = data.session.user._id;
             setHasPermission(true);
+            setdatainforUser(data.session.user);
           } else {
             router.push("/account/login");
           }
@@ -97,9 +116,15 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
       setItemNangcap(JSON.parse(storedItems));
     }
   }, []);
+  const [orderId, set_orderId] = useState<string | any>();
+  const [transId, set_transId] = useState<string | any>();
+  const [orderInfo, set_orderInfo] = useState<string | any>();
   useEffect(() => {
     // lấy resultCode từ momo trả về
     const resultCode = router.query.resultCode;
+    set_orderId(router.query.orderId);
+    set_transId(router.query.transId);
+    set_orderInfo(router.query.orderInfo);
     // console.log("check resultCode: ", resultCode);
     if (resultCode === "0") {
       // gọi hàm cập nhật trangthaithanhtoan
@@ -109,7 +134,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
 
   const [trangthaithanhtoan, settrangthaithanhtoan] = useState<number>();
   const fetch_update_trangthaithanhtoan = async () => {
-    const token_req: any = localStorage.getItem("token_req");
+    let token_req: any = `"${
+      datainforUser?.token_gg_encoded
+        ? datainforUser?.token_gg_encoded
+        : localStorage.getItem("token_req")
+    }"`;
     try {
       const response = await API_Capnhat_trangthai_thanhtoan(
         {
@@ -118,15 +147,154 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         },
         token_req
       );
-      // console.log("check response: ", response);
+      // trường hợp thành công
       if (response.trangthaithanhtoan == 1) {
         settrangthaithanhtoan(response.trangthaithanhtoan);
         localStorage.removeItem("itemNangcap");
         // sửa lại link url để tránh lỗi thanhtoan liên tục nhiều tin. vì redirectUrl cho momo location.href
         router.push(`/account/quan-ly-tin/${id_user}`);
       }
+      // if (response.status !== 200 || response.errCode !== 0) {
+      //   // trường hợp api nodejs phản hồi quá lâu (time out), trạng thái 500 hoặc trạng thái khác 200
+      //   // gửi thông tin tới admin qua msg
+      //   sendMessage();
+      // }
     } catch (error) {
       console.error("Error fetching data:", error);
+      sendMessage();
+      toast.error(
+        "Tạm thời bị lỗi khi cập nhật Tin ưu tiên. Đã nhắn tin cho Admin xử lý sớm nhất."
+      );
+    }
+  };
+
+  const messageText = `Đã thanh toán MoMo nhưng chưa cập nhật. OrderID: ${orderId}, Mã giao dịch: ${transId}, Tiêu đề tin: ${orderInfo}`;
+  // gửi tin nhắn đến Admin
+  const sendMessage = async () => {
+    //tạo id_room giữa 2 user
+    const sortedIds = [datainforUser?._id, "64d733a8df7d5a5bec4959bf"].sort();
+    const conversationID = sortedIds.join("_"); //id_room
+    if (messageText.trim() !== "") {
+      try {
+        const messageData = {
+          sender: datainforUser?._id,
+          userName: datainforUser?.name,
+          text: messageText,
+          img: [],
+          timestamp: serverTimestamp(),
+        };
+        // tạo tham chiếu tới collection "messages"
+        const messagesCollectionRef = collection(
+          doc(db, "conversations", conversationID),
+          "messages"
+        );
+        // setMessageText("");
+        // setImg_arr([]);
+        // setReviewImg_arr([]);
+        // thêm messageData vào collection con "messages"
+        await addDoc(messagesCollectionRef, messageData);
+        // tham chiếu tới document conversationID, tạo infor 2 user cho dễ biết
+        const conversationDocRef = doc(db, "conversations", conversationID);
+        // check tồn tại
+        const conversationDocSnapshot = await getDoc(conversationDocRef);
+        if (!conversationDocSnapshot.exists()) {
+          // chưa có thì tạo members, kèm trạng thái đã xem tin nhắn hay chưa.
+          const newConversationData = {
+            members: [
+              {
+                userID: datainforUser?._id,
+                userName: datainforUser?.name,
+              },
+              {
+                userID: "64d733a8df7d5a5bec4959bf",
+                userName: "Admin",
+              },
+            ],
+          };
+          await setDoc(conversationDocRef, newConversationData);
+        }
+
+        //------- tạo tham chiếu tới subcollection "list_userchat" của người dùng hiện tại
+        const listUserChatCollectionRef = collection(
+          doc(db, "list_user_chat", datainforUser?._id),
+          "list_chatting"
+        );
+        // tham chiếu document mới cho người dùng hiện tại trong "list_userchat"
+        const currentUserDocRef = doc(
+          listUserChatCollectionRef,
+          "64d733a8df7d5a5bec4959bf"
+        );
+        const updateData_receiver: any = {
+          timestamp: serverTimestamp(),
+        };
+        // check xem document đã tồn tại chưa
+        const currentUserDocSnapshot = await getDoc(currentUserDocRef);
+        if (currentUserDocSnapshot.exists()) {
+          // document tồn tại, thì kiểm tra các trường có thay đổi hay không
+          const currentData = currentUserDocSnapshot.data();
+          // check các trường userName và avatar có thay đổi không
+          if (currentData.userName !== "Admin") {
+            updateData_receiver.userName = "Admin";
+          }
+          // if (currentData.avatar !== avatar_receiver) {
+          //   updateData_receiver.avatar = avatar_receiver;
+          // }
+          updateData_receiver.seen = true;
+
+          // updateDoc để cập nhật thông tin
+          await updateDoc(currentUserDocRef, updateData_receiver);
+        } else {
+          const currentUserData = {
+            userID: "64d733a8df7d5a5bec4959bf",
+            userName: "Admin",
+            avatar: [],
+            timestamp: serverTimestamp(),
+            seen: true,
+          };
+          await setDoc(currentUserDocRef, currentUserData);
+        }
+        //---------- tạo tham chiếu tới subcollection "list_userchat" của người dùng nhận (receiver)
+        const receiverUserChatCollectionRef = collection(
+          doc(db, "list_user_chat", "64d733a8df7d5a5bec4959bf"),
+          "list_chatting"
+        );
+        // tạo document mới cho người dùng nhận (receiver) trong "list_userchat"
+        const receiverUserDocRef = doc(
+          receiverUserChatCollectionRef,
+          datainforUser?._id
+        );
+        const updateData_current_user: any = {
+          timestamp: serverTimestamp(),
+        };
+        // check xem document đã tồn tại chưa
+        const receiverUserDocSnapshot = await getDoc(receiverUserDocRef);
+        if (receiverUserDocSnapshot.exists()) {
+          // document tồn tại, thì kiểm tra các trường có thay đổi hay không
+          const currentData = receiverUserDocSnapshot.data();
+          // check các trường userName và avatar có thay đổi không
+          if (currentData.userName !== datainforUser?.name) {
+            updateData_current_user.userName = datainforUser?.name;
+          }
+          // if (currentData.avatar !== avatar_current_user) {
+          //   updateData_current_user.avatar = avatar_current_user;
+          // }
+          updateData_current_user.seen = false;
+
+          // updateDoc để cập nhật thông tin
+          await updateDoc(receiverUserDocRef, updateData_current_user);
+        } else {
+          const receiverUserData = {
+            userID: datainforUser?._id,
+            userName: datainforUser?.name,
+            avatar: datainforUser?.img,
+            timestamp: serverTimestamp(),
+            seen: false,
+          };
+          await setDoc(receiverUserDocRef, receiverUserData);
+        }
+      } catch (e) {
+        console.error("Error sending message: ", e);
+      }
     }
   };
 
@@ -188,7 +356,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     }
   };
   const handleXoatindang = async (type: string, id: string) => {
-    const token_req: any = localStorage.getItem("token_req");
+    let token_req: any = `"${
+      datainforUser?.token_gg_encoded
+        ? datainforUser?.token_gg_encoded
+        : localStorage.getItem("token_req")
+    }"`;
     try {
       const response = await API_deleteTindang(type, id, token_req);
       if (response) {
@@ -283,7 +455,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     lydoantin: inputLydoantin,
   };
   const handleUpdateStatus_Antin = async () => {
-    const token_req: any = localStorage.getItem("token_req");
+    let token_req: any = `"${
+      datainforUser?.token_gg_encoded
+        ? datainforUser?.token_gg_encoded
+        : localStorage.getItem("token_req")
+    }"`;
     try {
       const response = await API_Antin(build_data_antin, token_req);
       if (response.errCode === 0) {
@@ -319,7 +495,11 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
     giaban: giaban,
   };
   const handle_update_tindang = async () => {
-    let token_req: any = localStorage.getItem("token_req");
+    let token_req: any = `"${
+      datainforUser?.token_gg_encoded
+        ? datainforUser?.token_gg_encoded
+        : localStorage.getItem("token_req")
+    }"`;
     try {
       const response = await API_update_tindang(
         idTindang,
@@ -1005,17 +1185,6 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         handleUpdateStatusTindang={() => handleUpdateStatus_Antin()}
         openlidotuchoi={openlidotuchoi}
         Openlidotuchoi={Openlidotuchoi}
-      />
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
       />
     </div>
   );

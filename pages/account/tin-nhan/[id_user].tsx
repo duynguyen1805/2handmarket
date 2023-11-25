@@ -275,7 +275,7 @@ const Tin_nhan = ({
                           </div>
                         </div>
                         <div
-                          className="relative h-[25px]"
+                          className="relative h-[25px] min-w-[20px]"
                           onClick={() => handleClick_more(receiver.userID)}
                         >
                           <Image

@@ -47,30 +47,7 @@ const ModalComponent: React.FC<ModalProps> = ({
   const [demkitumota, setDemkituMota] = useState(inputMota.length);
 
   if (!isopenModalChinhsua) return null;
-  //   const handleClick_Capnhat = async () => {
-  //     let token_req: any = localStorage.getItem("token_req");
-  //     let item = {
-  //       img: img_arr,
-  //       tieude: inputTieude,
-  //       mota: inputMota,
-  //       giaban_muamoi: giaban_muamoi,
-  //       giaban: giaban,
-  //     };
-  //     try {
-  //       const response = await API_update_tindang(
-  //         idTindang,
-  //         type,
-  //         item,
-  //         token_req
-  //       );
-  //       if (response && response.errCode == 0) {
-  //         toast.success(response.message);
-  //         setOpenModalChinhsua(false);
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
+
   async function getBase64(file: any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
