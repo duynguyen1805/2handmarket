@@ -68,22 +68,25 @@ const Display_product_horizontal: React.FC<Props> = ({ item }) => {
       className="mb-1 h-[100px] w-full p-1 flex border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
-      <div className="h-full min-w-[100px] w-[100px] max-w-[100px] flex justify-center ">
+      <div className="h-full min-w-[110px] w-[110px] max-w-[110px] flex justify-center ">
         <div
-          className="h-full w-full bg-center bg-contain bg-no-repeat"
+          className="relative h-full w-full bg-center bg-contain bg-no-repeat"
           style={{ backgroundImage: `url(${item.img[0]})` }}
-        ></div>
+        >
+          {item.trangthaithanhtoan == 1 && (
+            <div className="absolute bottom-0 w-full py-[2px] flex items-center justify-center space-x-1 bg-mauxanhtroi">
+              <Image src={icon_star} alt="" className="h-[15px] w-[15px]" />
+              <p className="text-animation font-mono text-xs text-white">
+                Tin ưu tiên
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="h-full w-[calc(100% - 100px)] px-1 ">
+      <div className="h-full w-[calc(100% - 110px)] px-1 ">
         <div className="h-[50%] w-full">
           <div className="h-auto w-full text-base font-bold overflow-hidden flex items-center place-content-between">
             <p className="overflow-hidden h-[25px]">{item.tieude}</p>
-            {/* {item.trangthaithanhtoan == 1 && (
-              <div className="flex items-center space-x-1">
-                <Image src={icon_star} alt="" className="h-[25px] w-[25px]" />
-                <p className="text-animation font-mono">Tin ưu tiên</p>
-              </div>
-            )} */}
           </div>
           <p className="h-auto w-full text-sm font-bold text-red-500">
             {item.price.toLocaleString("vi-VN")} đ
