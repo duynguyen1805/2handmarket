@@ -68,7 +68,7 @@ const Display_product_vertical: React.FC<Props> = ({
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className={`relative sm:h-[310px] md:h-[330px] w-[228px] px-2 pt-1 border cursor-pointer hover:border-mauxanhtroi hover:shadow-lg ${
+      className={`relative sm:h-[280px] md:h-[330px] w-[228px] px-2 pt-1 border cursor-pointer hover:border-mauxanhtroi hover:shadow-lg ${
         item.trangthaithanhtoan == 1 && active_tab_filter == 0
           ? "border-mauxanhtroi"
           : "border-gray-300"
@@ -76,7 +76,7 @@ const Display_product_vertical: React.FC<Props> = ({
       onClick={() => clickProduct(item.type, item._id)}
     >
       <Link href={`/products/${item._id}?type=${item.type}`}>
-        <div className="sm:h-[190px] md:h-[210px] w-full flex justify-center">
+        <div className="sm:h-[170px] md:h-[210px] w-full flex justify-center">
           <div
             className="h-full w-full bg-center bg-contain bg-no-repeat"
             style={{ backgroundImage: `url(${item.img[0]})` }}
@@ -96,13 +96,13 @@ const Display_product_vertical: React.FC<Props> = ({
             )}
           </div>
         </div>
-        <p className="h-[60px] w-full sm:text-lg md:text-xl overflow-hidden">
+        <p className="sm:h-[50px] md:h-[60px] w-full sm:text-base md:text-xl overflow-hidden">
           {item.tieude}
         </p>
-        <p className="h-[25px] w-full sm:text-base md:text-lg font-bold text-red-500">
+        <p className="h-[25px] w-full sm:text-sm md:text-lg font-bold text-red-500">
           {item.price.toLocaleString("vi-VN")} đ
         </p>
-        <p className="h-[25px] w-full sm:text-base md:text-lg font-thin">
+        <p className="h-[25px] w-full sm:text-sm md:text-lg font-thin">
           {thoigiandadang}
         </p>
       </Link>

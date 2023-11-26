@@ -196,7 +196,7 @@ const Home = () => {
       {
         breakpoint: 375, // < 375
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 2,
           infinite: true,
           dots: true,
@@ -269,12 +269,12 @@ const Home = () => {
         </div>
       </div>
       {/* Khám phá danh mục */}
-      <div className="sm:h-[210px] md:h-[240px] lg:h-[210px] w-full flex items-center justify-center mt-3">
+      <div className="sm:h-[200px] md:h-[240px] lg:h-[210px] w-full flex items-center justify-center mt-3">
         <div className="bg-white shadow-sm h-full sm:w-auto sm:min-w-full md:min-w-[767px] md:max-w-[1024px] lg:w-[1440px] lg:max-w-[1440px] px-2 md:pt-2">
           <p className="h-[50px] w-full sm:text-lg md:text-2xl font-bold flex items-center">
             Khám phá danh mục
           </p>
-          <div className="h-[130px] w-full lg:pt-5">
+          <div className="sm:h-[110px] md:h-[130px] w-full lg:pt-5">
             <div className="h-full w-full">
               <Slider {...settings_slider_danhmuc}>
                 {danhmuc &&
@@ -288,7 +288,7 @@ const Home = () => {
                           handle_loading_router_push(item_main.link)
                         }
                       >
-                        <div className="h-[80px] w-full flex items-center justify-center">
+                        <div className="sm:h-[70px] md:h-[80px] w-full flex items-center justify-center">
                           <Image
                             src={
                               item_main.key === 0
@@ -310,7 +310,7 @@ const Home = () => {
                                 : ""
                             }
                             alt="icon"
-                            className="lg:h-[80px] lg:w-[80px] sm:h-[70px] sm:w-[70px] rounded-3xl cursor-pointer"
+                            className="lg:h-[80px] lg:w-[80px] md:h-[70px] md:w-[70px] sm:h-[60px] sm:w-[60px] rounded-3xl cursor-pointer"
                           />
                         </div>
                         <p className="h-[50px] w-full lg:text-xl md:text-lg sm:text-sm flex items-center justify-center text-center cursor-pointer">

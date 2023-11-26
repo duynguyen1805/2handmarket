@@ -31,6 +31,7 @@ import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien"
 import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
+import Display_product_horizontal from "@/components/Display_product_horizontal";
 
 const list_oto: oto[] = item_listoto;
 
@@ -196,7 +197,7 @@ const Oto = () => {
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
+            <div className="h-full w-[1440px] bg-white md:text-xl flex items-center place-content-between py-1 px-3 rounded-lg shadow-md">
               <div className="flex items-center h-full w-auto">
                 <Danhmuc />
                 <div className="h-full w-auto sm:hidden md:flex items-center ml-3 space-x-1">
@@ -311,16 +312,24 @@ const Oto = () => {
               </div>
             )}
             {itemOto && itemOto.length !== 0 && (
-              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
                 {itemOto &&
                   itemOto.map((item: any, index: any) => {
                     return (
-                      <div
-                        key={index}
-                        className="flex items-center justify-center"
-                      >
-                        <Display_product_vertical_v2 item={item} />
-                      </div>
+                      <>
+                        <div
+                          key={index}
+                          className="sm:hidden md:flex items-center justify-center"
+                        >
+                          <Display_product_vertical_v2 item={item} />
+                        </div>
+                        <div
+                          key={index}
+                          className="sm:flex md:hidden items-center justify-center"
+                        >
+                          <Display_product_horizontal item={item} />
+                        </div>
+                      </>
                     );
                   })}
               </div>

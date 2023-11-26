@@ -1,6 +1,6 @@
 CHƯA LÀM: (
--- responsive giao diện mobile fix lại các bộ lọc, trang xem tin chi tiết, cỡ chữ giảm xuống 1
--- giới hạn dung lượng ảnh khi đặt avatar
+-- responsive giao diện mobile fix lại các bộ lọc, cỡ chữ giảm xuống 1 size rồi vẫn còn to
+-- sửa lại tải file thống kê theo filter, không phải data từ response theo tháng trả từ api
 )
 Backend: (
 (1) -- tin đăng tối đa 30 ngày, kể từ ngày duyệt

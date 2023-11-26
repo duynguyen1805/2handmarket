@@ -104,7 +104,7 @@ const Xe_dap = () => {
         <div>
           {/* Điều hướng */}
           <div className="h-[60px] w-full flex items-center justify-center mt-2">
-            <div className="h-full w-[1440px] bg-white text-xl flex items-center p-1 rounded-lg shadow-md">
+            <div className="h-full w-[1440px] bg-white md:text-xl flex items-center p-1 rounded-lg shadow-md">
               <Danhmuc />
               <div className="h-full w-auto sm:hidden md:flex items-center ml-3 space-x-1">
                 <Link
@@ -138,7 +138,7 @@ const Xe_dap = () => {
                   Xem tất cả
                 </p>
               </div>
-              <div className="sm:h-[120px] md:h-[140px] w-full pt-3">
+              <div className="sm:h-[130px] md:h-[140px] w-full pt-3">
                 <div className="h-full w-full flex">
                   {list_loaixedap &&
                     list_loaixedap.map((item: any) => {
