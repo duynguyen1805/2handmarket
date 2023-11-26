@@ -18,6 +18,8 @@ import Modal_Filter_Phuongtien from "@/components/modal/Modal_Filter_Phuongtien"
 import { useMyContext } from "@/contexts/MyContext";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
+import Display_product_horizontal from "@/components/Display_product_horizontal";
+import { useMediaQuery } from "react-responsive";
 
 const Xe_dien = () => {
   const [itemXedien, setitemXedien] = useState<any[] | null>(null);
@@ -100,6 +102,11 @@ const Xe_dien = () => {
   const handleClick_btnFilter = () => {
     setopenModalFilter(!openModalFilter);
   };
+
+  // check màn hình mobile
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -235,7 +242,7 @@ const Xe_dien = () => {
               </div>
             )}
             {itemXedien && itemXedien.length !== 0 && (
-              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+              <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full  md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
                 {itemXedien &&
                   itemXedien.map((item: any, index: any) => {
                     return (
@@ -243,7 +250,11 @@ const Xe_dien = () => {
                         key={index}
                         className="flex items-center justify-center"
                       >
-                        <Display_product_vertical_v2 item={item} />
+                        {!isSmallScreen ? (
+                          <Display_product_vertical_v2 item={item} />
+                        ) : (
+                          <Display_product_horizontal item={item} />
+                        )}
                       </div>
                     );
                   })}

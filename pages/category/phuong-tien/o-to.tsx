@@ -24,6 +24,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ReactPaginate from "react-paginate";
+import { useMediaQuery } from "react-responsive";
 
 import item_listoto, { oto } from "../../../components/obj_data_raw/List_Oto";
 import { API_get_Phuongtien } from "@/service/userService";
@@ -163,6 +164,11 @@ const Oto = () => {
   const handleClick_btnFilter = () => {
     setopenModalFilter(!openModalFilter);
   };
+
+  // check màn hình mobile
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -316,20 +322,16 @@ const Oto = () => {
                 {itemOto &&
                   itemOto.map((item: any, index: any) => {
                     return (
-                      <>
-                        <div
-                          key={index}
-                          className="sm:hidden md:flex items-center justify-center"
-                        >
+                      <div
+                        key={index}
+                        className="flex items-center justify-center"
+                      >
+                        {!isSmallScreen ? (
                           <Display_product_vertical_v2 item={item} />
-                        </div>
-                        <div
-                          key={index}
-                          className="sm:flex md:hidden items-center justify-center"
-                        >
+                        ) : (
                           <Display_product_horizontal item={item} />
-                        </div>
-                      </>
+                        )}
+                      </div>
                     );
                   })}
               </div>

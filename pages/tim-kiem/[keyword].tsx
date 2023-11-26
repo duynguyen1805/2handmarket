@@ -95,7 +95,7 @@ const Keyword = ({ keyword }: Timkiem_Props) => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center">
             {/* max-h-2140px cho 6 hàng ngang */}
-            <div className="bg-white shadow-sm h-auto w-full min-h-[360px] max-h-[2140px] lg:max-w-[1440px] sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px] px-2 py-3">
+            <div className="bg-white shadow-sm h-auto w-full min-h-[360px] max-h-[2140px] lg:max-w-[1440px]  md:flex md:flex-wrap items-center justify-center gap-[10px] px-2 py-3">
               {kqSearch &&
                 kqSearch.map((item: any, index: any) => {
                   return (

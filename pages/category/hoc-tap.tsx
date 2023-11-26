@@ -21,6 +21,7 @@ import { API_get_Dohoctap, API_get_Donoithat } from "@/service/userService";
 import Display_product_horizontal_v2 from "@/components/Display_product_vertical_v2";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
+import { useMediaQuery } from "react-responsive";
 const danhmuc_main: any[] = item_danhmuc[0].sub_danhmuc;
 
 const Hoc_tap = () => {
@@ -129,6 +130,11 @@ const Hoc_tap = () => {
     setitemALLDohoctap(null);
   };
 
+  // check màn hình mobile
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Head>
@@ -230,7 +236,7 @@ const Hoc_tap = () => {
             )}
             {itemALLDohoctap && itemALLDohoctap.length !== 0 && (
               <div
-                className={`bg-white shadow-sm h-auto min-h-[360px] sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden`}
+                className={`bg-white shadow-sm h-auto min-h-[360px] sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full  md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden`}
               >
                 {itemALLDohoctap &&
                   itemALLDohoctap.length !== 0 &&
@@ -240,7 +246,11 @@ const Hoc_tap = () => {
                         key={index}
                         className="flex items-center justify-center"
                       >
-                        <Display_product_vertical_v2 item={item} />
+                        {!isSmallScreen ? (
+                          <Display_product_vertical_v2 item={item} />
+                        ) : (
+                          <Display_product_horizontal item={item} />
+                        )}
                       </div>
                     );
                   })}

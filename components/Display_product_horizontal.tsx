@@ -68,13 +68,13 @@ const Display_product_horizontal: React.FC<Props> = ({ item }) => {
       className="mb-1 h-[100px] w-full p-1 flex border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
-      <div className="h-full w-[150px] max-w-[100px] flex justify-center">
+      <div className="h-full min-w-[100px] w-[100px] max-w-[100px] flex justify-center ">
         <div
           className="h-full w-full bg-center bg-contain bg-no-repeat"
           style={{ backgroundImage: `url(${item.img[0]})` }}
         ></div>
       </div>
-      <div className="h-full w-[calc(100% - 150px)] px-1">
+      <div className="h-full w-[calc(100% - 100px)] px-1 ">
         <div className="h-[50%] w-full">
           <div className="h-auto w-full text-base font-bold overflow-hidden flex items-center place-content-between">
             <p className="overflow-hidden h-[25px]">{item.tieude}</p>

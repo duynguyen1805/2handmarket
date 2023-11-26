@@ -12,6 +12,8 @@ import { API_get_Dodientu } from "@/service/userService";
 import ReactPaginate from "react-paginate";
 import Display_product_vertical_v2 from "@/components/Display_product_vertical_v2";
 import Link from "next/link";
+import Display_product_horizontal from "@/components/Display_product_horizontal";
+import { useMediaQuery } from "react-responsive";
 
 const Tb_deo_thong_minh = () => {
   const [itemThietbideothongminh, setitemThietbideothongminh] = useState<
@@ -83,6 +85,11 @@ const Tb_deo_thong_minh = () => {
     setpagehientai(selected);
     setitemThietbideothongminh(null);
   };
+
+  // check màn hình mobile
+  const isSmallScreen = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -200,7 +207,7 @@ const Tb_deo_thong_minh = () => {
             )}
             {itemThietbideothongminh &&
               itemThietbideothongminh.length !== 0 && (
-                <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full sm:grid sm:grid-cols-2 md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
+                <div className="bg-white shadow-sm h-auto min-h-[360px] w-auto sm:w-full lg:w-[1440px] sm:max-h-[4280px] max-w-full  md:flex justify-center md:flex-wrap gap-[10px] px-2 py-3 overflow-hidden">
                   {itemThietbideothongminh &&
                     itemThietbideothongminh.map((item: any, index: any) => {
                       return (
@@ -208,7 +215,11 @@ const Tb_deo_thong_minh = () => {
                           key={index}
                           className="flex items-center justify-center"
                         >
-                          <Display_product_vertical_v2 item={item} />
+                          {!isSmallScreen ? (
+                            <Display_product_vertical_v2 item={item} />
+                          ) : (
+                            <Display_product_horizontal item={item} />
+                          )}
                         </div>
                       );
                     })}
