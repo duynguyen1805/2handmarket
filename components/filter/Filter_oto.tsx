@@ -195,7 +195,7 @@ const Filter_oto = ({
           <div className="flex item-center space-x-3">
             <button
               onClick={() => handleClick_hopso(0)}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 hopso === 0 ? `bg-mauxanhtroi text-white` : ``
               }`}
             >
@@ -203,7 +203,7 @@ const Filter_oto = ({
             </button>
             <button
               onClick={() => handleClick_hopso(1)}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 hopso === 1 ? `bg-mauxanhtroi text-white` : ``
               }`}
             >
@@ -211,7 +211,7 @@ const Filter_oto = ({
             </button>
             <button
               onClick={() => handleClick_hopso(2)}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 hopso === 2 ? `bg-mauxanhtroi text-white` : ``
               }`}
             >

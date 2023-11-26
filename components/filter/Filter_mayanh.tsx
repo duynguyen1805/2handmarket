@@ -60,7 +60,7 @@ const Filter_mayanh = ({
           <div className="flex item-center space-x-3">
             <button
               onClick={() => handleClick_loaithietbi("mayanh")}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 loaimayanh === "mayanh" ? `bg-mauxanhtroi text-white` : ``
               }`}
             >
@@ -68,7 +68,7 @@ const Filter_mayanh = ({
             </button>
             <button
               onClick={() => handleClick_loaithietbi("mayquay")}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 loaimayanh === "mayquay" ? `bg-mauxanhtroi text-white` : ``
               }`}
             >
@@ -76,7 +76,7 @@ const Filter_mayanh = ({
             </button>
             <button
               onClick={() => handleClick_loaithietbi("other")}
-              className={`h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
+              className={`md:h-[35px] w-auto px-5 rounded-full bg-gray-200 hover:border hover:border-mauxanhtroi ${
                 loaimayanh === "other" ? `bg-mauxanhtroi text-white` : ``
               }`}
             >

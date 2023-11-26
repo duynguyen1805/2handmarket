@@ -132,7 +132,7 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
   };
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-30 flex items-start justify-center pt-[85px]">
+    <div className="fixed inset-0 z-30 flex items-start justify-center md:pt-[85px]">
       <div className="modal-overlay absolute inset-0 bg-gray-900 opacity-20" />
       <motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -195,7 +195,7 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
             </div>
           )}
           {type === "maytinhbang" && (
-            <div className="modal-body px-5 py-2 h-[850px] flex flex-col place-content-between">
+            <div className="modal-body px-5 py-2 md:h-[850px] flex flex-col place-content-between">
               <Filter_maytinhbang
                 typeHang={hang}
                 settypeHang={setHang}
@@ -239,7 +239,7 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
             </div>
           )}
           {type === "laptop" && (
-            <div className="modal-body px-5 py-2 h-[850px] flex flex-col place-content-between">
+            <div className="modal-body px-5 py-2 md:h-[850px] flex flex-col place-content-between overflow-auto">
               <Filter_laptop
                 typeHang={hang}
                 settypeHang={setHang}
@@ -285,7 +285,7 @@ const Modal_Filter_Dodientu: React.FC<ModalProps> = ({
             </div>
           )}
           {type === "desktop" && (
-            <div className="modal-body px-5 py-2 h-[800px] flex flex-col place-content-between">
+            <div className="modal-body px-5 py-2 md:h-[800px] flex flex-col place-content-between">
               <Filter_desktop
                 typeHang={hang}
                 settypeHang={setHang}
