@@ -111,6 +111,7 @@ import { useMyContext } from "@/contexts/MyContext";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
+import { Select, Space } from "antd";
 
 const Dang_tin = () => {
   //lấy usecontext
@@ -189,7 +190,7 @@ const Dang_tin = () => {
   >();
   const [label_giaban, setlabel_Giaban] = useState<string | any>();
 
-  const setSelectDanhmuc = (item: danhmuc) => {
+  const setSelectDanhmuc = (item: danhmuc | any) => {
     settitleDanhmuc(item.label);
     settypeDanhmuc(item.type);
     setkeyDanhmuc(item.key);
@@ -198,8 +199,9 @@ const Dang_tin = () => {
     settitleDanhmucChitiet("");
     settypeDanhmucChitiet("");
     // console.log("check key: ", item.key);
-    // console.log("check chitiet_danhmuc: ", chitiet_danhmuc);
+    console.log("check: ", item);
   };
+
   const setSelectDanhmucChitiet = (item: sub_danhmuc) => {
     settitleDanhmucChitiet(item.label);
     settypeDanhmucChitiet(item.type);

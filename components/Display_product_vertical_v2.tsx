@@ -64,7 +64,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className="relative sm:h-[280px] md:h-[340px] w-[228px] px-2 pt-1 border border-gray-300 cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
+      className="relative sm:h-[280px] md:h-[340px] w-[228px] px-2 pt-1 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer hover:border-mauxanhtroi hover:shadow-lg"
       onClick={() => clickProduct(item.type, item._id)}
     >
       <div className="sm:h-[170px] md:h-[210px] w-full flex justify-center">
@@ -75,7 +75,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
         <div
           className={
             item.trangthaithanhtoan == 1
-              ? `sm:h-[40px] md:h-[50px] w-full bg-mauxanhtroi text-white md:text-xl flex items-center justify-center absolute top-0`
+              ? `sm:h-[40px] md:h-[50px] w-full bg-mauxanhtroi rounded-t-sm text-white md:text-xl flex items-center justify-center absolute top-0`
               : ""
           }
         >

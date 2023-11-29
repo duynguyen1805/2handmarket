@@ -64,11 +64,11 @@ const Display_product_vertical: React.FC<Props> = ({
       animate={{
         opacity: 1,
         y: 0,
-        transition: { duration: 0.3, delay: 0.1 },
+        transition: { duration: 1.2, delay: 0.3 },
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
-      className={`relative sm:h-[280px] md:h-[330px] w-[228px] px-2 pt-1 border cursor-pointer hover:border-mauxanhtroi hover:shadow-lg ${
+      className={`relative sm:h-[280px] md:h-[330px] w-[228px] px-2 pt-1 bg-white border border-gray-300 rounded-md shadow-sm hover:shadow-lg hover:border-mauxanhtroi cursor-pointer ${
         item.trangthaithanhtoan == 1 && active_tab_filter == 0
           ? "border-mauxanhtroi"
           : "border-gray-300"
@@ -84,7 +84,7 @@ const Display_product_vertical: React.FC<Props> = ({
           <div
             className={
               item.trangthaithanhtoan == 1 && active_tab_filter == 0
-                ? `sm:h-[40px] md:h-[50px] w-full bg-mauxanhtroi text-white md:text-xl flex items-center justify-center absolute top-0`
+                ? `sm:h-[40px] md:h-[50px] w-full bg-mauxanhtroi rounded-t-md text-white md:text-xl flex items-center justify-center absolute top-0`
                 : ""
             }
           >

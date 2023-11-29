@@ -195,7 +195,12 @@ const Header = () => {
     if (idUser) {
       try {
         handle_setIsLoading(true);
-        await router.push(`/account/trang-ca-nhan/${idUser}`);
+        if (window.location.href.includes("/account/trang-ca-nhan/")) {
+          window.location.href = `/account/trang-ca-nhan/${idUser}`;
+        } else {
+          await router.push(`/account/trang-ca-nhan/${idUser}`);
+        }
+
         handle_setIsLoading(false);
       } catch (error) {
         console.error("Error navigating:", error);

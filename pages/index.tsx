@@ -56,6 +56,7 @@ import item_danhmuc, {
 } from "../components/obj_data_raw/Danhmuc_raw";
 import Nav_mobile from "@/components/Nav_mobile";
 import { useMyContext } from "@/contexts/MyContext";
+import Loading_item from "@/components/loading/Loading_item";
 const danhmuc: danhmuc[] = item_danhmuc;
 
 const Home = () => {
@@ -331,15 +332,13 @@ const Home = () => {
             Tin đăng nổi bật
           </p>
           {errcode == null && (
-            <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
-              <Image
-                src={icon_loading}
-                alt=""
-                className="h-[45px] w-[45px] loading"
-              />
-              <p className="">
-                Loading... Vui lòng chờ Server phản hồi sau giây lát.
-              </p>
+            <div className="h-auto sm:max-h-[280px] md:max-h-[330px] w-full sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px] overflow-hidden">
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
             </div>
           )}
           {errcode == 0 && tindang_qc && tindang_qc.length == 0 && (
@@ -388,15 +387,13 @@ const Home = () => {
             Tin đăng gần đây
           </p>
           {tindang_ganday && tindang_ganday.length == 0 && (
-            <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
-              <Image
-                src={icon_loading}
-                alt=""
-                className="h-[45px] w-[45px] loading"
-              />
-              <p className="">
-                Loading... Vui lòng chờ Server phản hồi sau giây lát.
-              </p>
+            <div className="h-auto sm:max-h-[280px] md:max-h-[330px] w-full sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px] overflow-hidden">
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
+              <Loading_item />
             </div>
           )}
           <div className="h-auto w-full sm:pb-14 md:pb-0 md:pt-2 sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px]">
