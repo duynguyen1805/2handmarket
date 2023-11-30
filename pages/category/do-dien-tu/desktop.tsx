@@ -24,6 +24,7 @@ import Display_product_vertical_v2 from "@/components/Display_product_vertical_v
 import Link from "next/link";
 import Display_product_horizontal from "@/components/Display_product_horizontal";
 import { useMediaQuery } from "react-responsive";
+import Loading_item from "@/components/loading/Loading_item";
 
 const list_desktop: desktop[] = item_list_desktop;
 
@@ -286,15 +287,13 @@ const Desktop = () => {
           </div>
           <div className="h-auto w-full flex flex-col items-center justify-center mt-3">
             {itemDesktop == null && (
-              <div className="h-[50px] w-full md:text-2xl flex items-center justify-center space-x-2">
-                <Image
-                  src={icon_loading}
-                  alt=""
-                  className="h-[45px] w-[45px] loading"
-                />
-                <p className="">
-                  Loading... Vui lòng chờ Server phản hồi sau giây lát.
-                </p>
+              <div className="h-auto sm:max-h-[280px] md:max-h-[350px] sm:w-full lg:w-[1440px] max-w-full py-2 bg-white sm:grid sm:grid-cols-2 md:flex md:flex-wrap items-center justify-center gap-[10px] overflow-hidden">
+                <Loading_item />
+                <Loading_item />
+                <Loading_item />
+                <Loading_item />
+                <Loading_item />
+                <Loading_item />
               </div>
             )}
             {itemDesktop && itemDesktop.length == 0 && (

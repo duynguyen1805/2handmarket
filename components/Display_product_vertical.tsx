@@ -60,7 +60,7 @@ const Display_product_vertical: React.FC<Props> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{
         opacity: 1,
         y: 0,

@@ -236,8 +236,9 @@ const Home = () => {
           <div className="h-[50px] w-full py-1">
             <Danhmuc />
           </div>
-          <div className="h-full w-full pb-8 overflow-hidden flex items-center justify-center">
-            <motion.div
+          {/* pb-8 */}
+          <div className="h-full w-full overflow-hidden flex items-center justify-center">
+            {/* <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0, transition: { duration: 0.3 } }}
               className="h-full w-auto sm:min-w-full md:min-w-[767px] max-w-[960px]"
@@ -265,7 +266,7 @@ const Home = () => {
                   className="h-fit w-full rounded-md"
                 />
               </Slider>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </div>
