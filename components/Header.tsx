@@ -34,6 +34,11 @@ import { db } from "../firebase.config";
 
 import { useSession, signOut } from "next-auth/react";
 import { API_register } from "@/service/userService";
+
+import { Select } from "antd";
+import list_forSearching, { itf } from "./obj_data_raw/List_forSearching";
+const list_searching: itf[] = list_forSearching;
+
 interface UserData {
   name: string;
   email: string;
@@ -48,7 +53,7 @@ interface SessionData {
   expires: any;
 }
 
-const Header = () => {
+const Header: React.FC = () => {
   //lấy data session login bằng google (status: ['loading', 'authenticated', 'unauthenticated'])
   const { data, status } = useSession<SessionData | any>();
   //lấy usecontext
@@ -253,21 +258,38 @@ const Header = () => {
     }
   };
 
+  // search cũ
   const [searchValue, setSearchValue] = useState<string>("");
   const [isClickSearch, setisClickSearch] = useState<boolean>(false);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchValue(value);
     setisClickSearch(false);
     // handleSearch(value);
   };
-
   const handle_ClickSearch_pushnewpage = async () => {
     try {
       handle_setIsLoading(true);
       await router.push({ pathname: `/tim-kiem/${searchValue}` });
       setKeywordSearch(searchValue);
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
+    }
+  };
+
+  // sử dụng antd cho select search
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const filteredOptions = list_searching.filter(
+    (item: any) => !selectedItems.includes(item)
+  );
+  const handle_ClickSearch_pushnewpage_antd = async (value: any) => {
+    try {
+      handle_setIsLoading(true);
+      setSelectedItems(value);
+      await router.push({ pathname: `/tim-kiem/${value}` });
+      setKeywordSearch(value);
       handle_setIsLoading(false);
     } catch (error) {
       console.error("Error navigating:", error);
@@ -326,7 +348,7 @@ const Header = () => {
 
             <div className="relative w-6/12 sm:mx-auto sm:w-[80%] md:w-[100%] md:mx-[25px] lg:ml-[5px] lg:mr-[5px] lg:mb-[25px] lg:mt-[25px] rounded-[10px] bg-[#e2e2e2]">
               <div className="flex flex-row">
-                <input
+                {/* <input
                   className="h-10 lg:w-[92%] md:w-[100%] text-[black] text-base pl-2.5 border-[none] outline-none bg-transparent"
                   onChange={handleChange}
                   type="text"
@@ -339,7 +361,28 @@ const Header = () => {
                   className="text-black w-[20%] h-10 bg-[#e9ecef] text-lg cursor-pointer rounded-tr-[10px] rounded-br-[10px] border-[unset] outline-none hover:bg-blue-300 hover:text-white"
                 >
                   Tìm
-                </button>
+                </button> */}
+                <div className="h-12 lg:w-[100%] md:w-[100%] text-[black] flex flex-row border-none outline-none bg-transparent">
+                  <Select
+                    showSearch
+                    style={{ height: "100%", width: "100%" }}
+                    placeholder="Tìm kiếm"
+                    value={selectedItems}
+                    onChange={handle_ClickSearch_pushnewpage_antd}
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label?.toLowerCase() ?? "").includes(
+                        input.toLowerCase()
+                      )
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? "")
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? "").toLowerCase())
+                    }
+                    options={filteredOptions}
+                  />
+                </div>
               </div>
             </div>
           </div>

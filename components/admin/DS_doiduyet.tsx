@@ -24,6 +24,7 @@ import Modal_TuchoiTindang from "../modal/Modal_TuchoiTindang";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Link from "next/link";
 
 const DS_doiduyet: React.FC<any> = ({
   selectoption,
@@ -769,6 +770,22 @@ const DS_doiduyet: React.FC<any> = ({
               >
                 <p>Số chỗ ngồi: {item.sochongoi} chỗ</p>
               </div>
+            </div>
+            <span className="w-full font-bold mt-3">Thông tin người dùng</span>
+            <div className="w-full mt-1 flex flex-col space-y-1">
+              <span>Họ tên: {item.infor_user.name}</span>
+              <span>Địa chỉ: {item.infor_user.address}</span>
+
+              <Link
+                href={`/account/trang-ca-nhan/${item.infor_user._id}`}
+                className="flex items-center space-x-1"
+                target="_blank"
+              >
+                <span>id:</span>
+                <span className="hover:text-mauxanhtroi">
+                  {item.infor_user._id}
+                </span>
+              </Link>
             </div>
           </div>
           <div className="h-[60px] w-full flex sticky bottom-0">

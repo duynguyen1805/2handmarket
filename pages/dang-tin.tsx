@@ -111,7 +111,13 @@ import { useMyContext } from "@/contexts/MyContext";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
-import { Select, Space } from "antd";
+import { storage } from "../firebase.config";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 const Dang_tin = () => {
   //lấy usecontext
@@ -198,16 +204,12 @@ const Dang_tin = () => {
     //set lại chi tiết danh muc
     settitleDanhmucChitiet("");
     settypeDanhmucChitiet("");
-    // console.log("check key: ", item.key);
-    console.log("check: ", item);
   };
 
   const setSelectDanhmucChitiet = (item: sub_danhmuc) => {
     settitleDanhmucChitiet(item.label);
     settypeDanhmucChitiet(item.type);
     setopenDanhmucChitiet(!openDanhmucChitiet);
-    console.log("check key: ", item.key);
-    console.log("check type: ", item.type);
   };
 
   const [openKhoaTruong, setopenKhoaTruong] = useState<boolean>(false);
@@ -247,35 +249,40 @@ const Dang_tin = () => {
   }
   const [img_arr, setImg_arr] = useState<any>([]);
   const [reviewImg_arr, setReviewImg_arr] = useState<any>([]);
-  const handleFile = async (e: any) => {
-    //login handle multiple file (lưu 3 ảnh chung 1 trường img)
-    //chọn 1 lượt, ko chọn thêm từng ảnh.
-    let files = e.target.files;
-    let fileArray = Array.from(files);
+  // const handleFile = async (e: any) => {
+  //   //login handle multiple file (lưu 3 ảnh chung 1 trường img)
+  //   //chọn 1 lượt, ko chọn thêm từng ảnh.
+  //   let files = e.target.files;
+  //   let fileArray = Array.from(files);
 
-    let base64Array: any = [];
-    let objectURLArray: any = [];
+  //   let base64Array: any = [];
+  //   let objectURLArray: any = [];
 
-    for (let i = 0; i < fileArray.length; i++) {
-      let file: any = fileArray[i];
-      //check loại file
-      if (!file.type.startsWith("image/")) {
-        toast.error(`File ${file.name} không phải là ảnh.`);
-        continue; // bỏ qua file không phải là ảnh
-      }
-      let base64 = await getBase64(file);
-      let objectURL = URL.createObjectURL(file);
-      base64Array.push(base64);
-      objectURLArray.push(objectURL);
-    }
-    setImg_arr((prevImg_arr: any) => [...prevImg_arr, ...base64Array]);
-    setReviewImg_arr((prevReviewImg_arr: any) => [
-      ...prevReviewImg_arr,
-      ...objectURLArray,
-    ]);
-  };
+  //   for (let i = 0; i < fileArray.length; i++) {
+  //     let file: any = fileArray[i];
+  //     //check loại file
+  //     if (!file.type.startsWith("image/")) {
+  //       toast.error(`File ${file.name} không phải là ảnh.`);
+  //       continue; // bỏ qua file không phải là ảnh
+  //     }
+  //     let base64 = await getBase64(file);
+  //     let objectURL = URL.createObjectURL(file);
+  //     base64Array.push(base64);
+  //     objectURLArray.push(objectURL);
+  //   }
+  //   setImg_arr((prevImg_arr: any) => [...prevImg_arr, ...base64Array]);
+  //   setReviewImg_arr((prevReviewImg_arr: any) => [
+  //     ...prevReviewImg_arr,
+  //     ...objectURLArray,
+  //   ]);
+  // };
   // Xóa ảnh
-  const handleCloseButtonClick = (indexToRemove: number) => {
+  const handleCloseButtonClick = async (indexToRemove: number) => {
+    const imageUrlToRemove = img_arr[indexToRemove];
+    // delete img trên Firebase Storage
+    const imageRef = ref(storage, imageUrlToRemove);
+    await deleteObject(imageRef);
+
     setReviewImg_arr((prevReviewImg_arr: any) => {
       const updatedReviewImg_arr = [...prevReviewImg_arr];
       updatedReviewImg_arr.splice(indexToRemove, 1); // Xóa phần tử tại indexToRemove
@@ -287,6 +294,41 @@ const Dang_tin = () => {
       return updatedImg_arr;
     });
   };
+  // xử lý ảnh lưu lên firebase, trả về link url
+  const handleFile_new = async (e: any) => {
+    let files = e.target.files;
+    let fileArray = Array.from(files);
+
+    let objectURLArray: any = [];
+    let downloadURLArray: any = [];
+
+    for (let i = 0; i < fileArray.length; i++) {
+      let file: any = fileArray[i];
+      if (!file.type.startsWith("image/")) {
+        toast.error(`File ${file.name} không phải là ảnh.`);
+        continue;
+      }
+      let objectURL = URL.createObjectURL(file);
+
+      objectURLArray.push(objectURL);
+
+      // upload img lên Firebase Storage
+      const filename = Date.now().toString();
+      const storageRef = ref(storage, `images_sp_tindang/${filename}.png`);
+      const snapshot = await uploadBytes(storageRef, file);
+
+      // URL từ Firebase Storage
+      const imageUrl = await getDownloadURL(snapshot.ref);
+
+      downloadURLArray.push(imageUrl);
+    }
+    setImg_arr((prevImg_arr: any) => [...prevImg_arr, ...downloadURLArray]);
+    setReviewImg_arr((prevReviewImg_arr: any) => [
+      ...prevReviewImg_arr,
+      ...objectURLArray,
+    ]);
+  };
+
   const [inputTieude, setInputTieude] = useState("");
   const [demkitutieude, setDemkituTieude] = useState(0);
   const [inputMota, setInputMota] = useState("");
@@ -709,7 +751,6 @@ const Dang_tin = () => {
   }, [router]);
 
   const Dangtin = async () => {
-    // const token_req: any = localStorage.getItem("token_req");
     let token_req: any = `"${
       datainforUser?.token_gg_encoded
         ? datainforUser?.token_gg_encoded
@@ -736,6 +777,7 @@ const Dang_tin = () => {
         }
       } else {
         toast.error("Vui lòng điền đủ thông tin có dấu (*)");
+        console.log("check err: ", build_data_hoctap);
         // setErr_miss_input(true);
       }
     }
@@ -1266,7 +1308,7 @@ const Dang_tin = () => {
                         accept="image/*"
                         multiple
                         onChange={(e) => {
-                          handleFile(e);
+                          handleFile_new(e);
                         }}
                       />
                       <button className="h-full w-full bg-gray-100 text-white text-lg cursor-pointer">

@@ -35,7 +35,7 @@ import Slider from "react-slick";
 
 import LazyLoad from "react-lazyload";
 
-import type { Metadata } from "next";
+import type { GetServerSideProps, Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "2Hand Market",
@@ -54,7 +54,6 @@ import item_danhmuc, {
   danhmuc,
   sub_danhmuc,
 } from "../components/obj_data_raw/Danhmuc_raw";
-import Nav_mobile from "@/components/Nav_mobile";
 import { useMyContext } from "@/contexts/MyContext";
 import Loading_item from "@/components/loading/Loading_item";
 const danhmuc: danhmuc[] = item_danhmuc;

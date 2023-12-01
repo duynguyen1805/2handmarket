@@ -60,7 +60,7 @@ const Display_product_vertical: React.FC<Props> = ({ item }) => {
       animate={{
         opacity: 1,
         y: 0,
-        transition: { duration: 0.3, delay: 0.1 },
+        transition: { duration: 0.8, delay: 0.2 },
       }}
       exit={{ opacity: 0, y: -50, transition: { duration: 0.3 } }}
       whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}

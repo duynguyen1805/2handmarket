@@ -564,8 +564,8 @@ const Quangcao = () => {
             </tr>
           </thead>
           <tbody>
-            {lichsu_qc &&
-              lichsu_qc.map((item: any, index: number) => {
+            {filter_data &&
+              filter_data.map((item: any, index: number) => {
                 return (
                   <tr key={index}>
                     <td className="py-2 pl-2 border border-black">
