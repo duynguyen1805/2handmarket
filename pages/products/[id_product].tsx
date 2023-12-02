@@ -364,7 +364,7 @@ const Chi_tiet_san_pham = ({ type, id_product }: CodeProductProps) => {
                     Mô tả chi tiết
                   </p>
                   <div className="h-auto w-full overflow-hidden">
-                    <pre className="h-auto w-full md:text-lg break-words whitespace-pre-wrap font-mono">
+                    <pre className="h-auto w-full md:text-lg break-words whitespace-pre-wrap font-sans">
                       {item.mota}
                     </pre>
                   </div>

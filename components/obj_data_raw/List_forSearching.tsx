@@ -3203,19 +3203,27 @@ const list_forSearching: itf[] = [
   },
   {
     label: "Máy ảnh Canon",
-    value: "canon",
+    value: "mayanh canon",
   },
   {
     label: "Máy ảnh Nikon",
-    value: "nikon",
+    value: "mayanh nikon",
   },
   {
     label: "Máy ảnh Sony",
-    value: "sony",
+    value: "mayanh sony",
   },
   {
     label: "Máy ảnh Fujifilm",
-    value: "fujifilm",
+    value: "mayanh fujifilm",
+  },
+  {
+    label: "Máy ảnh",
+    value: "mayanh",
+  },
+  {
+    label: "Máy quay",
+    value: "mayquay",
   },
   {
     label: "Đồ hồ thông minh",

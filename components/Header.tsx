@@ -234,10 +234,6 @@ const Header: React.FC = () => {
     setOpenOptionUser(!isOpenOption);
   };
   const Logout = async () => {
-    signOut();
-    localStorage.clear();
-    Cookies.remove("jwt_token");
-    count_message_unread(0);
     if (window.location.pathname !== "/") {
       try {
         handle_setIsLoading(true);
@@ -250,6 +246,10 @@ const Header: React.FC = () => {
     } else {
       window.location.reload();
     }
+    signOut();
+    localStorage.clear();
+    Cookies.remove("jwt_token");
+    count_message_unread(0);
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -338,7 +338,7 @@ const Header: React.FC = () => {
       />
       {/* display medium/desktop */}
       <div className="sm:hidden md:block h-auto min-h-[80px] w-[100%] bg-mauxanhtroi py-0 border-b sticky top-0 left-0 z-20">
-        <div className="w-[100%] lg:h-[80px] sm:h-[115px] lg:flex lg:flex-row lg:py-0 lg:space-y-0 sm:flex sm:flex-col sm:py-2 sm:space-y-2">
+        <div className="w-[100%] lg:h-[80px] sm:h-[115px] lg:flex lg:flex-row lg:py-0 lg:space-y-0 sm:flex sm:flex-col sm:py-2 sm:space-y-1">
           <div className="lg:w-[50%] sm:w-full flex items-center">
             <Link
               href="/"

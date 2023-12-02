@@ -26,7 +26,6 @@ import icon_lg_noithat from "../assets/img/icon_lg_noithat.png";
 import icon_lg_thucung from "../assets/img/icon_lg_thucung.png";
 import icon_lg_tulanh from "../assets/img/icon_lg_tulanh.png";
 import icon_lg_xeco from "../assets/img/icon_lg_xeco.png";
-import icon_loading from "../assets/icon/loading.png";
 
 //import css file Slider
 import "slick-carousel/slick/slick.css";
@@ -231,7 +230,7 @@ const Home = () => {
       <Header />
       {/* Banner */}
       <div className="max-h-[330px] h-auto w-full flex items-center justify-center">
-        <div className="bg-white shadow-sm h-full w-auto lg:w-[1440px] sm:min-w-full md:min-w-[767px] max-w-full px-2 pt-1 flex flex-col items-center justify-center space-y-2">
+        <div className="bg-white shadow-sm h-full w-full lg:w-[1440px] sm:min-w-full md:min-w-[767px] max-w-full px-2 pt-1 flex flex-col items-center justify-center space-y-2">
           <div className="h-[50px] w-full py-1">
             <Danhmuc />
           </div>

@@ -71,6 +71,7 @@ import Dangtin_oto from "@/components/dangtin/Dangtin_phuongtien/Dangtin_oto";
 
 import img_chuachontindang from "../public/dangtin_empty.svg";
 import addimg from "../assets/icon/addimg.png";
+import icon_loading from "../assets/icon/loading.png";
 
 import { API_Dangtin } from "@/service/userService";
 import Dangtin_xemay from "@/components/dangtin/Dangtin_phuongtien/Dangtin_xemay";
@@ -619,6 +620,7 @@ const Dang_tin = () => {
     img: img_arr,
   };
   const resetState = () => {
+    setloading_wait_res(false);
     setkeyDanhmuc(0);
     setkeyTruong(0);
     setopenDanhmuc(false);
@@ -750,6 +752,8 @@ const Dang_tin = () => {
     checkPermission();
   }, [router]);
 
+  const [loading_wait_res, setloading_wait_res] = useState<boolean>(false);
+
   const Dangtin = async () => {
     let token_req: any = `"${
       datainforUser?.token_gg_encoded
@@ -765,6 +769,7 @@ const Dang_tin = () => {
         inputMota &&
         img_arr.length > 0
       ) {
+        setloading_wait_res(true);
         const response = await API_Dangtin(
           datainforUser?._id,
           typeDanhmuc,
@@ -774,11 +779,11 @@ const Dang_tin = () => {
         if (response.errCode === 0) {
           toast.success("Đã gửi Tin đăng. Đợi kiểm duyệt !");
           resetState();
+        } else {
+          setloading_wait_res(false);
         }
       } else {
         toast.error("Vui lòng điền đủ thông tin có dấu (*)");
-        console.log("check err: ", build_data_hoctap);
-        // setErr_miss_input(true);
       }
     }
     if (typeDanhmuc === "hoctap" && typeDanhmucChitiet == "sachthamkhao") {
@@ -1830,7 +1835,7 @@ const Dang_tin = () => {
                         <div className="flex item-center space-x-3">
                           <button
                             onClick={() => setTinhtrang(0)}
-                            className={`sm:h-[50px] md::h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
+                            className={`sm:h-[50px] md:h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
                               tinhtrang === 0 ? "bg-mauxanhtroi text-white" : ""
                             }`}
                           >
@@ -1838,7 +1843,7 @@ const Dang_tin = () => {
                           </button>
                           <button
                             onClick={() => setTinhtrang(1)}
-                            className={`sm:h-[50px] md::h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
+                            className={`sm:h-[50px] md:h-[35px] w-auto px-3 border border-mauxanhtroi text-mauxanhtroi hover:opacity-80 rounded-full ${
                               tinhtrang === 1 ? "bg-mauxanhtroi text-white" : ""
                             }`}
                           >
@@ -2248,12 +2253,17 @@ const Dang_tin = () => {
                         />
                       </div>
                       <div className="flex items-center justify-center cursor-pointer">
-                        <div
+                        <button
+                          disabled={loading_wait_res == true}
                           onClick={() => Dangtin()}
-                          className="h-[45px] w-full bg-mauxanhtroi rounded-md text-xl text-white flex items-center justify-center hover:opacity-90"
+                          className={`h-[45px] w-full bg-mauxanhtroi rounded-md text-xl text-white flex items-center justify-center hover:opacity-90`}
                         >
-                          Đăng tin
-                        </div>
+                          {loading_wait_res == false ? (
+                            <span>Đăng tin</span>
+                          ) : (
+                            <span>Loading... Vui lòng đợi giây lát.</span>
+                          )}
+                        </button>
                       </div>
                     </>
                   )}
