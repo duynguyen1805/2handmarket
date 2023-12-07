@@ -2,9 +2,6 @@ require("dotenv").config();
 import Header from "@/components/Header";
 import DS_doiduyet from "@/components/admin/DS_doiduyet";
 import Head from "next/head";
-import Image from "next/image";
-import Home from "../../assets/icon/home.png";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ManageUser from "@/components/admin/ManageUser";
@@ -42,10 +39,9 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const BACKEND_URL: any = process.env.NEXT_PUBLIC_BACKEND_URL;
-    // Tạo kết nối Socket.io với server backend
-    const socket = io(BACKEND_URL); // Thay URL phù hợp với server backend của bạn
+    const socket = io(BACKEND_URL);
 
-    // Lắng nghe sự kiện 'new-post' từ server
+    // sự kiện 'new-post' từ server
     socket.on("new-post", (data) => {
       // data là thông báo hoặc dữ liệu mới từ server
       setNoti_NewPostMessage(data.message);
@@ -54,7 +50,7 @@ const AdminDashboard = () => {
     });
 
     return () => {
-      socket.disconnect(); // Ngắt kết nối khi unmount component (tuỳ vào tình huống)
+      socket.disconnect(); // ngắt kết nối
     };
   }, []);
 
@@ -376,18 +372,6 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };

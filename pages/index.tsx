@@ -10,13 +10,7 @@ import {
 import router from "next/router";
 import Danhmuc from "@/components/Danhmuc";
 import Display_product_vertical from "@/components/Display_product_vertical";
-import { delay, motion } from "framer-motion";
 import Image from "next/image";
-import dealbatngan from "../assets/img/banner_dealbatngan.jpg";
-import doSV from "../assets/img/banner_doSVthich.jpg";
-import thuDienthoai from "../assets/img/banner_thudienthoai2h.jpg";
-import trogantruong from "../assets/img/banner_trogantruong.png";
-import daytinngay from "../assets/img/banner_daytinngay.png";
 
 import icon_lg_hoctap from "../assets/img/icon_lg_hoctap.jpg";
 import icon_lg_canhan from "../assets/img/icon_lg_canhan.png";
@@ -125,45 +119,6 @@ const Home = () => {
     }
   };
 
-  const settings_slider = {
-    dots: true,
-    arrows: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    delay: 300,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 700,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 530,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-    ],
-  };
   const settings_slider_danhmuc = {
     dots: true,
     arrows: false,
@@ -400,9 +355,9 @@ const Home = () => {
               tindang_ganday.map((item: any, index: number) => {
                 return (
                   <div key={index} className="flex items-center justify-center">
-                    {/* <LazyLoad offset={100}> */}
-                    <Display_product_vertical item={item} />
-                    {/* </LazyLoad> */}
+                    <LazyLoad offset={100}>
+                      <Display_product_vertical item={item} />
+                    </LazyLoad>
                   </div>
                 );
               })}

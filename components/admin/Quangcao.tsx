@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from "react";
 import {
   API_getLichsu_qc_byDate,
   API_searchLichsu_qc_tindang,
 } from "@/service/userService";
-import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../language_datepicker/vi";
@@ -19,6 +19,7 @@ declare module "jspdf" {
     autoTable: (options: object) => jsPDF;
   }
 }
+import { Pie } from "@ant-design/plots";
 
 import item_danhmuc, {
   danhmuc,
@@ -80,7 +81,62 @@ const Quangcao = () => {
     setopenDanhmucChitiet(false);
   };
 
+  const data_charts = [
+    {
+      type: "Học tập",
+      value: 0,
+    },
+    {
+      type: "Phương tiện",
+      value: 0,
+    },
+    {
+      type: "Đồ điện tử",
+      value: 0,
+    },
+    {
+      type: "Đồ nội thất",
+      value: 0,
+    },
+    {
+      type: "Điện lạnh",
+      value: 0,
+    },
+    {
+      type: "Đồ cá nhân",
+      value: 0,
+    },
+    {
+      type: "Giải trí",
+      value: 0,
+    },
+    {
+      type: "Thú cưng",
+      value: 0,
+    },
+  ];
   const [filter_data, setFilterData] = useState<any[]>([]);
+  const [data, setdata_charts] = useState<any[]>(data_charts);
+
+  const config = {
+    appendPadding: 10,
+    data,
+    angleField: "value",
+    colorField: "type",
+    radius: 0.8,
+    label: {
+      type: "outer",
+      content: "{name} {percentage}",
+    },
+    interactions: [
+      {
+        type: "pie-legend-active",
+      },
+      {
+        type: "element-active",
+      },
+    ],
+  };
 
   useEffect(() => {
     const validTypes_dohoctap = ["giaotrinh", "sachthamkhao", "other_hoctap"];
@@ -131,8 +187,93 @@ const Quangcao = () => {
     const validTypes_dienlanh = ["tulanh", "maylanh", "maygiat"];
 
     let new_filter_data = [];
+    let count_hoctap: number = 0;
+    let count_phuongtien: number = 0;
+    let count_dodientu: number = 0;
+    let count_donoithat: number = 0;
+    let count_dienlanh: number = 0;
+    let count_docanhan: number = 0;
+    let count_giaitri: number = 0;
+    let count_thucung: number = 0;
     if (typeDanhmuc == "ALL" || typeDanhmuc == "") {
       new_filter_data = lichsu_qc;
+      new_filter_data.map((item: any) => {
+        if (validTypes_dohoctap.includes(item.type)) {
+          count_hoctap += 1;
+        }
+        if (validTypes_phuongtien.includes(item.type)) {
+          count_phuongtien += 1;
+        }
+        if (validTypes_dodientu.includes(item.type)) {
+          count_dodientu += 1;
+        }
+        if (validTypes_donoithat.includes(item.type)) {
+          count_donoithat += 1;
+        }
+        if (validTypes_dienlanh.includes(item.type)) {
+          count_dienlanh += 1;
+        }
+        if (validTypes_docanhan.includes(item.type)) {
+          count_docanhan += 1;
+        }
+        if (validTypes_dogiaitri.includes(item.type)) {
+          count_giaitri += 1;
+        }
+        if (validTypes_thucung.includes(item.type)) {
+          count_thucung += 1;
+        }
+      });
+      let data_stemp = [
+        {
+          type: "Học tập",
+          value: parseFloat(
+            ((count_hoctap / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Phương tiện",
+          value: parseFloat(
+            ((count_phuongtien / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Đồ điện tử",
+          value: parseFloat(
+            ((count_dodientu / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Đồ nội thất",
+          value: parseFloat(
+            ((count_donoithat / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Điện lạnh",
+          value: parseFloat(
+            ((count_dienlanh / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Đồ cá nhân",
+          value: parseFloat(
+            ((count_docanhan / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Giải trí",
+          value: parseFloat(
+            ((count_giaitri / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+        {
+          type: "Thú cưng",
+          value: parseFloat(
+            ((count_thucung / new_filter_data.length) * 100).toFixed(2)
+          ),
+        },
+      ];
+      setdata_charts(data_stemp);
     } else if (typeDanhmuc == "hoctap") {
       if (typeDanhmucChitiet == "") {
         new_filter_data = lichsu_qc.filter((item: any) =>
@@ -427,6 +568,13 @@ const Quangcao = () => {
             <span>vnđ</span>
           </div>
         </div>
+        {datatime &&
+          (typeDanhmuc == "ALL" || typeDanhmuc == "") &&
+          filter_data.length > 0 && (
+            <div className="h-[300px] w-full">
+              <Pie {...config} />
+            </div>
+          )}
 
         <table className="sm:hidden md:block border-collapse h-10 w-full table-auto">
           <thead className="bg-gray-100 w-[100%]">

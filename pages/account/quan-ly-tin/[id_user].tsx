@@ -813,7 +813,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                           </div>
                           {isOpen === 3 && (
                             <div className={`h-full w-[350px]`}>
-                              <div className="h-full w-full border border-red-500 rounded-md break-words whitespace-pre-wrap font-mono">
+                              <div className="h-full w-full border border-red-500 rounded-md break-words whitespace-pre-wrap">
                                 <p className="w-full text-center bg-red-500 py-1 text-white">
                                   Lý do từ chối
                                 </p>
@@ -823,7 +823,7 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                           )}
                           {isOpen === 4 && (
                             <div className={`h-full w-[350px]`}>
-                              <div className="h-[65%] w-full border border-red-500 rounded-md break-words whitespace-pre-wrap font-mono overflow-auto">
+                              <div className="h-[65%] w-full border border-red-500 rounded-md break-words whitespace-pre-wrap overflow-auto">
                                 <p className="w-full text-center bg-red-500 py-1 text-white">
                                   Lý do ẩn tin
                                 </p>

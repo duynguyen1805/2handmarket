@@ -33,10 +33,10 @@ import {
 import { db } from "../firebase.config";
 
 import { useSession, signOut } from "next-auth/react";
-import { API_register } from "@/service/userService";
 
 import { Select } from "antd";
 import list_forSearching, { itf } from "./obj_data_raw/List_forSearching";
+import { io } from "socket.io-client";
 const list_searching: itf[] = list_forSearching;
 
 interface UserData {
@@ -69,6 +69,7 @@ const Header: React.FC = () => {
 
   const [datainforUser, setdatainforUser] = useState<any>(null); //thay thế bằng information_User
 
+  // lắng nghe tin nhắn mới tù firebase
   useEffect(() => {
     if (information_User?._id) {
       const listUserChatCollectionRef = collection(
@@ -100,8 +101,27 @@ const Header: React.FC = () => {
           count_message_unread(count);
         }
       });
+
       return () => {
         unsubscribe();
+      };
+    }
+  }, [information_User]);
+
+  // lắng nghe socket io nhận thông báo trạng thái tin đăng
+  useEffect(() => {
+    if (information_User?._id) {
+      const BACKEND_URL: any = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const socket = io(BACKEND_URL);
+      // sự kiện 'id người dùng' từ server
+      socket.on(`${information_User._id}`, (data) => {
+        // data là thông báo hoặc dữ liệu mới từ server
+        toast.success(data.message);
+        console.log("check số lần socket nhận: ", data.message);
+      });
+
+      return () => {
+        socket.disconnect(); // ngắt kết nối
       };
     }
   }, [information_User]);
@@ -327,7 +347,7 @@ const Header: React.FC = () => {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={3000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

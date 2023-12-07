@@ -773,17 +773,17 @@ const DS_doiduyet: React.FC<any> = ({
             </div>
             <span className="w-full font-bold mt-3">Thông tin người dùng</span>
             <div className="w-full mt-1 flex flex-col space-y-1">
-              <span>Họ tên: {item.infor_user.name}</span>
-              <span>Địa chỉ: {item.infor_user.address}</span>
+              <span>Họ tên: {item.infor_user?.name}</span>
+              <span>Địa chỉ: {item.infor_user?.address}</span>
 
               <Link
-                href={`/account/trang-ca-nhan/${item.infor_user._id}`}
+                href={`/account/trang-ca-nhan/${item.infor_user?._id}`}
                 className="flex items-center space-x-1"
                 target="_blank"
               >
                 <span>id:</span>
                 <span className="hover:text-mauxanhtroi">
-                  {item.infor_user._id}
+                  {item.infor_user?._id}
                 </span>
               </Link>
             </div>

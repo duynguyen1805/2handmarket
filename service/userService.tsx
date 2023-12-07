@@ -121,6 +121,36 @@ export async function API_Dangtin(
   }
 }
 
+export async function API_get_thongbao(id: string) {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/get-thong-bao`, {
+      id,
+    });
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("API_get_thongbao không thành công");
+  }
+}
+
+export async function API_delete_thongbao(
+  id_user: string,
+  id_tindang: string,
+  trangthaitin: number
+) {
+  try {
+    const response = await axios.delete(
+      `${BACKEND_URL}/delete-thong-bao/${id_user}/${id_tindang}/${trangthaitin}`
+    );
+    const data = await response.data;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("API_get_thongbao không thành công");
+  }
+}
+
 //type: ALL or dienthoai, laptop,.... type ALL thì hang phải ALL và soluong: 0
 //hang: ALL or apple, samsung,...
 //soluong: 0(tatca)

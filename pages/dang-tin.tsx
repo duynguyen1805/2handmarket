@@ -1263,17 +1263,7 @@ const Dang_tin = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+
       <Header />
       <div className="h-auto sm:min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-115px)] lg:min-h-[calc(100vh-80px)] w-[100%] sm:pb-12 md:pb-0 bg-gray-100 flex flex-col place-content-between">
         <div>
