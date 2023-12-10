@@ -18,6 +18,10 @@ module.exports = {
       colors: {
         mautim: "#bf06ac",
         mauxanhtroi: "#2374e1",
+        mauxamdam: "#333333",
+        mauxamsang: "#cccccc",
+        mauxanhduong_nhat: "#3498db",
+        maucam_nhat: "#e67e22",
       },
       transitionProperty: {
         height: "height",

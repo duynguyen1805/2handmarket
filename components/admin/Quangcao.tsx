@@ -20,11 +20,17 @@ declare module "jspdf" {
   }
 }
 // import { Pie } from "@ant-design/plots";
+// ant-design sử dụng requite() trong lib của nó, nextjs thì không cho dùng như vậy => sử dụng import động dynamic
+const Pie = dynamic(
+  () => import("@ant-design/plots").then((module) => module.Pie),
+  { ssr: false }
+);
 
 import item_danhmuc, {
   danhmuc,
   sub_danhmuc,
 } from "../obj_data_raw/Danhmuc_raw";
+import dynamic from "next/dynamic";
 
 const Quangcao = () => {
   const option_ALL = {
@@ -568,13 +574,13 @@ const Quangcao = () => {
             <span>vnđ</span>
           </div>
         </div>
-        {/* {datatime &&
+        {datatime &&
           (typeDanhmuc == "ALL" || typeDanhmuc == "") &&
           filter_data.length > 0 && (
             <div className="h-[300px] w-full">
               <Pie {...config} />
             </div>
-          )} */}
+          )}
 
         <table className="sm:hidden md:block border-collapse h-10 w-full table-auto">
           <thead className="bg-gray-100 w-[100%]">

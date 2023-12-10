@@ -31,6 +31,7 @@ const Button_topback = () => {
     information_User,
     setInfoUser,
   } = useMyContext();
+  const [isHovered_darkmode, setIsHovered_darkmode] = useState(false);
   const [isHovered_scrolltotop, setIsHovered_scrolltotop] = useState(false);
   const [isHovered_chatwithAD, setIsHovered_chatwithAD] = useState(false);
   const handle_scroll_top = () => {
@@ -61,11 +62,6 @@ const Button_topback = () => {
       }
     }
   };
-
-  // ẩn khi vào tin nhắn --- không sử dụng được vì component này được gọi trong _app => chạy server side, router chỉ chạy ở client side
-  // if (router.pathname.includes("/account/tin-nhan")) {
-  //   return null;
-  // }
   const [datainforUser, setdatainforUser] = useState<any>(null);
   useEffect(() => {
     //lấy thông tin người dùng
@@ -137,9 +133,58 @@ const Button_topback = () => {
       console.log(error);
     }
   };
+  const [isDarkMode, set_isDarkMode] = useState<boolean>(false);
+  const handle_darkmode = () => {
+    set_isDarkMode(!isDarkMode);
+  };
 
   return (
     <div>
+      {/* button darkmode */}
+      {/* <div
+        className={`fixed bottom-[110px] right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-500 animate__animated animate__fadeIn`}
+        onClick={() => handle_darkmode()}
+        onMouseEnter={() => setIsHovered_darkmode(true)}
+        onMouseLeave={() => setIsHovered_darkmode(false)}
+      >
+        {isDarkMode == false ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 icon-white"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 icon-white"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+            />
+          </svg>
+        )}
+
+        {isHovered_darkmode && (
+          <span className="absolute bottom-0 right-11 h-10 w-[110px] flex items-center justify-center bg-gray-200 rounded-md">
+            Dark mode
+          </span>
+        )}
+      </div> */}
       <div
         className={`fixed bottom-5 right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-500 animate__animated animate__fadeIn`}
         onClick={() => handle_scroll_top()}
