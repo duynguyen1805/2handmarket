@@ -19,7 +19,7 @@ declare module "jspdf" {
     autoTable: (options: object) => jsPDF;
   }
 }
-import { Pie } from "@ant-design/plots";
+// import { Pie } from "@ant-design/plots";
 
 import item_danhmuc, {
   danhmuc,
@@ -568,13 +568,13 @@ const Quangcao = () => {
             <span>vnđ</span>
           </div>
         </div>
-        {datatime &&
+        {/* {datatime &&
           (typeDanhmuc == "ALL" || typeDanhmuc == "") &&
           filter_data.length > 0 && (
             <div className="h-[300px] w-full">
               <Pie {...config} />
             </div>
-          )}
+          )} */}
 
         <table className="sm:hidden md:block border-collapse h-10 w-full table-auto">
           <thead className="bg-gray-100 w-[100%]">
