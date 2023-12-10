@@ -686,28 +686,24 @@ const Quangcao = () => {
         </table>
 
         {/* bảng dùng để export pdf */}
-        <table
-          id="my-table"
-          className="hidden border-collapse h-10 w-full table-auto"
-        >
-          <thead className="bg-gray-100 w-[100%]">
+        <table id="my-table" className="hidden border-collapse h-10 w-full">
+          <thead className="bg-gray-100 w-full">
             <tr className="w-full">
-              <th className="py-2 w-[2%] text-xl border border-black">STT</th>
-              <th className="py-2 w-[6%] text-xl border border-black">Loại</th>
-              <th className="py-2 w-[30%] text-xl border border-black">
+              <th className="py-2 w-[10px] text-xl border border-black">STT</th>
+              <th className="py-2 w-[10px] text-xl border border-black">
+                Loại
+              </th>
+              <th className="py-2 w-[50px] text-xl border border-black">
                 Tiêu đề
               </th>
-              <th className="py-2 w-[10%] text-xl border border-black">
+              <th className="py-2 w-[30px] text-xl border border-black">
                 Người đăng
               </th>
-              <th className="py-2 w-[8%] text-xl border border-black">
+              <th className="py-2 w-[30px] text-xl border border-black">
                 Ngày bắt đầu
               </th>
-              <th className="py-2 w-[8%] text-xl border border-black">
+              <th className="py-2 w-[30px] text-xl border border-black">
                 Ngày kết thúc
-              </th>
-              <th className="py-2 w-[6%] text-xl border border-black">
-                Phí QC
               </th>
             </tr>
           </thead>
@@ -757,9 +753,6 @@ const Quangcao = () => {
                             </span>
                           );
                         })}
-                    </td>
-                    <td className="py-2 pl-2 text-center border border-black">
-                      10.000
                     </td>
                   </tr>
                 );

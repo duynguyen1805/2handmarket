@@ -1,3 +1,4 @@
+"use client";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Head from "next/head";
@@ -65,72 +66,70 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   // check login, lấy infor current user
   useEffect(() => {
-    const checkPermission = async () => {
-      // check token login acc&pass
-      let token: any = localStorage.getItem("token");
-      let parse_token = JSON.parse(token);
-      if (parse_token) {
-        // decoded token
-        let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
-        const jwt_secret: Secret = jwt_key;
-        try {
-          const decoded: any = jwt.verify(parse_token, jwt_secret);
-          // gán id_user = id current user
-          id_user = decoded._id;
-          setInfoUser(decoded);
-          setdatainforUser(decoded);
-          setHasPermission(true);
-        } catch (error) {
-          console.log("Lỗi decoded token: ", error);
-          setInfoUser(null);
-          setdatainforUser(null);
-          setHasPermission(false);
-          router.push("/account/login");
-        }
-      } else {
-        // check session login google
-        try {
-          const response = await axios.post(`/api/check_permission`);
-          const data = await response.data;
-          if (data.hasPermission) {
-            id_user = data.session.user._id;
-            setHasPermission(true);
-            setdatainforUser(data.session.user);
-          } else {
-            router.push("/account/login");
-          }
-        } catch (error) {
-          console.error("Error checking permission:", error);
-          router.push("/account/login");
-        }
-      }
-    };
     checkPermission();
   }, [router]);
+  const checkPermission = async () => {
+    // check token login acc&pass
+    let token: any = localStorage.getItem("token");
+    let parse_token = JSON.parse(token);
+    if (parse_token) {
+      // decoded token
+      let jwt_key = "2handmarket_tdn" || process.env.NEXT_PUBLIC_JWT_SECRET;
+      const jwt_secret: Secret = jwt_key;
+      try {
+        const decoded: any = jwt.verify(parse_token, jwt_secret);
+        // gán id_user = id current user
+        id_user = decoded._id;
+        setInfoUser(decoded);
+        setdatainforUser(decoded);
+        setHasPermission(true);
+      } catch (error) {
+        console.log("Lỗi decoded token: ", error);
+        setInfoUser(null);
+        setdatainforUser(null);
+        setHasPermission(false);
+        router.push("/account/login");
+      }
+    } else {
+      // check session login google
+      try {
+        const response = await axios.post(`/api/check_permission`);
+        const data = await response.data;
+        if (data.hasPermission) {
+          id_user = data.session.user._id;
+          setHasPermission(true);
+          setdatainforUser(data.session.user);
+        } else {
+          router.push("/account/login");
+        }
+      } catch (error) {
+        console.error("Error checking permission:", error);
+        router.push("/account/login");
+      }
+    }
+  };
 
-  const [itemNangcap, setItemNangcap] = useState<any>();
-  useEffect(() => {
-    //lấy thông tin người dùng
-    const storedItems = localStorage.getItem("itemNangcap");
-    if (storedItems) {
-      setItemNangcap(JSON.parse(storedItems));
-    }
-  }, []);
   const [orderId, set_orderId] = useState<string | any>();
+  // router?.query ? router.query.orderId : undefined
   const [transId, set_transId] = useState<string | any>();
+  // router?.query ? router.query.transId : undefined
   const [orderInfo, set_orderInfo] = useState<string | any>();
+  // router?.query ? router.query.orderInfo : undefined
   useEffect(() => {
-    // lấy resultCode từ momo trả về
     const resultCode = router.query.resultCode;
-    set_orderId(router.query.orderId);
-    set_transId(router.query.transId);
-    set_orderInfo(router.query.orderInfo);
-    // console.log("check resultCode: ", resultCode);
-    if (resultCode === "0") {
-      // gọi hàm cập nhật trangthaithanhtoan
-      fetch_update_trangthaithanhtoan();
+    const orderId = router.query.orderId;
+    const transId = router.query.transId;
+    const orderInfo = router.query.orderInfo;
+    set_orderId(orderId);
+    set_orderInfo(orderInfo);
+    set_transId(transId);
+    if (orderId && transId && orderInfo) {
+      if (resultCode === "0") {
+        // gọi hàm cập nhật trangthaithanhtoan
+        fetch_update_trangthaithanhtoan();
+      }
     }
-  }, [itemNangcap]);
+  }, [information_User != null]);
 
   const [trangthaithanhtoan, settrangthaithanhtoan] = useState<number>();
   const fetch_update_trangthaithanhtoan = async () => {
@@ -139,6 +138,9 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         ? datainforUser?.token_gg_encoded
         : localStorage.getItem("token_req")
     }"`;
+    // lấy thông tin tin đăng cần cập nhật trạng thái thanh toán
+    let getitem: any = localStorage.getItem("itemNangcap");
+    let itemNangcap = JSON.parse(getitem);
     try {
       const response = await API_Capnhat_trangthai_thanhtoan(
         {
@@ -154,31 +156,25 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         // sửa lại link url để tránh lỗi thanhtoan liên tục nhiều tin. vì redirectUrl cho momo location.href
         router.push(`/account/quan-ly-tin/${id_user}`);
       }
-      // if (response.status !== 200 || response.errCode !== 0) {
-      //   // trường hợp api nodejs phản hồi quá lâu (time out), trạng thái 500 hoặc trạng thái khác 200
-      //   // gửi thông tin tới admin qua msg
-      //   sendMessage();
-      // }
+      // console.log("check response: ", response);
     } catch (error) {
       console.error("Error fetching data:", error);
       sendMessage();
-      toast.error(
-        "Tạm thời bị lỗi khi cập nhật Tin ưu tiên. Đã nhắn tin cho Admin xử lý sớm nhất."
-      );
     }
   };
-
   const messageText = `Đã thanh toán MoMo nhưng chưa cập nhật. OrderID: ${orderId}, Mã giao dịch: ${transId}, Tiêu đề tin: ${orderInfo}`;
-  // gửi tin nhắn đến Admin
+  // gửi tin nhắn đến Admin khi api_thanhtoan bị lỗi
   const sendMessage = async () => {
     //tạo id_room giữa 2 user
-    const sortedIds = [datainforUser?._id, "64d733a8df7d5a5bec4959bf"].sort();
+    const sortedIds = [id_user, "64d733a8df7d5a5bec4959bf"].sort();
     const conversationID = sortedIds.join("_"); //id_room
     if (messageText.trim() !== "") {
       try {
         const messageData = {
-          sender: datainforUser?._id,
-          userName: datainforUser?.name,
+          sender: id_user,
+          userName: datainforUser?.name
+            ? datainforUser?.name
+            : information_User?.name,
           text: messageText,
           img: [],
           timestamp: serverTimestamp(),
@@ -193,6 +189,9 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
         // setReviewImg_arr([]);
         // thêm messageData vào collection con "messages"
         await addDoc(messagesCollectionRef, messageData);
+        toast.error(
+          "Tạm thời bị lỗi khi cập nhật Tin ưu tiên. Đã nhắn tin cho Admin xử lý sớm nhất."
+        );
         // tham chiếu tới document conversationID, tạo infor 2 user cho dễ biết
         const conversationDocRef = doc(db, "conversations", conversationID);
         // check tồn tại
@@ -331,6 +330,10 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
   const filteredList =
     isOpen === -1
       ? tindang
+      : isOpen === 2
+      ? tindang
+          ?.filter((item: any) => item.trangthai === isOpen)
+          .sort((a, b) => (a.trangthaithanhtoan === 1 ? -1 : 1))
       : tindang?.filter((item: any) => item.trangthai === isOpen);
 
   const handleClickfilted = (key: any) => {
@@ -580,10 +583,14 @@ const Quanly_tindang = ({ id_user }: infodetailProps) => {
                     Quản lý tin đăng
                   </motion.p>
                 </div>
-                <div className="h-auto w-full text-lg">
-                  <p>* Tin được duyệt sẽ hiển thị tối đa 30 ngày.</p>
-                  <p>* Tin bị từ chối hoặc được ẩn sẽ bị xóa sau 3 ngày</p>
-                  <p className="text-red-500">
+                <div className="h-auto w-full">
+                  <p className="lg:text-xl">
+                    * Tin được duyệt sẽ hiển thị tối đa 30 ngày.
+                  </p>
+                  <p className="lg:text-xl">
+                    * Tin bị từ chối hoặc được ẩn sẽ bị xóa sau 3 ngày
+                  </p>
+                  <p className="text-red-500 lg:text-xl">
                     * Đẩy tin ưu tiên trong 7 ngày với 10.000đ
                   </p>
                 </div>
