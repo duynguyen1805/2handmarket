@@ -2,6 +2,10 @@
 
 Welcome to the Old Stuff Marketplace project! This project is a frontend application built with Next.js and TailwindCSS. The platform allows users to buy, sell, and manage used items efficiently. Below is a comprehensive guide to help you get started and understand the project structure, features, and setup instructions.
 
+_Account Demo:_
+account: demo
+password: demodemo
+
 ## Table of Contents
 
 - [Features](#features)
