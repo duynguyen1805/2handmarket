@@ -4,8 +4,8 @@ Welcome to the Old Stuff Marketplace project! This project is a frontend applica
 
 _Account Demo:_
 
-**account:** demo
-**password:** demodemo
+- **account:** demo
+- **password:** demodemo
 
 ## Table of Contents
 
