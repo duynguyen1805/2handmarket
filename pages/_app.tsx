@@ -9,6 +9,7 @@ import Nav_mobile from "@/components/Nav_mobile";
 import Loading_routerpush from "@/components/loading/Loading_routerpush";
 import Button_topback from "@/components/button/Button_topback";
 import NextAuthProvider from "./providers";
+import Providers from "@/redux/Provider";
 
 // export default function App({ Component, pageProps }: AppProps) {
 //   return (
@@ -20,7 +21,8 @@ import NextAuthProvider from "./providers";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
+    <Providers>
       <NextAuthProvider>
         <MyContextProvider>
           <Component {...pageProps} />
@@ -29,7 +31,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
           <Nav_mobile />
         </MyContextProvider>
       </NextAuthProvider>
-    </Provider>
+    </Providers>
   );
 };
 
