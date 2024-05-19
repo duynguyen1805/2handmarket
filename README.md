@@ -66,8 +66,8 @@ _Account Demo:_
 
 1. **Clone the repository:**
    ```
-   git clone https://github.com/your-username/old-stuff-marketplace.git
-   cd old-stuff-marketplace
+   git clone https://github.com/duynguyen1805/2handmarket.git
+   cd 2handmarket
    ```
 2. **Install dependencies:**
    ```
