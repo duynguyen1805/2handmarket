@@ -4,8 +4,8 @@ Welcome to the Old Stuff Marketplace project! This project is a frontend applica
 
 _Account Demo:_
 
-- **account:** demo
-- **password:** demodemo
+- **account:** demo | admin
+- **password:** demodemo | admin
 
 ## Table of Contents
 
@@ -66,7 +66,7 @@ _Account Demo:_
 
 ![Detail post](./assets//img/img_readme/detail_item.png)
 
-- **Detail post**
+- **Create a post**
 
 ![Create a post](./assets//img/img_readme/dangtin.png)
 
