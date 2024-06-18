@@ -11,6 +11,7 @@ _Account Demo:_
 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
+- [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -54,6 +55,32 @@ _Account Demo:_
 - **TailwindCSS:** Utility-first CSS framework for styling.
 - **Firebase Firestore:** NoSQL database for real-time chat.
 - **MoMo QR Code:** Payment gateway integration for ad payments.
+
+## Screenshots
+
+- **Homepage**
+
+![ImageHomepage](./assets//img/img_readme/homepage.png)
+
+- **Detail post**
+
+![Detail post](./assets//img/img_readme/detail_item.png)
+
+- **Detail post**
+
+![Create a post](./assets//img/img_readme/dangtin.png)
+
+- **Manage post by User**
+
+![Manage post by User](./assets//img/img_readme/quanlytin_user.png)
+
+- **Manage post by Admin**
+
+![Manage post by Admin](./assets//img/img_readme/quanlytin.png)
+
+- **Message**
+
+![Message](./assets//img/img_readme/tin-nhan.png)
 
 ## Getting Started
 
