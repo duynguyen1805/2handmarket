@@ -5,6 +5,23 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 // const BACKEND_URL = "http://192.168.1.58:4000";
 // const BACKEND_URL = "https://twohandmarket-be.onrender.com";
 
+export async function searchYoutube(searchString: string, page: number, pageSize: number) {
+  try {
+    const response = await axios.get(`${BACKEND_URL}/youtube-premium/songs`, {
+      params: {
+        searchString,
+        page,
+        pageSize,
+      },
+    });
+    return response.data.result.songs;
+  } catch (error) {
+    console.error("Error fetching data from YouTube API", error);
+    return [];
+  }
+  
+}
+
 export async function Search_tindang_header(
   keyword: string,
   soluong: number,
