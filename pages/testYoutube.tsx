@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 import { searchYoutube } from '@/service/userService';
 require('dotenv').config();
@@ -50,8 +51,19 @@ const TestYoutube: React.FC = () => {
             <div style={{ marginTop: '20px', width: '80%' }}>
             {results.map((item) => (
                 <div key={item.songId} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-                    <h3>{item.fullName}</h3>
-                    <p>{item.username}</p>
+                    <div className="flex items-center mb-2">
+                        <div className="">
+                            <Image
+                                src={item.thumbnail}
+                                alt={item.fullName}
+                                style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }}
+                            />
+                        </div>
+                        <div className="">
+                            <h3>{item.fullName}</h3>
+                            <p>{item.username}</p>
+                        </div>
+                    </div>
                     <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' /* Tỷ lệ 16:9 */ }}>
                         <iframe
                             style={{
