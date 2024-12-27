@@ -51,12 +51,12 @@ const TestYoutube: React.FC = () => {
             <div style={{ marginTop: '20px', width: '80%' }}>
             {results.map((item) => (
                 <div key={item.songId} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-                    <div className="flex items-center mb-2">
+                    <div className="flex items-center mb-2 space-x-2">
                         <div className="">
                             <Image
                                 src={item.thumbnail}
                                 alt={item.fullName}
-                                style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }}
+                                style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '5px' }}
                             />
                         </div>
                         <div className="">
