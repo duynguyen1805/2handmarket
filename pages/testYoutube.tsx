@@ -52,7 +52,24 @@ const TestYoutube: React.FC = () => {
                 <div key={item.songId} style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
                     <h3>{item.fullName}</h3>
                     <p>{item.username}</p>
-                    <iframe
+                    <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' /* Tỷ lệ 16:9 */ }}>
+                        <iframe
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                            }}
+                            // src={`https://www.youtube.com/embed/${item.trackUrl.split('v=')[1]}`}
+                            src={`${item.trackUrlNoCookie}?vq=hd1080`}
+                            frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title={item.fullName}
+                        ></iframe>
+                    </div>
+                    {/* <iframe
                         width="720"
                         height="480"
                         // src={`https://www.youtube.com/embed/${item.trackUrl.split('v=')[1]}`}
@@ -61,7 +78,7 @@ const TestYoutube: React.FC = () => {
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         title={item.fullName}
-                    ></iframe>
+                    ></iframe> */}
                 </div>
 ))}
             </div>
