@@ -1,8 +1,9 @@
 require("dotenv").config();
 import axios from "../utils/axios";
 // truy cập trên mobile thì thay localhost thành localhost (IP laptop)
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+// const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 // const BACKEND_URL = "http://192.168.1.58:4000";
+const BACKEND_URL = "http://localhost:4000";
 // const BACKEND_URL = "https://twohandmarket-be.onrender.com";
 
 export async function searchYoutube(searchString: string, page: number, pageSize: number) {
@@ -14,7 +15,7 @@ export async function searchYoutube(searchString: string, page: number, pageSize
         pageSize,
       },
     });
-    return response.data.result.songs;
+    return response.data.songs;
   } catch (error) {
     console.error("Error fetching data from YouTube API", error);
     return [];
