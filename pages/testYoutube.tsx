@@ -62,7 +62,7 @@ const TestYoutube: React.FC = () => {
                                 height: '100%',
                             }}
                             // src={`https://www.youtube.com/embed/${item.trackUrl.split('v=')[1]}`}
-                            src={`${item.trackUrlNoCookie}?vq=hd1080`}
+                            src={`${item.trackUrlNoCookie}?vq=hd1080?cc_load_policy=0`}
                             frameBorder="0"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
