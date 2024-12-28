@@ -8,21 +8,6 @@ const TestYoutube: React.FC = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<any[]>([]);
 
-    // const handleSearch = async () => {
-    //     try {
-    //         const response = await axios.get('http://localhost:5686/youtube-premium/songs', {
-    //             params: {
-    //                 searchString: query,
-    //                 page: 1,
-    //                 pageSize: 5,
-    //             },
-    //         });
-    //         setResults(response.data.result.songs);
-    //     } catch (error) {
-    //         console.error('Error fetching data from YouTube API', error);
-    //     }
-    // };
-
     const handleSearch = async () => {
         try {
             const response = await searchYoutube(query, 1, 5);
@@ -56,7 +41,9 @@ const TestYoutube: React.FC = () => {
                             <Image
                                 src={item.thumbnail}
                                 alt={item.fullName}
-                                style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '5px' }}
+                                style={{ width: '140px', height: '80px', objectFit: 'cover', borderRadius: '5px' }}
+                                width={140}
+                                height={80}
                             />
                         </div>
                         <div className="">
@@ -81,16 +68,6 @@ const TestYoutube: React.FC = () => {
                             title={item.fullName}
                         ></iframe>
                     </div>
-                    {/* <iframe
-                        width="720"
-                        height="480"
-                        // src={`https://www.youtube.com/embed/${item.trackUrl.split('v=')[1]}`}
-                        src={`${item.trackUrlNoCookie}`}
-                        frameBorder="0"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title={item.fullName}
-                    ></iframe> */}
                 </div>
 ))}
             </div>
