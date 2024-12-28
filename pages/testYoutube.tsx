@@ -51,22 +51,41 @@ const TestYoutube: React.FC = () => {
                             <p>{item.username}</p>
                         </div>
                     </div>
-                    <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%' /* Tỷ lệ 16:9 */ }}>
-                        <iframe
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                            }}
-                            // src={`https://www.youtube.com/embed/${item.trackUrl.split('v=')[1]}`}
-                            src={`${item.trackUrlNoCookie}?vq=hd1080?cc_load_policy=0`}
-                            frameBorder="0"
-                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            title={item.fullName}
-                        ></iframe>
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                        {/* Video 1 */}
+                        <div style={{ position: 'relative', width: '50%', paddingTop: '28.125%' }}>
+                            <iframe
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                src={`${item.trackUrlEmbed}?vq=hd1080?cc_load_policy=0`}
+                                frameBorder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={`${item.fullName}-video1`}
+                            ></iframe>
+                        </div>
+                        {/* Video 2 */}
+                        <div style={{ position: 'relative', width: '50%', paddingTop: '28.125%' }}>
+                            <iframe
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                src={`${item.trackUrlNoCookie}`}
+                                frameBorder="0"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={`${item.fullName}-video2`}
+                            ></iframe>
+                        </div>
                     </div>
                 </div>
 ))}
