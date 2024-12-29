@@ -25,7 +25,6 @@ const TestYoutube: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        marginTop: "50px",
       }}
     >
       <Head>
@@ -35,7 +34,7 @@ const TestYoutube: React.FC = () => {
         <link rel="icon" href="/icon_2handmarket.png" />
       </Head>
       <Header />
-      <h1>YouTube Search</h1>
+      <h1 className="top-10">YouTube Search</h1>
       <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <input
           type="text"
