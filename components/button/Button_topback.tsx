@@ -34,6 +34,7 @@ const Button_topback = () => {
   const [isHovered_darkmode, setIsHovered_darkmode] = useState(false);
   const [isHovered_scrolltotop, setIsHovered_scrolltotop] = useState(false);
   const [isHovered_chatwithAD, setIsHovered_chatwithAD] = useState(false);
+  const [isHovered_youtube, setIsHovered_youtube] = useState(false);
   const handle_scroll_top = () => {
     // Cuộn lên đầu trang web khi nút được click
     window.scrollTo({
@@ -43,23 +44,15 @@ const Button_topback = () => {
   };
 
   const handleClickMessage_toAdmin = async () => {
-    if (information_User !== undefined || information_User !== null) {
-      const query: any = {
-        current_user_name: information_User?.name,
-        id_receiver: "64d733a8df7d5a5bec4959bf",
-        name_receiver: "Admin",
-      };
-      try {
-        handle_setIsLoading(true);
-        await router.push({
-          pathname: `/account/tin-nhan/${information_User?._id}`,
-          query,
-        });
-        handle_setIsLoading(false);
-      } catch (error) {
-        console.error("Error navigating:", error);
-        handle_setIsLoading(false);
-      }
+    try {
+      handle_setIsLoading(true);
+      await router.push({
+        pathname: `/youtube`,
+      });
+      handle_setIsLoading(false);
+    } catch (error) {
+      console.error("Error navigating:", error);
+      handle_setIsLoading(false);
     }
   };
   const [datainforUser, setdatainforUser] = useState<any>(null);
@@ -213,7 +206,7 @@ const Button_topback = () => {
       </div>
       {(information_User || isLogin == true) && (
         <div
-          className="fixed bottom-[65px] right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-500 animate__animated animate__fadeIn"
+          className="fixed bottom-[105px] right-3 h-[40px] w-[40px] bg-mauxanhtroi rounded-full sm:hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-500 animate__animated animate__fadeIn"
           onClick={handleClickMessage_toAdmin}
           onMouseEnter={() => setIsHovered_chatwithAD(true)}
           onMouseLeave={() => setIsHovered_chatwithAD(false)}
@@ -239,6 +232,34 @@ const Button_topback = () => {
           )}
         </div>
       )}
+      {/* nút Youtube */}
+      <div
+        className="fixed bottom-[65px] right-3 h-[40px] w-[40px] border-mauxanhtroi border rounded-full sm:hidden md:flex items-center justify-center cursor-pointer hover:scale-110 duration-500 animate__animated animate__fadeIn"
+        onClick={handleClickMessage_toAdmin}
+        onMouseEnter={() => setIsHovered_youtube(true)}
+        onMouseLeave={() => setIsHovered_youtube(false)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          x="0px"
+          y="0px"
+          width="60"
+          height="60"
+          viewBox="0 0 48 48"
+        >
+          <path
+            fill="#FF3D00"
+            d="M43.2,33.9c-0.4,2.1-2.1,3.7-4.2,4c-3.3,0.5-8.8,1.1-15,1.1c-6.1,0-11.6-0.6-15-1.1c-2.1-0.3-3.8-1.9-4.2-4C4.4,31.6,4,28.2,4,24c0-4.2,0.4-7.6,0.8-9.9c0.4-2.1,2.1-3.7,4.2-4C12.3,9.6,17.8,9,24,9c6.2,0,11.6,0.6,15,1.1c2.1,0.3,3.8,1.9,4.2,4c0.4,2.3,0.9,5.7,0.9,9.9C44,28.2,43.6,31.6,43.2,33.9z"
+          ></path>
+          <path fill="#FFF" d="M20 31L20 17 32 24z"></path>
+        </svg>
+        {isHovered_youtube && (
+          <span className="absolute bottom-0 right-11 h-10 w-[120px] flex items-center justify-center bg-gray-200 rounded-md">
+            Youtube
+          </span>
+        )}
+      </div>
+
       {/* nút thông báo */}
       {(information_User?.role == "Client" ||
         datainforUser?.role == "Client") && (
