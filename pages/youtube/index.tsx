@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import axios from "axios";
 import { searchYoutube } from "@/service/userService";
 import Header from "@/components/Header";
 require("dotenv").config();
@@ -9,6 +8,7 @@ require("dotenv").config();
 const TestYoutube: React.FC = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
+  const [showIframeIndex, setShowIframeIndex] = useState<number | null>(null);
 
   const handleSearch = async () => {
     try {
@@ -64,7 +64,7 @@ const TestYoutube: React.FC = () => {
         </button>
       </div>
       <div style={{ marginTop: "20px", width: "80%" }}>
-        {results.map((item) => (
+        {results.map((item, index) => (
           <div
             key={item.songId}
             style={{
@@ -125,22 +125,39 @@ const TestYoutube: React.FC = () => {
                   position: "relative",
                   width: "50%",
                   paddingTop: "28.125%",
+                  textAlign: "center",
                 }}
               >
-                <iframe
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  src={`${item.trackUrlNoCookie}`}
-                  frameBorder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  title={`${item.fullName}-video2`}
-                ></iframe>
+                {showIframeIndex === index ? (
+                  <iframe
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                    src={`${item.trackUrlNoCookie}`}
+                    frameBorder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title={`${item.fullName}-video2`}
+                  ></iframe>
+                ) : (
+                  <button
+                    onClick={() => setShowIframeIndex(index)}
+                    style={{
+                      padding: "10px",
+                      borderRadius: "5px",
+                      border: "none",
+                      backgroundColor: "#007BFF",
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Show Video 2
+                  </button>
+                )}
               </div>
             </div>
           </div>
