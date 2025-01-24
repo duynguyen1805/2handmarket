@@ -76,10 +76,10 @@ export default NextAuth({
       // lấy google id từ token
       (session.user as Extended_User_Type)._id = `${token.sub}${"acc"}`;
       (session.user as Extended_User_Type).token_gg_encoded = token_gg_encoded;
-      (session.user as Extended_User_Type).id_token_google = token;
+      (session.user as Extended_User_Type).id_token_google = token.id_token;
+      (session.user as Extended_User_Type).accessToken_google =
+        token.accessToken;
       // (session.user as Extended_User_Type).token_gg_decoded = token;
-      // (session.user as Extended_User_Type).accessToken_google =
-      //   token.accessToken;
       // (session.user as Extended_User_Type).id_token_google = token.id_token;
 
       return session;
