@@ -18,6 +18,7 @@ type Extended_User_Type = User & {
   token_gg_decoded?: any;
   id_token_google?: any;
   accessToken_google?: any;
+  googleToken?: any;
 };
 
 export default NextAuth({
@@ -79,6 +80,7 @@ export default NextAuth({
       (session.user as Extended_User_Type).id_token_google = token.id_token;
       (session.user as Extended_User_Type).accessToken_google =
         token.accessToken;
+      (session.user as Extended_User_Type).googleToken = token.googleToken;
       // (session.user as Extended_User_Type).token_gg_decoded = token;
       // (session.user as Extended_User_Type).id_token_google = token.id_token;
 
@@ -92,10 +94,11 @@ export default NextAuth({
     // },
 
     async jwt({ token, user, account, profile, isNewUser }) {
-      // if (account) {
-      //   token.accessToken = account.access_token;
-      //   token.id_token = account.id_token;
-      // }
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id_token = account.id_token;
+        token.googleToken = account.id_token;
+      }
       if (user) {
         // lưu infor acc google về db
         let build_data = {
